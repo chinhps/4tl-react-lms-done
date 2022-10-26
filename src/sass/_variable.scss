@@ -1,0 +1,30 @@
+// color variable
+$main-bg: #ffffff;
+$main-color: #b92c95;
+
+$txt-main-color: rgba(0, 0, 0, 0.9);
+$txt-second-color: #989898;
+$txt-white: #fff;
+
+$btn-main-bg: $main-color;
+$btn-main-color: #fff;
+$btn-bg-gray: #b4b4b4;
+$border-color: #cdcdcd;
+
+$colors: (
+    'white': #fff,
+    'black': #000,
+    'main': $main-color,
+);
+
+// size
+$logo-height: 50px;
+
+// shadow
+$box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+
+// break point
+$tablet-width: 960px;
+$mobile-width: 570px;
+
+$numbers: (0, 1, 2, 3, 4, 5, 6, 7, 8);
