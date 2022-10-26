@@ -22,62 +22,62 @@ ul {
 
 a {
     text-decoration: none;
-    color: unset;
 }
-
-a:hover {
-    color: $main-color;
-}
-
 img {
     max-width: 100%;
 }
-
-@each $color, $val in $colors {
-    .color-#{$color} {
-        color: $val;
-    }
-
-    .bg-#{$color} {
-        background-color: $val;
-    }
+body {
+    font-size: 18px;
+    background: var(--bg-color);
 }
 
-@each $var in $numbers {
-    .grid-col-sm-#{$var} {
-        grid-template-columns: repeat($var, 1fr);
-    }
+.show {
+    visibility: collapse;
+    opacity: 1;
 }
 
-@each $var in $numbers {
-    .grid-col-md-#{$var} {
-        @include tablet {
-            grid-template-columns: repeat($var, 1fr);
-        }
-    }
-}
-
-@each $var in $numbers {
-    .grid-col-#{$var} {
-        @include pc {
-            grid-template-columns: repeat($var, 1fr);
-        }
-    }
+.hide {
+    visibility: hidden;
+    opacity: 0;
 }
 
 .container {
     width: 100%;
+    margin: 0 auto;
     max-width: 1366px;
-    padding: 0 50px;
+    // min-height: 1000px;
+}
 
-    @include tablet {
-        max-width: 800px;
-        padding: 0 20px;
-    }
+input {
+    outline: none;
+    border: none;
+}
+textarea {
+    outline: none;
+    border: none;
+}
 
-    @include mobile {
-        max-width: $mobile-width;
-        padding: 0 1.95rem;
-        margin: auto;
-    }
+button {
+    outline: none !important;
+    border: none;
+    background: 0 0;
+}
+button:hover {
+    cursor: pointer;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-thumb {
+    background: var(--scroll-background);
+}
+::-webkit-scrollbar-track {
+    background: var(--scroll-color);
 }
