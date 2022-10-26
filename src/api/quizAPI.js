@@ -1,8 +1,11 @@
-// import axiosClient from './axiosClient';
+import axiosClient from './axiosClient';
 
-// const authApi = {
-//     login: (params: object) => axiosClient.post('/auth/login', params),
-//     verifyToken: () => axiosClient.post('/auth/verify-token'),
-// };
+const BASE_URL = 'branch/';
+const quizAPI = {
+    getBranch: (params) => {
+        const url = `${BASE_URL}`;
+        return axiosClient.get(url, params);
+    },
+};
 
-// export default authApi;
+export default quizAPI;

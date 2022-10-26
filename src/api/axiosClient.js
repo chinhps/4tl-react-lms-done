@@ -1,7 +1,9 @@
 import axios from 'axios';
 import queryString from 'query-string';
+import { API } from '../Constant';
 
 const axiosClient = axios.create({
+    baseURL: API,
     headers: {
         'content-type': 'application/json',
     },

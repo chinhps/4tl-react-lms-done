@@ -1,7 +1,18 @@
 import React from 'react';
-const menuItem = [{ name: 'Home' }, { name: 'Class' }, { name: 'Chat' }];
+import MenuItem from './MenuItem';
+const menuItem = [
+    { name: 'Home', path: '/' },
+    { name: 'Class', path: 'class' },
+    { name: 'Chat', path: 'chat' },
+];
 const Menu = () => {
-    return <ul className="header-menu"></ul>;
+    return (
+        <ul className="header-menu">
+            {menuItem.map((item) => (
+                <MenuItem title={item.name} path={item.path} key={item.name} />
+            ))}
+        </ul>
+    );
 };
 
 export default Menu;
