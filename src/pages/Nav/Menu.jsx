@@ -1,5 +1,6 @@
 import React from 'react';
 import MenuItem from './MenuItem';
+
 const menuItem = [
     { name: 'Home', path: '/' },
     { name: 'Class', path: 'class' },

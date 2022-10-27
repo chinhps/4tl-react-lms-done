@@ -1,14 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Menu from '../../pages/Nav/Menu';
 import { Link } from 'react-router-dom';
-import logo from '../../assets/images/4TL_Logo_png.png';
-import user from '../../assets/images/user.png';
-import {IoIosNotifications} from 'react-icons/io';
+import { logo, user } from '../../assets/images';
+import { itemSettings } from '../../utils/constants';
 
 const Header = () => {
+    const [toggle, setToggle] = useState(false);
+    const [display, setDisplay] = useState('none');
+
+    const showSetting = () => {
+        setToggle(!toggle);
+        if (toggle === true) {
+            setDisplay('none')
+        } else {
+            setDisplay('flex')
+        }
+    }
+
     return (
         <header className='header'>
             <div style={{ display: 'flex', alignItems: 'center' }}>
+                <div className='header__icon'>
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+
                 <div className='header__logo'>
                     <Link to='/'>
                         <img 
@@ -24,20 +39,22 @@ const Header = () => {
 
             <div className='header__user'>
                 <div className='user__notification'>
-                    <IoIosNotifications fontSize={30} />
+                    <i class="fa fa-bell"></i>
                     <div className='notification__circle'>1</div>
                 </div>
 
-                <div className='user__image center'>
-                    <p className='user__image--name'>Chung chi lam</p>
-                    <img src={user} alt='' width={50} />
+                <div className='user__image'>
+                    <p className='user__image--name'>Chung Chí Lâm</p>
+                    <img src={user} alt='user' width={46} onClick={showSetting} />
                 </div>
 
-                <ul className='user__setting'>
+                <ul className='user__setting' style={{ display }}>
                     <li className='user__setting--item'>
-                        <Link to='/' className='user__setting--link'>
-                            <i className='fa-solid fa-user'></i>
-                        </Link>
+                        {itemSettings.map((item) => (
+                            <Link key={item} to={item.link} className='user__setting--link'>
+                                <i className={item.icon}></i> {item.title}
+                            </Link>
+                        ))}
                     </li>
                 </ul>
             </div>
