@@ -13,7 +13,7 @@ html {
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif !important;
 }
 
 ul {
@@ -28,7 +28,7 @@ img {
 }
 body {
     font-size: 18px;
-    background: var(--bg-color);
+    background: $bg-color;
 }
 
 .show {
@@ -45,7 +45,6 @@ body {
     width: 100%;
     margin: 0 auto;
     max-width: 1366px;
-    // min-height: 1000px;
 }
 
 input {
@@ -76,8 +75,8 @@ button:hover {
     width: 10px;
 }
 ::-webkit-scrollbar-thumb {
-    background: var(--scroll-background);
+    background: $scroll-background;
 }
 ::-webkit-scrollbar-track {
-    background: var(--scroll-color);
+    background: $scroll-color;
 }

@@ -1,5 +1,3 @@
-@import '../variable';
-
 .footer {
     background-color: $background-footer;
     color: $color-black;
@@ -20,10 +18,9 @@
     &__contact {
         h3 {
             font-size: 2rem;
-            font-family: "Segoe UI Bold";
+            font-weight: 600;
             line-height: 30px;
             margin-bottom: 20px;
-            font-weight: bold;
         }
 
         .menu {
