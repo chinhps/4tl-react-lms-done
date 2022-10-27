@@ -1,0 +1,42 @@
+@import '../variable';
+
+.footer {
+    background-color: $background-footer;
+    color: $color-black;
+    margin-top: 20px;
+    padding: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    box-shadow: 0px -3px 8px $fds-black-alpha-05;
+    position: fixed;
+    bottom: 0;
+    gap: 50px;
+    &__logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    &__contact {
+        h3 {
+            font-size: 2rem;
+            font-family: "Segoe UI Bold";
+            line-height: 30px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .menu {
+            &__item {
+                font-size: 1.6rem;
+                line-height: 1.5;
+            }
+            &__link {
+                i {
+                    color: $fds-gray-30;
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+}

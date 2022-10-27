@@ -7,7 +7,7 @@ const menuItem = [
 ];
 const Menu = () => {
     return (
-        <ul className="header-menu">
+        <ul className="header__menu">
             {menuItem.map((item) => (
                 <MenuItem title={item.name} path={item.path} key={item.name} />
             ))}
