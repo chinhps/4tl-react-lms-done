@@ -127,7 +127,7 @@
             display: flex;
         }
         &__menu {
-            display: none;
+            display: block;
             position: absolute;
             background-color: $background-header;
             top: 45px;

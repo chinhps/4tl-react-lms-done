@@ -18,9 +18,9 @@ function App() {
                             {routee.children ? <Route index element={<Page />} /> : null}
                             {routee.children !== undefined
                                 ? routee.children.map((routeChild, i) => {
-                                      const PageChild = routeChild.component;
-                                      return <Route key={i} path={routeChild.path} element={<PageChild />} />;
-                                  })
+                                    const PageChild = routeChild.component;
+                                    return <Route key={i} path={routeChild.path} element={<PageChild />} />;
+                                })
                                 : null}
                         </Route>
                     );

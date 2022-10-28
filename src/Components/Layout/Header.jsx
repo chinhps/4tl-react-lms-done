@@ -21,7 +21,7 @@ const Header = () => {
         <header className='header'>
             <div style={{ display: 'flex', alignItems: 'center' }}>
                 <div className='header__icon'>
-                    <i class="fa-solid fa-bars"></i>
+                    <i className="fa-solid fa-bars"></i>
                 </div>
 
                 <div className='header__logo'>
@@ -39,7 +39,7 @@ const Header = () => {
 
             <div className='header__user'>
                 <div className='user__notification'>
-                    <i class="fa fa-bell"></i>
+                    <i className="fa fa-bell"></i>
                     <div className='notification__circle'>1</div>
                 </div>
 
@@ -50,9 +50,9 @@ const Header = () => {
 
                 <ul className='user__setting' style={{ display }}>
                     <li className='user__setting--item'>
-                        {itemSettings.map((item) => (
-                            <Link key={item} to={item.link} className='user__setting--link'>
-                                <i className={item.icon}></i> {item.title}
+                        {itemSettings.map((setting) => (
+                            <Link key={setting} to={setting.link} className='user__setting--link'>
+                                <i className={setting.icon}></i> {setting.title}
                             </Link>
                         ))}
                     </li>
