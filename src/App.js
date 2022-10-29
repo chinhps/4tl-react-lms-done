@@ -4,7 +4,7 @@ import { publicRoutes } from './routes/route';
 
 function App() {
     return (
-        <div className="App">
+        <>
             <Routes>
                 {publicRoutes.map((routee, index) => {
                     const Page = routee.component;
@@ -26,7 +26,7 @@ function App() {
                     );
                 })}
             </Routes>
-        </div>
+        </>
     );
 }
 

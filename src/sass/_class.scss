@@ -1,0 +1,117 @@
+.class {
+    width: 100%;
+    font-size: 1.6rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    &__item {
+        display: flex;
+        align-items: center;
+        max-width: 600px;
+        width: 100%;
+        height: 100%;
+        padding: 15px;
+        background: $white;
+        color: $black;
+        border-radius: 14px;
+        box-shadow: 2px 2px 5px 0px $fds-black-alpha-05;
+    }
+    &__icon {
+        flex: 1;
+        margin-right: 20px;
+        font-size: 4.5em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: $fds-blue-60;
+    }
+    &__detail {
+        flex: 4;
+        text-align: left;
+        word-break: keep-all;
+        padding-left: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        border-left: 3px solid $black;
+
+        gap: 1rem;
+        &--title {
+            font-size: 18px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        &--sup {
+            font-size: 16px;
+        }
+        &--time {
+            font-size: 14px;
+        }
+    }
+}
+.popup {
+    width: 600px;
+    height: 200px;
+    background: rgb(255, 255, 255);
+    border-radius: 24px;
+    box-shadow: 0px 0px 8px $fds-black-alpha-20;
+    padding: 15px 30px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    & h1 {
+        font-size: 30px;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+    &__button {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+}
+
+@include tablet {
+    .class,
+    .course {
+        &__icon {
+            font-size: 4em;
+        }
+        &__detail {
+            &--title {
+                font-size: 16px;
+            }
+            &--sup {
+                font-size: 14px;
+            }
+            &--time {
+                font-size: 12px;
+            }
+        }
+    }
+}
+@include mobile {
+    .class,
+    .course {
+        &__icon {
+            font-size: 3em;
+        }
+        &__detail {
+            &--title {
+                font-size: 14px;
+            }
+            &--sup,
+            &--time {
+                font-size: 12px;
+            }
+        }
+    }
+}
+
+@include mobile {
+    .class {
+        grid-template-columns: 1fr;
+    }
+}
