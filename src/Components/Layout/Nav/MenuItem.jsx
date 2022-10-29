@@ -1,11 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const MenuItem = ({ path, title }) => {
     return (
         <li className="menu-item">
-            <a className="menu-link" href={path}>
+            <Link className="menu-link" to={path}>
                 {title}
-            </a>
+            </Link>
         </li>
     );
 };
