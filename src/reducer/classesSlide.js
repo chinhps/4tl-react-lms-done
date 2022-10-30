@@ -15,7 +15,6 @@ const classesSlide = createSlice({
     extraReducers: {
         [fetchClasses.fulfilled]: (state, action) => {
             state.listClasses = action.payload;
-            console.log(action.payload);
         },
     },
 });

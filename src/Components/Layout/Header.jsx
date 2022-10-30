@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import Menu from '../../pages/Nav/Menu';
+
+import Menu from './Nav/Menu';
 import { Link } from 'react-router-dom';
 import { logo, user } from '../../assets/images';
 import { itemSettings } from '../../utils/constants';
@@ -18,7 +19,7 @@ const Header = () => {
     };
 
     return (
-        <header className="header">
+        <div className="header">
             <div style={{ display: 'flex', alignItems: 'center' }}>
                 <div className="header__icon">
                     <i className="fa-solid fa-bars"></i>
@@ -46,15 +47,15 @@ const Header = () => {
 
                 <ul className="user__setting" style={{ display }}>
                     <li className="user__setting--item">
-                        {itemSettings.map((setting) => (
-                            <Link key={setting} to={setting.link} className="user__setting--link">
+                        {itemSettings.map((setting, index) => (
+                            <Link key={setting.title} to={setting.link} className="user__setting--link">
                                 <i className={setting.icon}></i> {setting.title}
                             </Link>
                         ))}
                     </li>
                 </ul>
             </div>
-        </header>
+        </div>
     );
 };
 

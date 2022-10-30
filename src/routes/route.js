@@ -1,7 +1,8 @@
 import Upload from '../pages/Upload/Upload';
-import { HomeLayout } from '../Layout';
+import { HomeLayout, LoginLayout } from '../Layout';
 import Classes from '../pages/Classes/Classes';
 import Home from '../pages/Home/Home';
+import { Login } from '../pages/Login/Login';
 
 const publicRoutes = [
     {
@@ -17,6 +18,12 @@ const publicRoutes = [
     {
         path: '/upload',
         component: Upload,
+        layout: HomeLayout,
+    },
+    {
+        path: '/login',
+        component: Login,
+        layout: LoginLayout,
     },
 ];
 

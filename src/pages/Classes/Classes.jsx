@@ -9,16 +9,19 @@ const Classes = () => {
     let params = useParams();
     params = Object.values(params);
     params = params.toString();
+
     const listClasses = useSelector(classesSelector);
     const dispatch = useDispatch();
+
     useEffect(() => {
         dispatch(fetchClasses(params));
-    }, [dispatch, params]);
+    }, [params]);
 
+    console.log(listClasses);
     return (
         <div className="class">
             {listClasses.map((item, index) => (
-                <ClassItem props={item} key={index} isCourse={true} />
+                <ClassItem props={item} key={index} isCourse={item.id ? true : false} />
             ))}
         </div>
     );
