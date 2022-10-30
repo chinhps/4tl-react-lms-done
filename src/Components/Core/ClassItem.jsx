@@ -38,14 +38,14 @@ const ClassItem = ({ props, isCourse }) => {
             console.log('click' + isClick);
             // if (isClick) {
             //     console.log(isClick);
-            //     dispatch(joinCourse(data.id, user.msg));
+            dispatch(joinCourse(data.id, user.msg));
             // } else {
             // }
         }
     };
-
+    console.log(123);
     useEffect(() => {
-        getData();
+        if (courseStudent.id === props.id) getData();
     }, [courseStudent.courseStudent]);
 
     const getData = () => {

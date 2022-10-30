@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import ClassItem from '../../Components/Core/ClassItem';
+import ClassItem from '../../components/Core/ClassItem';
 import { fetchClasses } from '../../reducer/classesSlide';
 import { classesSelector } from '../../selectors';
 

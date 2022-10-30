@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const Upload = () => {
-    const [selectedFile, setSelectedFile] = useState();
+    // const [selectedFile, setSelectedFile] = useState();
 
     return (
         <div className="upload">
