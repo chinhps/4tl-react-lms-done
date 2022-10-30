@@ -1,9 +1,11 @@
+import { useDisclosure } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { set } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { joinCourse } from '../../reducer/courseStudentSlide';
 import { courseStudentSelector, userSelector } from '../../selectors';
+import PopOver from './PopOver';
 
 const ClassItem = ({ props, isCourse }) => {
     const dispatch = useDispatch();
@@ -12,6 +14,8 @@ const ClassItem = ({ props, isCourse }) => {
     params = Object.values(params).toString();
     const courseStudent = useSelector(courseStudentSelector);
     const user = useSelector(userSelector);
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const [isClick, setIsClick] = useState(false);
 
     const setRouteParent = (parent, folder) => {
         if (parent === 0) {
@@ -30,8 +34,13 @@ const ClassItem = ({ props, isCourse }) => {
         if (link || !isCourse) {
             navigate(link);
         } else {
-            console.log('joining');
-            dispatch(joinCourse(data.id, user.msg));
+            onOpen();
+            console.log('click' + isClick);
+            // if (isClick) {
+            //     console.log(isClick);
+            //     dispatch(joinCourse(data.id, user.msg));
+            // } else {
+            // }
         }
     };
 
@@ -75,6 +84,14 @@ const ClassItem = ({ props, isCourse }) => {
                     )}
                 </div>
             </div>
+            <PopOver
+                courseName={props?.subject_id?.name + '-' + props?.teacher_id?.name}
+                courseDetail={props?.class_id?.name}
+                isOpen={isOpen}
+                onClose={onClose}
+                courseID={props?.id}
+                setIsClick={setIsClick}
+            />
         </div>
     );
 };
