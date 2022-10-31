@@ -1,6 +1,5 @@
 import { useDisclosure } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
-import { set } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { joinCourse } from '../../reducer/courseStudentSlide';
@@ -14,8 +13,6 @@ const ClassItem = ({ props, isCourse }) => {
     params = Object.values(params).toString();
     const courseStudent = useSelector(courseStudentSelector);
     const user = useSelector(userSelector);
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const [isClick, setIsClick] = useState(false);
 
     const setRouteParent = (parent, folder) => {
         if (parent === 0) {
@@ -28,32 +25,18 @@ const ClassItem = ({ props, isCourse }) => {
             return false;
         }
     };
-
     const handleJoinCourse = (data) => {
         const link = setRouteParent(props?.parent_tree_id, props?.folder_tree_id);
-        if (link || !isCourse) {
+        if (link && !isCourse) {
             navigate(link);
         } else {
-            onOpen();
-            console.log('click' + isClick);
-            // if (isClick) {
-            //     console.log(isClick);
-            //     dispatch(joinCourse(data.id, user.msg));
-            // } else {
-            // }
-        }
-    };
-
-    useEffect(() => {
-        getData();
-    }, [courseStudent.courseStudent]);
-
-    const getData = () => {
-        if (!courseStudent.pending || props.isCourse) {
-            if (courseStudent.courseStudent.status === 200) {
-                console.log('da tham gia', courseStudent);
-            } else {
-                console.log('tham gia that bai', courseStudent);
+            dispatch(joinCourse(data.id, user.msg));
+            if (!courseStudent.pending || props.isCourse) {
+                if (courseStudent.courseStudent.status === 200) {
+                    console.log('da tham gia', courseStudent);
+                } else {
+                    console.log('tham gia that bai', courseStudent);
+                }
             }
         }
     };
@@ -84,14 +67,6 @@ const ClassItem = ({ props, isCourse }) => {
                     )}
                 </div>
             </div>
-            <PopOver
-                courseName={props?.subject_id?.name + '-' + props?.teacher_id?.name}
-                courseDetail={props?.class_id?.name}
-                isOpen={isOpen}
-                onClose={onClose}
-                courseID={props?.id}
-                setIsClick={setIsClick}
-            />
         </div>
     );
 };

@@ -11,13 +11,14 @@ import {
     Text,
 } from '@chakra-ui/react';
 // import { useNavigate } from 'react-router-dom';
-const PopOver = ({ courseName, courseDetail, isOpen, onClose, courseID, setIsClick }) => {
+const PopOver = ({ courseName, courseDetail, isOpen, onClose, setIsYes }) => {
     // const navigate = useNavigate();
     // navigate(`/course/${id}`);
-    const handleClickYes = (id) => {
-        setIsClick(true);
-    };
 
+    const handleYes = () => {};
+    const handleClose = () => {
+        onClose();
+    };
     return (
         <>
             <Modal isOpen={isOpen} onClose={onClose}>
@@ -30,10 +31,10 @@ const PopOver = ({ courseName, courseDetail, isOpen, onClose, courseID, setIsCli
                     </ModalBody>
 
                     <ModalFooter>
-                        <Button colorScheme="blue" mr={3} onClick={() => handleClickYes(courseID)}>
+                        <Button colorScheme="blue" mr={3} onClick={() => setIsYes(true)}>
                             Tham gia
                         </Button>
-                        <Button variant="ghost" onClick={onClose}>
+                        <Button variant="ghost" onClick={handleClose}>
                             Hủy
                         </Button>
                     </ModalFooter>
