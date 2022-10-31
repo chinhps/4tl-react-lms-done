@@ -4,8 +4,10 @@ const Upload = () => {
     // const [selectedFile, setSelectedFile] = useState();
 
     return (
-        <div className="upload">
-            <input type="file" name="file" className="upload__file" />
+        <div className='upload'>
+            <button style={{ background: 'green' }}>Tải tệp lên</button>
+
+            <input type='file' name='file' className='upload__file' />
 
             <i className="fa fa-times"></i>
 
