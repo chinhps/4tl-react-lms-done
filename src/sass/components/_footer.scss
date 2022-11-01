@@ -40,10 +40,17 @@
 
 @include tablet {
     .footer {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+}
+
+@include mobile {
+    .footer {
         display: flex;
-        flex-direction: column;
-        justify-content: center;
         align-items: center;
-        width: 100%;
+        justify-content: center;
+        flex-direction: column;
     }
 }
