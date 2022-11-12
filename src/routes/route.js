@@ -1,8 +1,8 @@
 import Upload from '../pages/Upload/Upload';
-import { HomeLayout, LoginLayout } from '../Layout';
-import Classes from '../Components/Core/ClassItem';
+import { AuthIllustration, HomeLayout } from '../Layout';
+import Classes from '../pages/Classes/Classes';
 import Home from '../pages/Home/Home';
-import { Login } from '../pages/Login/Login';
+import Login from '../pages/Login/Login';
 import Course from '../Components/Core/Course';
 
 const publicRoutes = [
@@ -24,10 +24,10 @@ const publicRoutes = [
     {
         path: '/login',
         component: Login,
-        layout: LoginLayout,
+        layout: AuthIllustration,
     },
     {
-        path: '/course',
+        path: '/course/:id',
         component: Course,
         layout: HomeLayout,
     },

@@ -6,6 +6,10 @@ const userAPI = {
         const url = `${BASE_URL}/get-me`;
         return axiosClient.get(url);
     },
+    login: (data) => {
+        const url = `${BASE_URL}/login`;
+        return axiosClient.post(url, data);
+    },
 };
 
 export default userAPI;

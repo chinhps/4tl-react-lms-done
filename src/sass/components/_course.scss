@@ -1,7 +1,5 @@
-.css-1oezttv {
-  font-size: 2rem !important;
+.course {
+    & a:hover {
+        text-decoration: underline;
+    }
 }
-a:hover {
-  text-decoration: underline; 
-}
-

@@ -48,7 +48,7 @@ const Header = () => {
                 <ul className="user__setting" style={{ display }}>
                     <li className="user__setting--item">
                         {itemSettings.map((setting, index) => (
-                            <Link key={setting.title} to={setting.link} className="user__setting--link">
+                            <Link key={setting.title} to={`/${setting.link}`} className="user__setting--link">
                                 <i className={setting.icon}></i> {setting.title}
                             </Link>
                         ))}

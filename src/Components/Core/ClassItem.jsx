@@ -1,9 +1,9 @@
-import { useDisclosure } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { joinCourse } from '../../reducer/courseStudentSlide';
 import { courseStudentSelector, userSelector } from '../../selectors';
+
 import PopOver from './PopOver';
 
 const ClassItem = ({ props, isCourse }) => {
@@ -31,6 +31,7 @@ const ClassItem = ({ props, isCourse }) => {
             navigate(link);
         } else {
             dispatch(joinCourse(data.id, user.msg));
+            navigate(`/course/${data.id}`);
         }
     };
 
@@ -49,7 +50,7 @@ const ClassItem = ({ props, isCourse }) => {
     };
 
     return (
-        <div>
+        <>
             <div className="class__item" onClick={() => handleJoinCourse(props)}>
                 <div className="class__icon">
                     <i className="fa-solid fa-book"></i>
@@ -74,7 +75,7 @@ const ClassItem = ({ props, isCourse }) => {
                     )}
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 
