@@ -17,24 +17,20 @@ import {
 
 const avatars = [
     {
-        name: 'Ryan Florence',
-        url: 'https://bit.ly/ryan-florence',
+        name: 'Nhật Tiến',
+        url: 'https://scontent.fsgn4-1.fna.fbcdn.net/v/t1.6435-9/135226721_3209692509131255_4464809862726056073_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=TaXoTRFsEnYAX8fDXjA&tn=OMki3wQ8TQlnFkJP&_nc_ht=scontent.fsgn4-1.fna&oh=00_AfAOGjO2-Zm5P-meXl4igorSDUJWXt7i5OCuYIzOQ7bm3A&oe=6396A0FC',
     },
     {
-        name: 'Segun Adebayo',
-        url: 'https://bit.ly/sage-adebayo',
+        name: 'Hoàng Chính',
+        url: 'https://scontent.fsgn13-4.fna.fbcdn.net/v/t39.30808-1/308722722_3006931316272943_4576939478055507646_n.jpg?stp=dst-jpg_p200x200&_nc_cat=110&ccb=1-7&_nc_sid=7206a8&_nc_ohc=DiK0KvM4Ex8AX_XOOCB&tn=OMki3wQ8TQlnFkJP&_nc_ht=scontent.fsgn13-4.fna&oh=00_AfC2EorB33W_rnZ43CwZ1MJCiDXlmGHDIzdZ317FivxyaA&oe=6373E21C',
     },
     {
-        name: 'Kent Dodds',
-        url: 'https://bit.ly/kent-c-dodds',
+        name: 'Chí Lâm',
+        url: 'https://scontent.fsgn4-1.fna.fbcdn.net/v/t39.30808-6/288243634_2025306667677571_5952956210188722068_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=bFe4KMzSQR8AX-KJbqQ&_nc_ht=scontent.fsgn4-1.fna&oh=00_AfBsJBtzgtjbFdzmluhA0DtplJ9oSAMP7VC7o-Do_FbqJQ&oe=6373A387',
     },
     {
-        name: 'Prosper Otemuyiwa',
-        url: 'https://bit.ly/prosper-baba',
-    },
-    {
-        name: 'Christian Nwamba',
-        url: 'https://bit.ly/code-beast',
+        name: 'Thanh Luân',
+        url: 'https://scontent.fsgn4-1.fna.fbcdn.net/v/t39.30808-1/315107151_1260459698132300_4129487493574862284_n.jpg?stp=c0.41.200.200a_dst-jpg_p200x200&_nc_cat=101&ccb=1-7&_nc_sid=7206a8&_nc_ohc=BFn30rko6HcAX84_NpY&_nc_ht=scontent.fsgn4-1.fna&oh=00_AfAxymRI7fe1FnwvsDu0m5OewKBfeawydDt4MUdTJnwBdQ&oe=63746274',
     },
 ];
 
@@ -50,11 +46,11 @@ export default function Login() {
             >
                 <Stack spacing={{ base: 10, md: 20 }}>
                     <Heading lineHeight={1.1} fontSize={{ base: '3xl', sm: '4xl', md: '5xl', lg: '6xl' }}>
-                        Senior web designers{' '}
+                        4TL Hệ thống quản lý học tập
                         <Text as={'span'} bgGradient="linear(to-r, red.400,pink.400)" bgClip="text">
                             &
-                        </Text>{' '}
-                        Full-Stack Developers
+                        </Text>
+                        Cao đẳng FPT
                     </Heading>
                     <Stack direction={'row'} spacing={4} align={'center'}>
                         <AvatarGroup>
@@ -120,20 +116,17 @@ export default function Login() {
                 >
                     <Stack spacing={4}>
                         <Heading color={'gray.800'} lineHeight={1.1} fontSize={{ base: '2xl', sm: '3xl', md: '4xl' }}>
-                            Join our team
+                            Đăng nhập ngay
                             <Text as={'span'} bgGradient="linear(to-r, red.400,pink.400)" bgClip="text">
                                 !
                             </Text>
                         </Heading>
-                        <Text color={'gray.500'} fontSize={{ base: 'sm', sm: 'md' }}>
-                            We’re looking for amazing engineers just like you! Become a part of our rockstar engineering
-                            team and skyrocket your career!
-                        </Text>
+                        <Text color={'gray.500'} fontSize={{ base: 'sm', sm: 'md' }}></Text>
                     </Stack>
                     <Box as={'form'} mt={10}>
                         <Stack spacing={4}>
                             <Input
-                                placeholder="Firstname"
+                                placeholder="Email"
                                 bg={'gray.100'}
                                 border={0}
                                 color={'gray.500'}
@@ -142,7 +135,7 @@ export default function Login() {
                                 }}
                             />
                             <Input
-                                placeholder="firstname@lastname.io"
+                                placeholder="Mật khẩu"
                                 bg={'gray.100'}
                                 border={0}
                                 color={'gray.500'}
@@ -150,18 +143,6 @@ export default function Login() {
                                     color: 'gray.500',
                                 }}
                             />
-                            <Input
-                                placeholder="+1 (___) __-___-___"
-                                bg={'gray.100'}
-                                border={0}
-                                color={'gray.500'}
-                                _placeholder={{
-                                    color: 'gray.500',
-                                }}
-                            />
-                            <Button fontFamily={'heading'} bg={'gray.200'} color={'gray.800'}>
-                                Upload CV
-                            </Button>
                         </Stack>
                         <Button
                             fontFamily={'heading'}
@@ -174,7 +155,7 @@ export default function Login() {
                                 boxShadow: 'xl',
                             }}
                         >
-                            Submit
+                            Đăng nhập
                         </Button>
                     </Box>
                     form
