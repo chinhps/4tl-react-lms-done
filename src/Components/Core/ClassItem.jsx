@@ -31,12 +31,19 @@ const ClassItem = ({ props, isCourse }) => {
             navigate(link);
         } else {
             dispatch(joinCourse(data.id, user.msg));
-            if (!courseStudent.pending || props.isCourse) {
-                if (courseStudent.courseStudent.status === 200) {
-                    console.log('da tham gia', courseStudent);
-                } else {
-                    console.log('tham gia that bai', courseStudent);
-                }
+        }
+    };
+
+    useEffect(() => {
+        if (courseStudent.id === props.id) getData();
+    }, [courseStudent.courseStudent]);
+
+    const getData = () => {
+        if (!courseStudent.pending || props.isCourse) {
+            if (courseStudent.courseStudent.status === 200) {
+                console.log('da tham gia', courseStudent);
+            } else {
+                console.log('tham gia that bai', courseStudent);
             }
         }
     };
