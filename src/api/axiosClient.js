@@ -1,12 +1,14 @@
 import axios from 'axios';
 import queryString from 'query-string';
-import { API } from '../Constant';
+import { logOut } from '../utils/auth';
 
 const axiosClient = axios.create({
-    baseURL: API,
+    baseURL: process.env.REACT_APP_API,
     headers: {
+        'X-Requested-With': 'XMLHttpRequest',
         'content-type': 'application/json',
     },
+    withCredentials: true,
     paramsSerializer: (params) => queryString.stringify(params),
 });
 
@@ -18,6 +20,9 @@ axiosClient.interceptors.response.use(
         return res;
     },
     (err) => {
+        if (err.response.status === 401) {
+            logOut();
+        }
         throw err;
     },
 );

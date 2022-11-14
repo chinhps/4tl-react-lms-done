@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
+import { Fragment, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Routes, Route, Outlet } from 'react-router-dom';
+import axiosClient from './api/axiosClient';
 import DefaultLayout from './Layout/HomeLayout';
 import { fetchUser } from './reducer/userSlide';
 import { publicRoutes } from './routes/route';
@@ -8,8 +9,13 @@ import { publicRoutes } from './routes/route';
 function App() {
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(fetchUser());
-    });
+        csrf();
+    }, []);
+
+    const csrf = async () => {
+        const csrf = await axiosClient.get('/sanctum/csrf-cookie');
+        console.log('csrf = ', csrf);
+    };
 
     return (
         <>
@@ -17,11 +23,16 @@ function App() {
                 {publicRoutes.map((routee, index) => {
                     const Page = routee.component;
                     const Layout = routee.layout || DefaultLayout;
+                    const Guard = routee.guard || Fragment;
                     return (
                         <Route
                             key={index}
                             path={routee.path}
-                            element={<Layout>{routee.children ? <Outlet /> : <Page />}</Layout>}
+                            element={
+                                <Guard>
+                                    <Layout title={routee.title}>{routee.children ? <Outlet /> : <Page />}</Layout>
+                                </Guard>
+                            }
                         >
                             {routee.children ? <Route index element={<Page />} /> : null}
                             {routee.children !== undefined

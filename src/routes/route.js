@@ -1,15 +1,17 @@
 import Upload from '../pages/Upload/Upload';
-import { AuthIllustration, HomeLayout } from '../Layout';
+import { AuthLayout, HomeLayout } from '../Layout';
 import Classes from '../pages/Classes/Classes';
 import Home from '../pages/Home/Home';
-import Login from '../pages/Login/Login';
+import Login from '../pages/Auth/Login';
 import Course from '../Components/Core/Course';
+import { ProtectedAuth } from '../guards';
 
 const publicRoutes = [
     {
         path: '/',
         component: Home,
         layout: HomeLayout,
+        guard: ProtectedAuth,
     },
     {
         path: '/class/*',
@@ -24,7 +26,7 @@ const publicRoutes = [
     {
         path: '/login',
         component: Login,
-        layout: AuthIllustration,
+        layout: AuthLayout,
     },
     {
         path: '/course/:id',
