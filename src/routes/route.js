@@ -5,6 +5,7 @@ import Home from '../pages/Home/Home';
 import Login from '../pages/Auth/Login';
 import Course from '../Components/Core/Course';
 import { ProtectedAuth } from '../guards';
+import DoingQuiz from '../Components/Core/DoingQuiz';
 
 const publicRoutes = [
     {
@@ -31,6 +32,11 @@ const publicRoutes = [
     {
         path: '/course/:id',
         component: Course,
+        layout: HomeLayout,
+    },
+    {
+        path: '/doing-quiz',
+        component: DoingQuiz,
         layout: HomeLayout,
     },
 ];
