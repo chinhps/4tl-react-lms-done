@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
+import DropZone from './DropZone';
 
 const Upload = () => {
-    // const [selectedFile, setSelectedFile] = useState();
+    const onFileChange = (files) => {
+        console.log(files);
+    }
 
     return (
-        <div className='upload'>
-            <button style={{ background: 'green' }}>Tải tệp lên</button>
-
-            <input type='file' name='file' className='upload__file' />
-
-            <i className="fa fa-times"></i>
-
-            <div className="upload__button">
-                <button className="upload__submit reset">Reset</button>
-                <button className="upload__submit upload">Upload</button>
+        <div className='dropzone'>
+            <div className="dropzone__box">
+                <h2 className="dropzone__box__header">
+                    React drop files input
+                </h2>
+                <DropZone
+                    onFileChange={(files) => onFileChange(files)}
+                />
             </div>
         </div>
     );
