@@ -15,10 +15,11 @@ const ClassItem = ({ props, isCourse }) => {
     const user = useSelector(userSelector);
 
     const setRouteParent = (parent, folder) => {
-        if (parent === 0) {
+        console.log(parent, folder);
+        if (Number(parent) === 0) {
             return `/class/${folder}`;
         }
-        if (parent > 0) {
+        if (Number(parent) > 0) {
             return `${params}/${folder}`;
         }
         if (parent === undefined && folder === undefined && isCourse === true) {
@@ -26,7 +27,7 @@ const ClassItem = ({ props, isCourse }) => {
         }
     };
     const handleJoinCourse = (data) => {
-        const link = setRouteParent(props?.parent_tree_id, props?.folder_tree_id);
+        const link = setRouteParent(data?.parent_tree_id, data.folder_tree_id);
         if (link && !isCourse) {
             navigate(link);
         } else {
