@@ -8,37 +8,41 @@ import { ProtectedAuth } from '../guards';
 import DoingQuiz from '../Components/Core/DoingQuiz';
 
 const publicRoutes = [
-    {
-        path: '/',
-        component: Home,
-        layout: HomeLayout,
-        guard: ProtectedAuth,
-    },
-    {
-        path: '/class/*',
-        component: Classes,
-        layout: HomeLayout,
-    },
-    {
-        path: '/upload',
-        component: Upload,
-        layout: HomeLayout,
-    },
-    {
-        path: '/login',
-        component: Login,
-        layout: AuthLayout,
-    },
-    {
-        path: '/course/:id',
-        component: Course,
-        layout: HomeLayout,
-    },
-    {
-        path: '/doing-quiz',
-        component: DoingQuiz,
-        layout: HomeLayout,
-    },
+  {
+    path: '/',
+    component: Home,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/class/*',
+    component: Classes,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/upload',
+    component: Upload,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/login',
+    component: Login,
+    layout: AuthLayout,
+  },
+  {
+    path: '/course/:id',
+    component: Course,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/doing-quiz',
+    component: DoingQuiz,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
 ];
 
 export { publicRoutes };

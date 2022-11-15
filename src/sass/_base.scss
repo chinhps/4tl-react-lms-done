@@ -1,84 +1,84 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,300;1,400;1,500;1,700;1,900&display=swap');
 
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-    user-select: none;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
 }
 
 html {
-    // font-size: 62.5%;
+  // font-size: 62.5%;
 }
 
 body {
-    font-family: 'Roboto', sans-serif !important;
+  font-family: 'Roboto', sans-serif !important;
 }
 
 ul {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 img {
-    max-width: 100%;
+  max-width: 100%;
 }
 body {
-    font-size: 18px;
+  // font-size: 18px;
 }
 
 .show {
-    visibility: collapse;
-    opacity: 1;
+  visibility: collapse;
+  opacity: 1;
 }
 
 .hide {
-    visibility: hidden;
-    opacity: 0;
+  visibility: hidden;
+  opacity: 0;
 }
 
 .container {
-    width: 100%;
-    margin: 0 auto;
-    max-width: 1366px;
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1366px;
 }
 
 input {
-    outline: none;
-    border: none;
+  outline: none;
+  border: none;
 }
 textarea {
-    outline: none;
-    border: none;
+  outline: none;
+  border: none;
 }
 
 button {
-    outline: none !important;
-    border: none;
-    background: 0 0;
+  outline: none !important;
+  border: none;
+  background: 0 0;
 }
 button:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 ::-webkit-scrollbar {
-    width: 10px;
+  width: 10px;
 }
 ::-webkit-scrollbar-thumb {
-    background: $scroll-background;
+  background: $scroll-background;
 }
 ::-webkit-scrollbar-track {
-    background: $scroll-color;
+  background: $scroll-color;
 }

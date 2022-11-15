@@ -69,6 +69,7 @@ function Login() {
             });
         }
         if (GetUser && !GetError) {
+            alert('Thành công');
             setLogin();
         }
         console.log(GetUser);
