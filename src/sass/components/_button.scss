@@ -1,29 +1,29 @@
 .btn {
-    padding: 10px 40px;
-    &-back {
-        text-transform: capitalize;
-        color: $white;
-        border-radius: 7px;
-        background: $fds-black;
-        display: inline-block;
-        font-size: 20px;
-        &:hover {
-            background: $message-self;
-        }
+  padding: 10px 40px;
+  &-back {
+    text-transform: capitalize;
+    color: $white;
+    border-radius: 7px;
+    background: $fds-black;
+    display: inline-block;
+    font-size: 20px;
+    &:hover {
+      background: $message-self;
     }
-    &-access,
-    &-close {
-        width: 150px;
-        height: 40px;
-        font-size: 16px;
-        border-radius: 7px;
-        font-weight: 600;
-        color: $white;
-    }
-    &-access {
-        background: $btn-send-message;
-    }
-    &-close {
-        background: $notification;
-    }
+  }
+  &-access,
+  &-close {
+    width: 150px;
+    height: 40px;
+    font-size: 16px;
+    border-radius: 7px;
+    font-weight: 600;
+    color: $white;
+  }
+  &-access {
+    background: $btn-send-message;
+  }
+  &-close {
+    background: $notification;
+  }
 }

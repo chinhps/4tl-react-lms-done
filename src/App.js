@@ -7,46 +7,46 @@ import { fetchUser } from './reducer/userSlide';
 import { publicRoutes } from './routes/route';
 
 function App() {
-    const dispatch = useDispatch();
-    useEffect(() => {
-        csrf();
-    }, []);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    csrf();
+  }, []);
 
-    const csrf = async () => {
-        const csrf = await axiosClient.get('/sanctum/csrf-cookie');
-        console.log('csrf = ', csrf);
-    };
+  const csrf = async () => {
+    const csrf = await axiosClient.get('/sanctum/csrf-cookie');
+    console.log('csrf = ', csrf);
+  };
 
-    return (
-        <>
-            <Routes>
-                {publicRoutes.map((routee, index) => {
-                    const Page = routee.component;
-                    const Layout = routee.layout || DefaultLayout;
-                    const Guard = routee.guard || Fragment;
-                    return (
-                        <Route
-                            key={index}
-                            path={routee.path}
-                            element={
-                                <Guard>
-                                    <Layout title={routee.title}>{routee.children ? <Outlet /> : <Page />}</Layout>
-                                </Guard>
-                            }
-                        >
-                            {routee.children ? <Route index element={<Page />} /> : null}
-                            {routee.children !== undefined
-                                ? routee.children.map((routeChild, i) => {
-                                      const PageChild = routeChild.component;
-                                      return <Route key={i} path={routeChild.path} element={<PageChild />} />;
-                                  })
-                                : null}
-                        </Route>
-                    );
-                })}
-            </Routes>
-        </>
-    );
+  return (
+    <>
+      <Routes>
+        {publicRoutes.map((routee, index) => {
+          const Page = routee.component;
+          const Layout = routee.layout || DefaultLayout;
+          const Guard = routee.guard || Fragment;
+          return (
+            <Route
+              key={index}
+              path={routee.path}
+              element={
+                <Guard>
+                  <Layout title={routee.title}>{routee.children ? <Outlet /> : <Page />}</Layout>
+                </Guard>
+              }
+            >
+              {routee.children ? <Route index element={<Page />} /> : null}
+              {routee.children !== undefined
+                ? routee.children.map((routeChild, i) => {
+                    const PageChild = routeChild.component;
+                    return <Route key={i} path={routeChild.path} element={<PageChild />} />;
+                  })
+                : null}
+            </Route>
+          );
+        })}
+      </Routes>
+    </>
+  );
 }
 
 export default App;
