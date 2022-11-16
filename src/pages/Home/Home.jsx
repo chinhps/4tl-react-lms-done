@@ -1,11 +1,16 @@
 import { Box, Flex, Grid, Link, SimpleGrid, Text, useColorModeValue } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect } from 'react';
+import axiosClient from '../../api/axiosClient';
 import Banner from '../../Components/Core/Banner';
 import BoxCollection from '../../Components/Core/Card/BoxCollection';
 
 function Home() {
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const textColorBrand = useColorModeValue("brand.500", "white");
+  useEffect(() => {
+    let data = axiosClient.get('https://api2.chinh.dev/api/users');
+    console.log(data);
+  },[]);
   return (
     <>
       <Box>
