@@ -6,6 +6,8 @@ import Login from '../pages/Auth/Login';
 import Course from '../Components/Core/Course';
 import { ProtectedAuth } from '../guards';
 import DoingQuiz from '../Components/Core/DoingQuiz';
+import AdminCourseCU from '../pages/Admin/Courses/CoursesCU';
+import AdminCourse from '../pages/Admin/Courses/Course';
 
 const publicRoutes = [
   {
@@ -41,6 +43,29 @@ const publicRoutes = [
     path: '/doing-quiz',
     component: DoingQuiz,
     layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/admin/courses',
+    component: AdminCourse,
+    layout: HomeLayout,
+
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/admin/courses/new',
+    // children: [{ path: '/courses' }],
+    component: AdminCourseCU,
+    layout: HomeLayout,
+
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/admin/courses/:id',
+    // children: [{ path: '/courses' }],
+    component: AdminCourseCU,
+    layout: HomeLayout,
+
     guard: ProtectedAuth,
   },
 ];
