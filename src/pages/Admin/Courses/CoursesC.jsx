@@ -46,71 +46,37 @@ const CoursesC = () => {
       status: sameAddressSwitch === true ? 1 : 0,
     };
 
-    if (params.id) {
-      return new Promise((resolve) => {
-        coursesAPI
-          .put(params.id, postData)
-          .then((res) => {
-            setIsSubmit(false);
-            toast({
-              title: 'Thông báo',
-              description: res.msg,
-              status: 'success',
-              duration: 2000,
-              isClosable: true,
-            });
-          })
-          .then(() => {
-            setTimeout(() => {
-              navigate('/courses');
-            }, 2000);
-          })
-
-          .catch((err) => {
-            setIsSubmit(false);
-
-            toast({
-              title: 'Lỗi',
-              description: err.errorInfo,
-              status: 'error',
-              duration: 2000,
-              isClosable: true,
-            });
+    return new Promise((resolve) => {
+      coursesAPI
+        .new(postData)
+        .then((res) => {
+          setIsSubmit(false);
+          toast({
+            title: 'Thông báo',
+            description: res.msg,
+            status: 'success',
+            duration: 2000,
+            isClosable: true,
           });
-      });
-    } else {
-      return new Promise((resolve) => {
-        coursesAPI
-          .new(postData)
-          .then((res) => {
-            setIsSubmit(false);
-            toast({
-              title: 'Thông báo',
-              description: res.msg,
-              status: 'success',
-              duration: 2000,
-              isClosable: true,
-            });
-          })
-          .then(() => {
-            setTimeout(() => {
-              navigate('/courses');
-            }, 2000);
-          })
+        })
+        .then(() => {
+          setTimeout(() => {
+            navigate('/courses');
+          }, 2000);
+        })
 
-          .catch((err) => {
-            setIsSubmit(false);
+        .catch((err) => {
+          setIsSubmit(false);
 
-            toast({
-              title: 'Lỗi',
-              description: err.errorInfo,
-              status: 'error',
-              duration: 2000,
-              isClosable: true,
-            });
+          toast({
+            title: 'Lỗi',
+            description: err.errorInfo,
+            status: 'error',
+            duration: 2000,
+            isClosable: true,
           });
-      });
-    }
+        });
+    });
   }
 
   useEffect(() => {
