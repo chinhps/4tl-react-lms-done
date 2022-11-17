@@ -5,7 +5,7 @@ import { AvatarGroup, Avatar, Box, Button, Flex, Icon, Image, Link, Text, useCol
 import Card from './Card';
 
 function BoxCollection(props) {
-  const { image, name, author, bidders, download, currentbid } = props;
+  const { image, name, author, download } = props;
   const [like, setLike] = useState(false);
   const textColor = useColorModeValue("navy.700", "white");
   const textColorBid = useColorModeValue("brand.500", "white");
@@ -16,7 +16,8 @@ function BoxCollection(props) {
           <Image
             src={image}
             w={{ base: '100%', '3xl': '100%' }}
-            h={{ base: '100%', '3xl': '100%' }}
+            h={'200px'}
+            objectFit="cover"
             borderRadius="20px"
           />
           <Button
@@ -67,7 +68,7 @@ function BoxCollection(props) {
               >
                 {name}
               </Text>
-              <Text
+              {/* <Text
                 color="secondaryGray.600"
                 fontSize={{
                   base: 'sm',
@@ -76,7 +77,7 @@ function BoxCollection(props) {
                 me="14px"
               >
                 {author}
-              </Text>
+              </Text> */}
             </Flex>
             <AvatarGroup
               max={3}
@@ -91,9 +92,7 @@ function BoxCollection(props) {
               }}
               fontSize="12px"
             >
-              {bidders.map((avt, key) => (
-                <Avatar key={key} src={avt} />
-              ))}
+
             </AvatarGroup>
           </Flex>
           <Flex
@@ -108,9 +107,7 @@ function BoxCollection(props) {
             }}
             mt="25px"
           >
-            <Text fontWeight="700" fontSize="sm" color={textColorBid}>
-              Current Bid: {currentbid}
-            </Text>
+           
             <Link
               href={download}
               mt={{
@@ -130,7 +127,7 @@ function BoxCollection(props) {
                 px="24px"
                 py="5px"
               >
-                Place Bid
+                Chi tiết
               </Button>
             </Link>
           </Flex>

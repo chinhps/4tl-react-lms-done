@@ -20,6 +20,7 @@ import {
     FiChevronDown,
 } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
+import { logOut } from '../../utils/auth';
 
 function MobileNav({ onOpen, ...rest }) {
     const { user: userRd } = useSelector(state => state.user)
@@ -92,7 +93,7 @@ function MobileNav({ onOpen, ...rest }) {
                             borderColor={useColorModeValue('gray.200', 'gray.700')}>
                             <MenuItem>Trang cá nhân</MenuItem>
                             <MenuDivider />
-                            <MenuItem>Đăng xuất</MenuItem>
+                            <MenuItem onClick={() => logOut()}>Đăng xuất</MenuItem>
                         </MenuList>
                     </Menu>
                 </Flex>

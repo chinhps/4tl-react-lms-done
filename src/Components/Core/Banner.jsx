@@ -2,8 +2,12 @@ import React from "react";
 
 // Chakra imports
 import { Button, Flex, Link, Text } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 export default function Banner() {
+
+  const navigate = useNavigate();
+
   // Chakra Color Mode
   return (
     <Flex
@@ -27,7 +31,7 @@ export default function Banner() {
         }}
         fontWeight='700'
         lineHeight={{ base: "32px", md: "42px" }}>
-        Discover, collect, and sell extraordinary NFTs
+        Hệ thống quản lý học tập 4TL Education
       </Text>
       <Text
         fontSize='md'
@@ -43,8 +47,7 @@ export default function Banner() {
         fontWeight='500'
         mb='40px'
         lineHeight='28px'>
-        Enter in this creative world. Discover now the latest NFTs or start
-        creating your own!
+        Học không phải là con đường ngắn nhất để dẫn tới thành công nhưng là con đường ngắn nhất!
       </Text>
       <Flex align='center'>
         <Button
@@ -57,12 +60,12 @@ export default function Banner() {
           fontSize='14px'
           py='20px'
           px='27'
-          me='38px'>
-          Discover now
+          me='38px' onClick={() => navigate('/branches')}>
+          Bắt đầu ngay
         </Button>
         <Link>
           <Text color='white' fontSize='sm' fontWeight='500'>
-            Watch video
+            Hướng dẫn sử dụng
           </Text>
         </Link>
       </Flex>

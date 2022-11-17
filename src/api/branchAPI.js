@@ -1,14 +1,8 @@
 import axiosClient from './axiosClient';
 
-const BASE_URL = 'branch';
 const branchAPI = {
-  getBranch: (params) => {
-    let url = '';
-    if (params) {
-      url = `/api/${BASE_URL}/${params}`;
-    } else {
-      url = `/api/${BASE_URL}`;
-    }
+  getBranch: (slug,table) => {
+    let url = `/api/branches?page=${slug}&table=${table}`;
     return axiosClient.get(url);
   },
 };

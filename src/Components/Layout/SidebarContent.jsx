@@ -19,7 +19,7 @@ import {
 
 const LinkItems = [
     { name: 'Trang chủ', icon: FiHome, to: '/' },
-    { name: 'Khóa học', icon: FiTrendingUp, to: '/class' },
+    { name: 'Kho kiến thức', icon: FiTrendingUp, to: '/branches' },
     { name: 'Tin nhắn', icon: FiCompass, to: '/chat' },
     { name: 'Cấu hình', icon: FiSettings, to: '/setting' },
 ];

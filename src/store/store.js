@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import classesSlide from '../reducer/classesSlide';
+import branchSlide from '../reducer/branchSlide';
 import courseStudentSlide from '../reducer/courseStudentSlide';
 import userSlide from '../reducer/userSlide';
 
 export const store = configureStore({
     reducer: {
-        classes: classesSlide.reducer,
+        branches: branchSlide.reducer,
         user: userSlide.reducer,
         courseStudent: courseStudentSlide.reducer,
     },
