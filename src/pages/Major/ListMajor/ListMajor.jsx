@@ -1,169 +1,82 @@
-import { Flex, Table, Progress, Icon, Tbody, Td, Text, Th, Thead, Tr, useColorModeValue } from '@chakra-ui/react';
-import React, { useMemo } from 'react';
-import { useGlobalFilter, usePagination, useSortBy, useTable } from 'react-table';
-
-// Custom components
-import Card from '../../../Components/Core/Card/Card';
-import Menu from '../../../Components/menu/MainMenu';
-
-// Assets
+import { Button, Flex, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr, Icon } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import majorAPI from '../../../api/majorAPI';
 import { MdCheckCircle, MdCancel, MdOutlineError } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
+
 export default function ListMajor() {
-  const columnsData = [
-    {
-      Header: 'Mã ngành học',
-      accessor: 'id',
-    },
-    {
-      Header: 'Tên ngành học',
-      accessor: 'name',
-    },
-    {
-      Header: 'Hiển thị',
-      accessor: 'status',
-    },
-  ];
-  const tableData = [
-      {
-        id: 1,
-        name: 'Marketplace1',
-        status: 'Approved',
-      },
-      {
-        id: 2,
-        name: 'Marketplace2',
-        status: 'Disable',
-      },
-      {
-        id: 3,
-        name: 'Marketplace3',
-        status: 'Error',
-      },
-      {
-        id: 4,
-        name: 'Marketplace4',
-        status: 'Approved',
-      },
-    ]
-
-  const columns = useMemo(() => columnsData, [columnsData]);
-  const data = useMemo(() => tableData, [tableData]);
-
-  const tableInstance = useTable(
-    {
-      columns,
-      data,
-    },
-    useGlobalFilter,
-    useSortBy,
-    usePagination,
-  );
-
-  const { getTableProps, getTableBodyProps, headerGroups, page, prepareRow, initialState } = tableInstance;
-  initialState.pageSize = 5;
-
-  const textColor = useColorModeValue('secondaryGray.900', 'white');
-  const borderColor = useColorModeValue('gray.200', 'whiteAlpha.100');
+  const navigate = useNavigate();
+  const [tableData, setTableData] = useState();
+  useEffect(() => {
+    majorAPI.get().then((major) => {
+      setTableData(major);
+    });
+  }, []);
+  console.log(tableData);
   return (
-    <Card direction="column" w="100%" px="0px" overflowX={{ sm: 'scroll', lg: 'hidden' }}>
+    <TableContainer>
       <Flex px="25px" justify="space-between" mb="20px" align="center">
-        <Text color={textColor} fontSize="22px" fontWeight="700" lineHeight="100%">
-          Complex Table
+        <Text fontSize="22px" fontWeight="700" lineHeight="100%">
+          Danh sách ngành học
         </Text>
-        <Menu />
       </Flex>
-      <Table {...getTableProps()} variant="simple" color="gray.500" mb="24px">
+      <Table variant="simple">
         <Thead>
-          {headerGroups.map((headerGroup, index) => (
-            <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
-              {headerGroup.headers.map((column, index) => (
-                <Th
-                  pe="10px"
-                  key={index}
-                  borderColor={borderColor}
-                >
-                  <Flex justify="space-between" align="center" fontSize={{ sm: '10px', lg: '12px' }} color="gray.400">
-                    {column.render('Header')}
+          <Tr>
+            <Th>ID</Th>
+            <Th>Tên ngành</Th>
+            <Th>Slug</Th>
+            <Th>Trạng thái</Th>
+            <Th textAlign={'center'}>Thao tác</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {tableData?.map((major, index) => (
+            <Tr key={index}>
+              <Td>{major.id}</Td>
+              <Td>{major.name}</Td>
+              <Td>{major.slug}</Td>
+              <Td>
+                {major.status == 1 ? (
+                  <Flex align="center">
+                    <Icon
+                      w="24px"
+                      h="24px"
+                      me="5px"
+                      color={'green.500'}
+                      as={MdCheckCircle}
+                    />
+                    <Text fontSize="sm" fontWeight="700">
+                      Hiện
+                    </Text>
                   </Flex>
-                </Th>
-              ))}
+                ) : (
+                  <Flex align="center">
+                    <Icon
+                      w="24px"
+                      h="24px"
+                      me="5px"
+                      color={'red.500'}
+                      as={MdCancel}
+                    />
+                    <Text fontSize="sm" fontWeight="700">
+                      Ẩn
+                    </Text>
+                  </Flex>
+                )}
+              </Td>
+              <Td display={'flex'} gap={'5px'}>
+                <Button flex={1} colorScheme="teal" onClick={() => {navigate(`/major/update/${major.id}`)}}>
+                  Sửa
+                </Button>
+                <Button flex={1} colorScheme="red">
+                  Xóa
+                </Button>
+              </Td>
             </Tr>
           ))}
-        </Thead>
-        <Tbody {...getTableBodyProps()}>
-          {page.map((row, index) => {
-            prepareRow(row);
-            return (
-              <Tr {...row.getRowProps()} key={index}>
-                {row.cells.map((cell, index) => {
-                  let data = '';
-                  if (cell.column.Header === 'Mã ngành học') {
-                    data = (
-                      <Text color={textColor} fontSize="sm" fontWeight="700">
-                        {cell.value}
-                      </Text>
-                    );
-                  } else if (cell.column.Header === 'Tên ngành học') {
-                    data = (
-                      <Text color={textColor} fontSize="sm" fontWeight="700">
-                        {cell.value}
-                      </Text>
-                    );
-                  } else if (cell.column.Header === 'Hiển thị') {
-                    data = (
-                      <Flex align="center">
-                        <Icon
-                          w="24px"
-                          h="24px"
-                          me="5px"
-                          color={
-                            cell.value === 'Approved'
-                              ? 'green.500'
-                              : cell.value === 'Disable'
-                              ? 'red.500'
-                              : cell.value === 'Error'
-                              ? 'orange.500'
-                              : null
-                          }
-                          as={
-                            cell.value === 'Approved'
-                              ? MdCheckCircle
-                              : cell.value === 'Disable'
-                              ? MdCancel
-                              : cell.value === 'Error'
-                              ? MdOutlineError
-                              : null
-                          }
-                        />
-                        <Text color={textColor} fontSize="sm" fontWeight="700">
-                          {cell.value}
-                        </Text>
-                      </Flex>
-                    );
-                  } else if (cell.column.Header === 'PROGRESS') {
-                    data = (
-                      <Flex align="center">
-                        <Progress variant="table" colorScheme="brandScheme" h="8px" w="108px" value={cell.value} />
-                      </Flex>
-                    );
-                  }
-                  return (
-                    <Td
-                      {...cell.getCellProps()}
-                      key={index}
-                      fontSize={{ sm: '14px' }}
-                      minW={{ sm: '150px', md: '200px', lg: 'auto' }}
-                      borderColor="transparent"
-                    >
-                      {data}
-                    </Td>
-                  );
-                })}
-              </Tr>
-            );
-          })}
         </Tbody>
       </Table>
-    </Card>
+    </TableContainer>
   );
 }
