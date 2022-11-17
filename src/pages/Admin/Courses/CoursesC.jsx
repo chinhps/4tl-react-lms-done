@@ -16,10 +16,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import coursesAPI from '../../../api/courseAPI';
 import { useState } from 'react';
+import subjectsAPI from '../../../api/subjectAPI';
+import classesAPI from '../../../api/classesAPI';
 
 const CoursesC = () => {
   const [listTeacher, setListTeacher] = useState([]);
   const [course, setCouse] = useState(null);
+  const [classes, setClasses] = useState([]);
+  const [subject, setSubject] = useState([]);
   const toast = useToast();
   const {
     handleSubmit,
@@ -88,6 +92,24 @@ const CoursesC = () => {
       .catch((err) => console.log(err));
   }, []);
 
+  useEffect(() => {
+    subjectsAPI
+      .get()
+      .then((res) => {
+        setSubject(res);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    classesAPI
+      .get()
+      .then((res) => {
+        setClasses(res);
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   return (
     <>
       <Text fontSize="6xl" fontWeight="bold">
@@ -96,27 +118,33 @@ const CoursesC = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl isInvalid={errors.subject_id}>
           <FormLabel htmlFor="subject_id">Mã khóa học</FormLabel>
-          <Input
-            type="number"
-            id="subject_id"
-            placeholder="Mã khóa học"
-            defaultValue={course ? course.subject_id : ''}
-            {...register('subject_id', {
-              required: 'Vui lòng nhập mã khóa học',
-              minLength: { value: 1, message: `Không được dưới 1 ký tự` },
-            })}
-          />
+          {subject ? (
+            <Select
+              id="subject_id"
+              placeholder="Chọn khóa học"
+              {...register('subject_id', {
+                required: 'Vui lòng chọn khóa học',
+              })}
+            >
+              {subject.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.name}
+                </option>
+              ))}
+            </Select>
+          ) : (
+            <></>
+          )}
+
           <FormErrorMessage>{errors.subject_id && errors.subject_id.message}</FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={errors.class_code}>
           <FormLabel htmlFor="class_code">Mã lớp</FormLabel>
           <Input
             id="class_code"
-            defaultValue={course ? course.class_code : ''}
-            placeholder="Mã lớp"
+            defaultValue={''}
             {...register('class_code', {
               required: 'Vui lòng nhập mã lớp',
-              minLength: { value: 3, message: 'Không được dưới 4 ký tự' },
             })}
           />
           <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
