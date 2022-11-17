@@ -11,28 +11,36 @@ import { MdCheckCircle, MdCancel, MdOutlineError } from 'react-icons/md';
 export default function ListMajor() {
   const columnsData = [
     {
+      Header: 'Mã ngành học',
+      accessor: 'id',
+    },
+    {
       Header: 'Tên ngành học',
       accessor: 'name',
     },
     {
-      Header: 'STATUS',
+      Header: 'Hiển thị',
       accessor: 'status',
     },
   ];
   const tableData = [
       {
+        id: 1,
         name: 'Marketplace1',
         status: 'Approved',
       },
       {
+        id: 2,
         name: 'Marketplace2',
         status: 'Disable',
       },
       {
+        id: 3,
         name: 'Marketplace3',
         status: 'Error',
       },
       {
+        id: 4,
         name: 'Marketplace4',
         status: 'Approved',
       },
@@ -89,13 +97,19 @@ export default function ListMajor() {
               <Tr {...row.getRowProps()} key={index}>
                 {row.cells.map((cell, index) => {
                   let data = '';
-                  if (cell.column.Header === 'Tên ngành học') {
+                  if (cell.column.Header === 'Mã ngành học') {
                     data = (
                       <Text color={textColor} fontSize="sm" fontWeight="700">
                         {cell.value}
                       </Text>
                     );
-                  } else if (cell.column.Header === 'STATUS') {
+                  } else if (cell.column.Header === 'Tên ngành học') {
+                    data = (
+                      <Text color={textColor} fontSize="sm" fontWeight="700">
+                        {cell.value}
+                      </Text>
+                    );
+                  } else if (cell.column.Header === 'Hiển thị') {
                     data = (
                       <Flex align="center">
                         <Icon
@@ -125,12 +139,6 @@ export default function ListMajor() {
                           {cell.value}
                         </Text>
                       </Flex>
-                    );
-                  } else if (cell.column.Header === 'DATE') {
-                    data = (
-                      <Text color={textColor} fontSize="sm" fontWeight="700">
-                        {cell.value}
-                      </Text>
                     );
                   } else if (cell.column.Header === 'PROGRESS') {
                     data = (

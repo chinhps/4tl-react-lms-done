@@ -9,50 +9,76 @@ import Menu from '../../../Components/menu/MainMenu';
 // Assets
 import { MdCheckCircle, MdCancel, MdOutlineError } from 'react-icons/md';
 export default function ListUser() {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const columnsData = [
     {
-      Header: 'NAME',
+      Header: 'ID User',
+      accessor: 'id',
+    },
+    {
+      Header: 'Mã tài khoản',
+      accessor: 'user_code',
+    },
+    {
+      Header: 'Email',
+      accessor: 'email',
+    },
+    {
+      Header: 'Số điện thoại',
+      accessor: 'phone_number',
+    },
+    {
+      Header: 'Họ và tên',
       accessor: 'name',
     },
     {
-      Header: 'STATUS',
+      Header: 'Vai trò',
+      accessor: 'role_id',
+    },
+    {
+      Header: 'Lớp',
+      accessor: 'class_id',
+    },
+    {
+      Header: 'Trạng thái',
       accessor: 'status',
     },
     {
-      Header: 'DATE',
-      accessor: 'date',
+      Header: 'Ngày cập nhật',
+      accessor: 'updated_at',
     },
     {
-      Header: 'PROGRESS',
-      accessor: 'progress',
+      Header: 'Ngày khởi tạo',
+      accessor: 'created_at',
     },
   ];
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const tableData = [
-      {
-        name: 'Marketplace',
-        status: 'Approved',
-        date: '24.Jan.2021',
-        progress: 75.5,
-      },
-      {
-        name: 'Marketplace',
-        status: 'Disable',
-        date: '30.Dec.2021',
-        progress: 25.5,
-      },
-      {
-        name: 'Marketplace',
-        status: 'Error',
-        date: '20.May.2021',
-        progress: 90,
-      },
-      {
-        name: 'Marketplace',
-        status: 'Approved',
-        date: '12.Jul.2021',
-        progress: 50.5,
-      },
-    ]
+    {
+      id: 1,
+      user_code: 'PS15456',
+      email: 'tien@gmail.com',
+      phone_number: '0932350000',
+      name: 'Pham Tiến',
+      role_id: '1',
+      class_id: '1',
+      status: '1',
+      updated_at: '2022-11-13 22:07:40',
+      created_at: '2022-11-13 22:07:40',
+    },
+    {
+      id: 2,
+      user_code: 'PS15456',
+      email: 'chinh@gmail.com',
+      phone_number: '0932350000',
+      name: 'Pham Chính',
+      role_id: '1',
+      class_id: '1',
+      status: '1',
+      updated_at: '2022-11-13 22:07:40',
+      created_at: '2022-11-13 22:07:40',
+    },
+  ];
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
@@ -76,7 +102,7 @@ export default function ListUser() {
     <Card direction="column" w="100%" px="0px" overflowX={{ sm: 'scroll', lg: 'hidden' }}>
       <Flex px="25px" justify="space-between" mb="20px" align="center">
         <Text color={textColor} fontSize="22px" fontWeight="700" lineHeight="100%">
-          Complex Table
+          Danh sách tài khoản
         </Text>
         <Menu />
       </Flex>
@@ -85,11 +111,7 @@ export default function ListUser() {
           {headerGroups.map((headerGroup, index) => (
             <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
               {headerGroup.headers.map((column, index) => (
-                <Th
-                  pe="10px"
-                  key={index}
-                  borderColor={borderColor}
-                >
+                <Th pe="10px" key={index} borderColor={borderColor}>
                   <Flex justify="space-between" align="center" fontSize={{ sm: '10px', lg: '12px' }} color="gray.400">
                     {column.render('Header')}
                   </Flex>
@@ -105,13 +127,49 @@ export default function ListUser() {
               <Tr {...row.getRowProps()} key={index}>
                 {row.cells.map((cell, index) => {
                   let data = '';
-                  if (cell.column.Header === 'NAME') {
+                  if (cell.column.Header === 'ID User') {
                     data = (
                       <Text color={textColor} fontSize="sm" fontWeight="700">
                         {cell.value}
                       </Text>
                     );
-                  } else if (cell.column.Header === 'STATUS') {
+                  } else if (cell.column.Header === 'Mã tài khoản') {
+                    data = (
+                      <Text color={textColor} fontSize="sm" fontWeight="700">
+                        {cell.value}
+                      </Text>
+                    );
+                  } else if (cell.column.Header === 'Email') {
+                    data = (
+                      <Text color={textColor} fontSize="sm" fontWeight="700">
+                        {cell.value}
+                      </Text>
+                    );
+                  } else if (cell.column.Header === 'Số điện thoại') {
+                    data = (
+                      <Text color={textColor} fontSize="sm" fontWeight="700">
+                        {cell.value}
+                      </Text>
+                    );
+                  } else if (cell.column.Header === 'Họ và tên') {
+                    data = (
+                      <Text color={textColor} fontSize="sm" fontWeight="700">
+                        {cell.value}
+                      </Text>
+                    );
+                  } else if (cell.column.Header === 'Vai trò') {
+                    data = (
+                      <Text color={textColor} fontSize="sm" fontWeight="700">
+                        {cell.value}
+                      </Text>
+                    );
+                  } else if (cell.column.Header === 'Lớp') {
+                    data = (
+                      <Text color={textColor} fontSize="sm" fontWeight="700">
+                        {cell.value}
+                      </Text>
+                    );
+                  } else if (cell.column.Header === 'Trạng thái') {
                     data = (
                       <Flex align="center">
                         <Icon
@@ -142,19 +200,13 @@ export default function ListUser() {
                         </Text>
                       </Flex>
                     );
-                  } else if (cell.column.Header === 'DATE') {
+                  }  else if (cell.column.Header === 'Ngày cập nhật' || cell.column.Header === 'Ngày khởi tạo') {
                     data = (
                       <Text color={textColor} fontSize="sm" fontWeight="700">
                         {cell.value}
                       </Text>
                     );
-                  } else if (cell.column.Header === 'PROGRESS') {
-                    data = (
-                      <Flex align="center">
-                        <Progress variant="table" colorScheme="brandScheme" h="8px" w="108px" value={cell.value} />
-                      </Flex>
-                    );
-                  }
+                  } 
                   return (
                     <Td
                       {...cell.getCellProps()}

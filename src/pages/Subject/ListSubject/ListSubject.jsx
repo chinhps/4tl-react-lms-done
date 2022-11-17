@@ -11,43 +11,59 @@ import { MdCheckCircle, MdCancel, MdOutlineError } from 'react-icons/md';
 export default function ListSubject() {
   const columnsData = [
     {
-      Header: 'NAME',
+      Header: 'ID môn học',
+      accessor: 'subject_id',
+    },
+    {
+      Header: 'Mã môn học',
+      accessor: 'code',
+    },
+    {
+      Header: 'Tên môn học',
       accessor: 'name',
     },
     {
-      Header: 'STATUS',
+      Header: 'Ngành học',
+      accessor: 'major_id',
+    },
+    {
+      Header: 'Hiển thị',
       accessor: 'status',
-    },
-    {
-      Header: 'DATE',
-      accessor: 'date',
-    },
-    {
-      Header: 'PROGRESS',
-      accessor: 'progress',
     },
   ];
   const tableData = [
       {
+        subject_id: 1,
+        code: 'COM107',
         name: 'Marketplace',
+        major_id: '1',
         status: 'Approved',
         date: '24.Jan.2021',
         progress: 75.5,
       },
       {
+        subject_id: 1,
+        code: 'COM107',
         name: 'Marketplace',
+        major_id: '1',
         status: 'Disable',
         date: '30.Dec.2021',
         progress: 25.5,
       },
       {
+        subject_id: 1,
+        code: 'COM107',
         name: 'Marketplace',
+        major_id: '1',
         status: 'Error',
         date: '20.May.2021',
         progress: 90,
       },
       {
+        subject_id: 1,
+        code: 'COM107',
         name: 'Marketplace',
+        major_id: '1',
         status: 'Approved',
         date: '12.Jul.2021',
         progress: 50.5,
@@ -105,13 +121,31 @@ export default function ListSubject() {
               <Tr {...row.getRowProps()} key={index}>
                 {row.cells.map((cell, index) => {
                   let data = '';
-                  if (cell.column.Header === 'NAME') {
+                  if (cell.column.Header === 'ID môn học') {
                     data = (
                       <Text color={textColor} fontSize="sm" fontWeight="700">
                         {cell.value}
                       </Text>
                     );
-                  } else if (cell.column.Header === 'STATUS') {
+                  } else if (cell.column.Header === 'Mã môn học') {
+                    data = (
+                      <Text color={textColor} fontSize="sm" fontWeight="700">
+                        {cell.value}
+                      </Text>
+                    );
+                  } else if (cell.column.Header === 'Tên môn học') {
+                    data = (
+                      <Text color={textColor} fontSize="sm" fontWeight="700">
+                        {cell.value}
+                      </Text>
+                    );
+                  } else if (cell.column.Header === 'Ngành học') {
+                    data = (
+                      <Text color={textColor} fontSize="sm" fontWeight="700">
+                        {cell.value}
+                      </Text>
+                    );
+                  } else if (cell.column.Header === 'Hiển thị') {
                     data = (
                       <Flex align="center">
                         <Icon
@@ -140,18 +174,6 @@ export default function ListSubject() {
                         <Text color={textColor} fontSize="sm" fontWeight="700">
                           {cell.value}
                         </Text>
-                      </Flex>
-                    );
-                  } else if (cell.column.Header === 'DATE') {
-                    data = (
-                      <Text color={textColor} fontSize="sm" fontWeight="700">
-                        {cell.value}
-                      </Text>
-                    );
-                  } else if (cell.column.Header === 'PROGRESS') {
-                    data = (
-                      <Flex align="center">
-                        <Progress variant="table" colorScheme="brandScheme" h="8px" w="108px" value={cell.value} />
                       </Flex>
                     );
                   }
