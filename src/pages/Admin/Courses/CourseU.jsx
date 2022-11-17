@@ -32,19 +32,13 @@ const CoursesU = () => {
   const [isSubmit, setIsSubmit] = useState(false);
   const [defaultName, setDefaultName] = useState(null);
   const [defaultSwitchValue, setDefaultSwitchValue] = useState(true);
-  const [sameAddressSwitch, setSameAddressSwitch] = useState(defaultSwitchValue);
-
-  const handleSwitchOnChange = () => {
-    const newValue = !sameAddressSwitch;
-    setSameAddressSwitch(newValue);
-  };
 
   function onSubmit(values) {
     const postData = {
       subject_id: Number(values.subject_id),
       class_code: values.class_code,
       name: values.name,
-      status: sameAddressSwitch === true ? 1 : 0,
+      status: defaultSwitchValue === true ? 1 : 0,
     };
     return new Promise((resolve) => {
       coursesAPI
@@ -84,6 +78,7 @@ const CoursesU = () => {
       const res = await coursesAPI.getById(params.id);
       await setCouse(res);
       await setDefaultSwitchValue(res.status === 1 ? true : false);
+      console.log(defaultSwitchValue);
       const res2 = await coursesAPI.getTeacher();
       await setListTeacher(res2);
       await setDefaultName(res.name);
@@ -153,7 +148,11 @@ const CoursesU = () => {
           <FormLabel htmlFor="status" mb="0">
             Hiện thị
           </FormLabel>
-          <Switch id="status" isChecked={defaultSwitchValue} onChange={handleSwitchOnChange} />
+          <Switch
+            id="status"
+            isChecked={defaultSwitchValue}
+            onChange={() => setDefaultSwitchValue(!defaultSwitchValue)}
+          />
         </FormControl>
         <Button mt={4} colorScheme="teal" isLoading={isSubmit} type="submit">
           Lưu
