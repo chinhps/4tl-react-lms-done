@@ -117,13 +117,17 @@ const CoursesC = () => {
       </Text>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl isInvalid={errors.subject_id}>
-          <FormLabel htmlFor="subject_id">Mã khóa học</FormLabel>
-          {subject ? (
+          <FormLabel htmlFor="subject_id">
+            Môn học
+            <span role="presentation" aria-hidden="true" style={{ color: 'red', marginLeft: '2px' }}>
+              *
+            </span>
+          </FormLabel>
             <Select
               id="subject_id"
-              placeholder="Chọn khóa học"
+              placeholder="Chọn môn học"
               {...register('subject_id', {
-                required: 'Vui lòng chọn khóa học',
+                required: 'Vui lòng chọn môn học',
               })}
             >
               {subject.map((item) => (
@@ -132,26 +136,32 @@ const CoursesC = () => {
                 </option>
               ))}
             </Select>
-          ) : (
-            <></>
-          )}
-
           <FormErrorMessage>{errors.subject_id && errors.subject_id.message}</FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={errors.class_code}>
-          <FormLabel htmlFor="class_code">Mã lớp</FormLabel>
+          <FormLabel htmlFor="class_code">
+            Mã lớp
+            <span role="presentation" aria-hidden="true" style={{ color: 'red', marginLeft: '2px' }}>
+              *
+            </span>
+          </FormLabel>
           <Input
             id="class_code"
-            defaultValue={''}
+            value={''}
             {...register('class_code', {
               required: 'Vui lòng nhập mã lớp',
             })}
           />
-          <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
+          <FormErrorMessage>{errors.class_code && errors.class_code.message}</FormErrorMessage>
         </FormControl>
 
         <FormControl isInvalid={errors.name}>
-          <FormLabel htmlFor="name">Tên giáo viên</FormLabel>
+          <FormLabel htmlFor="name">
+            Tên giáo viên
+            <span role="presentation" aria-hidden="true" style={{ color: 'red', marginLeft: '2px' }}>
+              *
+            </span>
+          </FormLabel>
           <Select
             id="name"
             defaultValue={''}

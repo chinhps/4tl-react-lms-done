@@ -27,8 +27,5 @@ const userAPI = {
   delete: (id) => {
     return axiosClient.delete(`${BASE_URL}/${id}`);
   },
-  new: (data) => {
-    return axiosClient.post(`${BASE_URL}/new`, data);
-  },
 };
 export default userAPI;

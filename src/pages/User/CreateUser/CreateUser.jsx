@@ -234,7 +234,7 @@ export default function CreateUser() {
           <FormErrorMessage>{errors.class_id && errors.class_id.message}</FormErrorMessage>
         </FormControl>
         <FormControl>
-          <FormLabel htmlFor="name">Hiển thị</FormLabel>
+          <FormLabel htmlFor="name">Khóa</FormLabel>
           <Switch onChange={() => setStatus(!status)} />
         </FormControl>
         <Button mt={4} colorScheme="teal" isLoading={isSubmit} type="submit" w={'100px'}>

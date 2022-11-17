@@ -81,6 +81,7 @@ const CoursesU = () => {
     const fetchData = async () => {
       const res = await coursesAPI.getById(params.id);
       setCouse(res);
+      setDefaultName(await res.name);
       setDefaultSwitchValue(res.status === 1 ? true : false);
 
       const res2 = await coursesAPI.getTeacher();
@@ -88,13 +89,10 @@ const CoursesU = () => {
 
       setListTeacher(res2);
       setSubject(res3);
-      setDefaultName(res.name);
       setDefaultSubject(res.subject_id);
     };
     fetchData().catch((err) => console.log(err));
-  }, [params.id]);
-
-  console.log(defaultSubject);
+  }, []);
 
   return (
     <>
@@ -103,12 +101,17 @@ const CoursesU = () => {
       </Text>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl isInvalid={errors.subject_id}>
-          <FormLabel htmlFor="subject_id">Mã khóa học</FormLabel>
+          <FormLabel htmlFor="subject_id">
+            Môn học
+            <span role="presentation" aria-hidden="true" style={{ color: 'red', marginLeft: '2px' }}>
+              *
+            </span>
+          </FormLabel>
           {defaultSubject ? (
             <Select
               defaultValue={defaultSubject}
               id="subject_id"
-              placeholder="Chọn khóa học"
+              placeholder="Chọn môn học"
               {...register('subject_id', {
                 required: 'Vui lòng chọn khóa học',
               })}
@@ -125,7 +128,12 @@ const CoursesU = () => {
           <FormErrorMessage>{errors.subject_id && errors.subject_id.message}</FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={errors.class_code}>
-          <FormLabel htmlFor="class_code">Mã lớp</FormLabel>
+          <FormLabel htmlFor="class_code">
+            Mã lớp
+            <span role="presentation" aria-hidden="true" style={{ color: 'red', marginLeft: '2px' }}>
+              *
+            </span>
+          </FormLabel>
           <Input
             id="class_code"
             defaultValue={course ? course.class_code : ''}
@@ -133,11 +141,16 @@ const CoursesU = () => {
               required: 'Vui lòng nhập mã lớp',
             })}
           />
-          <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
+          <FormErrorMessage>{errors.class_code && errors.class_code.message}</FormErrorMessage>
         </FormControl>
 
         <FormControl isInvalid={errors.name}>
-          <FormLabel htmlFor="name">Tên giáo viên</FormLabel>
+          <FormLabel htmlFor="name">
+            Tên giáo viên
+            <span role="presentation" aria-hidden="true" style={{ color: 'red', marginLeft: '2px' }}>
+              *
+            </span>
+          </FormLabel>
           {defaultName ? (
             <Select
               placeholder="Chọn giáo viên"
