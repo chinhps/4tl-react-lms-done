@@ -28,31 +28,31 @@ export default function ListUser() {
     },
   ];
   const tableData = [
-      {
-        name: 'Marketplace',
-        status: 'Approved',
-        date: '24.Jan.2021',
-        progress: 75.5,
-      },
-      {
-        name: 'Marketplace',
-        status: 'Disable',
-        date: '30.Dec.2021',
-        progress: 25.5,
-      },
-      {
-        name: 'Marketplace',
-        status: 'Error',
-        date: '20.May.2021',
-        progress: 90,
-      },
-      {
-        name: 'Marketplace',
-        status: 'Approved',
-        date: '12.Jul.2021',
-        progress: 50.5,
-      },
-    ]
+    {
+      name: 'Marketplace',
+      status: 'Approved',
+      date: '24.Jan.2021',
+      progress: 75.5,
+    },
+    {
+      name: 'Marketplace',
+      status: 'Disable',
+      date: '30.Dec.2021',
+      progress: 25.5,
+    },
+    {
+      name: 'Marketplace',
+      status: 'Error',
+      date: '20.May.2021',
+      progress: 90,
+    },
+    {
+      name: 'Marketplace',
+      status: 'Approved',
+      date: '12.Jul.2021',
+      progress: 50.5,
+    },
+  ];
 
   const columns = useMemo(() => columnsData, [columnsData]);
   const data = useMemo(() => tableData, [tableData]);
@@ -85,11 +85,7 @@ export default function ListUser() {
           {headerGroups.map((headerGroup, index) => (
             <Tr {...headerGroup.getHeaderGroupProps()} key={index}>
               {headerGroup.headers.map((column, index) => (
-                <Th
-                  pe="10px"
-                  key={index}
-                  borderColor={borderColor}
-                >
+                <Th pe="10px" key={index} borderColor={borderColor}>
                   <Flex justify="space-between" align="center" fontSize={{ sm: '10px', lg: '12px' }} color="gray.400">
                     {column.render('Header')}
                   </Flex>

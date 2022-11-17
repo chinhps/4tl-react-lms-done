@@ -17,7 +17,7 @@ import { useEffect } from 'react';
 import coursesAPI from '../../../api/courseAPI';
 import { useState } from 'react';
 
-const Courses = () => {
+const CoursesU = () => {
   const [listTeacher, setListTeacher] = useState([]);
   const [course, setCouse] = useState(null);
   const toast = useToast();
@@ -25,11 +25,12 @@ const Courses = () => {
     handleSubmit,
     register,
     formState: { errors },
+    setValue,
   } = useForm();
   const params = useParams();
   const navigate = useNavigate();
   const [isSubmit, setIsSubmit] = useState(false);
-
+  const [defaultName, setDefaultName] = useState(null);
   const [defaultSwitchValue, setDefaultSwitchValue] = useState(true);
   const [sameAddressSwitch, setSameAddressSwitch] = useState(defaultSwitchValue);
 
@@ -45,88 +46,50 @@ const Courses = () => {
       name: values.name,
       status: sameAddressSwitch === true ? 1 : 0,
     };
-
-    if (params.id) {
-      return new Promise((resolve) => {
-        coursesAPI
-          .put(params.id, postData)
-          .then((res) => {
-            setIsSubmit(false);
-            toast({
-              title: 'Thông báo',
-              description: res.msg,
-              status: 'success',
-              duration: 2000,
-              isClosable: true,
-            });
-          })
-          .then(() => {
-            setTimeout(() => {
-              navigate('/courses');
-            }, 2000);
-          })
-
-          .catch((err) => {
-            setIsSubmit(false);
-
-            toast({
-              title: 'Lỗi',
-              description: err.errorInfo,
-              status: 'error',
-              duration: 2000,
-              isClosable: true,
-            });
+    return new Promise((resolve) => {
+      coursesAPI
+        .put(params.id, postData)
+        .then((res) => {
+          setIsSubmit(false);
+          toast({
+            title: 'Thông báo',
+            description: res.msg,
+            status: 'success',
+            duration: 2000,
+            isClosable: true,
           });
-      });
-    } else {
-      return new Promise((resolve) => {
-        coursesAPI
-          .new(postData)
-          .then((res) => {
-            setIsSubmit(false);
-            toast({
-              title: 'Thông báo',
-              description: res.msg,
-              status: 'success',
-              duration: 2000,
-              isClosable: true,
-            });
-          })
-          .then(() => {
-            setTimeout(() => {
-              navigate('/courses');
-            }, 2000);
-          })
+        })
+        .then(() => {
+          setTimeout(() => {
+            navigate('/admin/courses');
+          }, 2000);
+        })
 
-          .catch((err) => {
-            setIsSubmit(false);
+        .catch((err) => {
+          setIsSubmit(false);
 
-            toast({
-              title: 'Lỗi',
-              description: err.errorInfo,
-              status: 'error',
-              duration: 2000,
-              isClosable: true,
-            });
+          toast({
+            title: 'Lỗi',
+            description: err.errorInfo,
+            status: 'error',
+            duration: 2000,
+            isClosable: true,
           });
-      });
-    }
-  }
-  useEffect(() => {
-    coursesAPI.getById(params.id).then((res) => {
-      setCouse(res);
-      setDefaultSwitchValue(res.status === 1 ? true : false);
+        });
     });
-  }, [params.id]);
+  }
 
   useEffect(() => {
-    coursesAPI
-      .getTeacher()
-      .then((res) => {
-        setListTeacher(res);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+    const fetchData = async () => {
+      const res = await coursesAPI.getById(params.id);
+      await setCouse(res);
+      await setDefaultSwitchValue(res.status === 1 ? true : false);
+      const res2 = await coursesAPI.getTeacher();
+      await setListTeacher(res2);
+      await setDefaultName(res.name);
+    };
+    fetchData().catch((err) => console.log(err));
+  }, [params.id]);
 
   return (
     <>
@@ -161,51 +124,30 @@ const Courses = () => {
           />
           <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
         </FormControl>
-        {course ? (
-          <FormControl isInvalid={errors.name}>
-            <FormLabel htmlFor="name">Tên giáo viên</FormLabel>
+
+        <FormControl isInvalid={errors.name}>
+          <FormLabel htmlFor="name">Tên giáo viên</FormLabel>
+          {defaultName ? (
             <Select
+              placeholder="Chọn giáo viên"
               id="name"
-              defaultValue={course.name}
+              defaultValue={defaultName}
               {...register('name', {
                 required: 'Vui lòng nhập tên giáo viên',
               })}
             >
-              <option disabled value="">
-                Tên giáo viên
-              </option>
-
               {listTeacher.map((item) => (
                 <option key={item.id} value={item.name}>
                   {item.name}
                 </option>
               ))}
             </Select>
-            <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
-          </FormControl>
-        ) : (
-          <FormControl isInvalid={errors.name}>
-            <FormLabel htmlFor="name">Tên giáo viên</FormLabel>
-            <Select
-              id="name"
-              defaultValue={''}
-              {...register('name', {
-                required: 'Vui lòng nhập tên giáo viên',
-              })}
-            >
-              <option disabled value="">
-                Tên giáo viên
-              </option>
+          ) : (
+            <></>
+          )}
 
-              {listTeacher.map((item) => (
-                <option key={item.id} value={item.name}>
-                  {item.name}
-                </option>
-              ))}
-            </Select>
-            <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
-          </FormControl>
-        )}
+          <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
+        </FormControl>
 
         <FormControl display="flex" alignItems="center" mt="15">
           <FormLabel htmlFor="status" mb="0">
@@ -221,4 +163,4 @@ const Courses = () => {
   );
 };
 
-export default Courses;
+export default CoursesU;

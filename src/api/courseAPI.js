@@ -2,6 +2,9 @@ import axiosClient from './axiosClient';
 
 const BASE_URL = '/api/courses';
 const coursesAPI = {
+  get: () => {
+    return axiosClient.get(`${BASE_URL}`);
+  },
   new: (data) => {
     return axiosClient.post(`${BASE_URL}/new`, data);
   },
@@ -13,6 +16,9 @@ const coursesAPI = {
   },
   getById: (id) => {
     return axiosClient.get(`${BASE_URL}/${id}`);
+  },
+  delete: (id) => {
+    return axiosClient.delete(`${BASE_URL}/${id}`);
   },
 };
 

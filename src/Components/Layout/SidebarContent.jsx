@@ -13,7 +13,7 @@ const LinkItems = [
   { name: 'Thêm mới môn học', icon: FiSettings, to: '/setting' },
   { name: 'Danh sách ngành học', icon: FiSettings, to: '/setting' },
   { name: 'Thêm mới ngành học', icon: FiSettings, to: '/setting' },
-  { name: 'Course', icon: FiSettings, to: '/admin/courses' },
+  { name: 'Danh sách khóa học', icon: FiSettings, to: '/admin/courses' },
   //
 ];
 
