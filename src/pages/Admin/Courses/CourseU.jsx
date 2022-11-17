@@ -16,16 +16,20 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import coursesAPI from '../../../api/courseAPI';
 import { useState } from 'react';
+import subjectsAPI from '../../../api/subjectAPI';
+import classesAPI from '../../../api/classesAPI';
 
 const CoursesU = () => {
   const [listTeacher, setListTeacher] = useState([]);
   const [course, setCouse] = useState(null);
+  const [defaultSubject, setDefaultSubject] = useState(null);
+  const [subject, setSubject] = useState([]);
+
   const toast = useToast();
   const {
     handleSubmit,
     register,
     formState: { errors },
-    setValue,
   } = useForm();
   const params = useParams();
   const navigate = useNavigate();
@@ -76,15 +80,21 @@ const CoursesU = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await coursesAPI.getById(params.id);
-      await setCouse(res);
-      await setDefaultSwitchValue(res.status === 1 ? true : false);
-      console.log(defaultSwitchValue);
+      setCouse(res);
+      setDefaultSwitchValue(res.status === 1 ? true : false);
+
       const res2 = await coursesAPI.getTeacher();
-      await setListTeacher(res2);
-      await setDefaultName(res.name);
+      const res3 = await subjectsAPI.get();
+
+      setListTeacher(res2);
+      setSubject(res3);
+      setDefaultName(res.name);
+      setDefaultSubject(res.subject_id);
     };
     fetchData().catch((err) => console.log(err));
   }, [params.id]);
+
+  console.log(defaultSubject);
 
   return (
     <>
@@ -94,16 +104,24 @@ const CoursesU = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl isInvalid={errors.subject_id}>
           <FormLabel htmlFor="subject_id">Mã khóa học</FormLabel>
-          <Input
-            type="number"
-            id="subject_id"
-            placeholder="Mã khóa học"
-            defaultValue={course ? course.subject_id : ''}
-            {...register('subject_id', {
-              required: 'Vui lòng nhập mã khóa học',
-              minLength: { value: 1, message: `Không được dưới 1 ký tự` },
-            })}
-          />
+          {defaultSubject ? (
+            <Select
+              defaultValue={defaultSubject}
+              id="subject_id"
+              placeholder="Chọn khóa học"
+              {...register('subject_id', {
+                required: 'Vui lòng chọn khóa học',
+              })}
+            >
+              {subject.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.name}
+                </option>
+              ))}
+            </Select>
+          ) : (
+            <></>
+          )}
           <FormErrorMessage>{errors.subject_id && errors.subject_id.message}</FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={errors.class_code}>
@@ -111,10 +129,8 @@ const CoursesU = () => {
           <Input
             id="class_code"
             defaultValue={course ? course.class_code : ''}
-            placeholder="Mã lớp"
             {...register('class_code', {
               required: 'Vui lòng nhập mã lớp',
-              minLength: { value: 3, message: 'Không được dưới 4 ký tự' },
             })}
           />
           <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>

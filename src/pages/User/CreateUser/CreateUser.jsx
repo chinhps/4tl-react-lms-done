@@ -1,25 +1,101 @@
 import { useForm } from 'react-hook-form';
-import { FormErrorMessage, FormLabel, FormControl, Input, Button, Select, Switch } from '@chakra-ui/react';
+import {
+  FormErrorMessage,
+  FormLabel,
+  FormControl,
+  Input,
+  Button,
+  Select,
+  Switch,
+  Text,
+  useToast,
+} from '@chakra-ui/react';
 import { useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect } from 'react';
+import classesAPI from '../../../api/classesAPI';
+import roleAPI from '../../../api/roleAPI';
+import userAPI from '../../../api/userAPI';
 
 export default function CreateUser() {
   const [status, setStatus] = useState(false);
+  const params = useParams();
+  const navigate = useNavigate();
+  const toast = useToast();
+
   const {
     handleSubmit,
     register,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm();
+  const [role, setRole] = useState([]);
+  const [classes, setClasses] = useState([]);
+  const [isSubmit, setIsSubmit] = useState(false);
 
   function onSubmit(values) {
     return new Promise((resolve) => {
       if (status) values.status = 1;
       else values.status = 0;
       console.log(values);
-    });
+      const postData = {
+        user_code: values.code,
+        password: values.password,
+        email: values.email,
+        phone_number: values.phone_number,
+        name: values.name,
+        status: Number(values.status),
+        role_id: Number(values.role_id),
+        class_id: Number(values.class_id),
+      };
+
+      userAPI.new(postData).then((res) => {
+        setIsSubmit(false);
+        toast({
+          title: 'Thông báo',
+          description: res.msg,
+          status: 'success',
+          duration: 2000,
+          isClosable: true,
+        });
+      });
+    })
+      .then(() => {
+        setTimeout(() => {
+          navigate('/user/list');
+        }, 2000);
+      })
+
+      .catch((err) => {
+        setIsSubmit(false);
+
+        toast({
+          title: 'Lỗi',
+          description: err.errorInfo,
+          status: 'error',
+          duration: 2000,
+          isClosable: true,
+        });
+      });
   }
+
+  useEffect(() => {
+    classesAPI
+      .get()
+      .then((res) => {
+        setClasses(res);
+      })
+      .then(() => {
+        roleAPI.get().then((res2) => {
+          setRole(res2);
+        });
+      });
+  }, []);
 
   return (
     <>
+      <Text fontSize="6xl" fontWeight="bold">
+        {params.id ? 'Sửa người dùng' : 'Thêm mới người dùng'}
+      </Text>
       <form onSubmit={handleSubmit(onSubmit)} style={{ gap: '20px', display: 'flex', flexDirection: 'column' }}>
         <FormControl isInvalid={errors.code}>
           <FormLabel htmlFor="code">
@@ -59,6 +135,24 @@ export default function CreateUser() {
           />
           <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
         </FormControl>
+        <FormControl isInvalid={errors.password}>
+          <FormLabel htmlFor="password">
+            Mật khẩu
+            <span role="presentation" aria-hidden="true" style={{ color: 'red', marginLeft: '2px' }}>
+              *
+            </span>
+          </FormLabel>
+          <Input
+            type="password"
+            id="password"
+            placeholder="password"
+            {...register('password', {
+              required: 'Mật khẩu không được bỏ trống',
+              minLength: { value: 3, message: 'Mật khẩu phải ít nhất 3 ký tự' },
+            })}
+          />
+          <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
+        </FormControl>
         <FormControl isInvalid={errors.name}>
           <FormLabel htmlFor="name">
             Họ và tên
@@ -76,7 +170,7 @@ export default function CreateUser() {
           />
           <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
         </FormControl>
-        <FormControl isInvalid={errors.name}>
+        <FormControl isInvalid={errors.phone_number}>
           <FormLabel htmlFor="phone_number">
             Số điện thoại
             <span role="presentation" aria-hidden="true" style={{ color: 'red', marginLeft: '2px' }}>
@@ -86,7 +180,7 @@ export default function CreateUser() {
           <Input
             id="phone_number"
             placeholder="Số điện thoại"
-            type={'number'}
+            type={'tel'}
             {...register('phone_number', {
               required: 'Số điện thoại không được bỏ trống',
               minLength: { value: 10, message: 'Số điện thoai có 10 chữ số' },
@@ -109,9 +203,11 @@ export default function CreateUser() {
               required: 'Bạn chưa chọn vai trò',
             })}
           >
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
+            {role.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.role_name}
+              </option>
+            ))}
           </Select>
           <FormErrorMessage>{errors.role_id && errors.role_id.message}</FormErrorMessage>
         </FormControl>
@@ -129,9 +225,11 @@ export default function CreateUser() {
               required: 'Bạn chưa chọn lớp',
             })}
           >
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
+            {classes.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.class_name}
+              </option>
+            ))}
           </Select>
           <FormErrorMessage>{errors.class_id && errors.class_id.message}</FormErrorMessage>
         </FormControl>
@@ -139,9 +237,9 @@ export default function CreateUser() {
           <FormLabel htmlFor="name">Hiển thị</FormLabel>
           <Switch onChange={() => setStatus(!status)} />
         </FormControl>
-      <Button mt={4} colorScheme="teal" isLoading={isSubmitting} type="submit" w={'100px'}>
-        Thêm mới
-      </Button>
+        <Button mt={4} colorScheme="teal" isLoading={isSubmit} type="submit" w={'100px'}>
+          Thêm mới
+        </Button>
       </form>
     </>
   );

@@ -1,8 +1,18 @@
 import { useForm } from 'react-hook-form';
-import { FormErrorMessage, FormLabel, FormControl, Input, Button, Switch, useToast, Select } from '@chakra-ui/react';
+import {
+  FormErrorMessage,
+  FormLabel,
+  FormControl,
+  Input,
+  Button,
+  Switch,
+  useToast,
+  Select,
+  Text,
+} from '@chakra-ui/react';
 import { useState } from 'react';
 import subjectsAPI from '../../../api/subjectAPI';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import majorsAPI from '../../../api/majorAPI';
 
@@ -11,6 +21,7 @@ export default function CreateSubject() {
   const [status, setStatus] = useState(false);
   const navigate = useNavigate();
   const [isSubmit, setIsSubmit] = useState(false);
+  const params = useParams();
   const [major, setMajor] = useState(null);
   const {
     handleSubmit,
@@ -45,7 +56,7 @@ export default function CreateSubject() {
         })
         .then(() => {
           setTimeout(() => {
-            navigate('/courses');
+            navigate('/subject');
           }, 2000);
         })
 
@@ -70,6 +81,9 @@ export default function CreateSubject() {
   }, []);
   return (
     <>
+      <Text fontSize="6xl" fontWeight="bold">
+        {params.id ? 'Sửa môn học' : 'Thêm mới môn học'}
+      </Text>
       <form onSubmit={handleSubmit(onSubmit)} style={{ gap: '20px', display: 'flex', flexDirection: 'column' }}>
         <FormControl isInvalid={errors.major_id}>
           <FormLabel htmlFor="major_id">
