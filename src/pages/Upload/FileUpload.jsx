@@ -1,7 +1,8 @@
 import { Box, ChakraProvider, Stack, Text, Image, Input, Button } from '@chakra-ui/react';
 import React, { useState } from 'react';
-// import uploadImage from './assets/cloud-upload-regular-240.png';
+import uploadImage from '../../assets/images/upload/cloud-upload-regular-240.png';
 import { AiFillCloseCircle } from 'react-icons/ai';
+import { imageConfig } from '../../utils/constants';
 
 const FileUpload = () => {
   const [fileList, setFileList] = useState([]);
@@ -11,7 +12,13 @@ const FileUpload = () => {
       const updateList = [...fileList, file];
       setFileList(updateList);
     }
-  };
+  }
+
+  const fileRemove = (file) => {
+    const updateList = [...fileList];
+    updateList.splice(fileList.indexOf(file), 1);
+    setFileList(updateList);
+  }
 
   return (
     <ChakraProvider>
@@ -30,7 +37,7 @@ const FileUpload = () => {
               bg="#f5f8ff"
               h="250px"
             >
-              <Image src={''} alt="upload" w="100px" />
+              <Image src={uploadImage} alt="upload" w="100px" />
               <Text>Click vào đây để tải file của bạn lên</Text>
             </Stack>
 
@@ -54,7 +61,7 @@ const FileUpload = () => {
                 File đã chọn
               </Text>
 
-              {fileList.map((file, index) => (
+              {fileList.map((item, index) => (
                 <Stack
                   key={index}
                   position="relative"
@@ -67,16 +74,17 @@ const FileUpload = () => {
                   p="3"
                   rounded="lg"
                 >
-                  <Image src={'uploadImage'} alt="upload" w="50px" />
+                  <Image src={imageConfig[item.type.split('/')[1]] || imageConfig['default']} alt={item.name} w="50px" />
 
                   <Stack direction="column" justify="start" align="start">
-                    <Text>{file.name}</Text>
-                    <Text>{file.size}B</Text>
+                    <Text>{item.name}</Text>
+                    <Text>{item.size}B</Text>
                   </Stack>
 
                   <AiFillCloseCircle
                     fontSize={36}
                     style={{ position: 'absolute', right: '0', color: 'red', margin: '10px', opacity: '0' }}
+                    onClick={() => fileRemove(item)}
                   />
                 </Stack>
               ))}
