@@ -7,14 +7,14 @@ const LinkItems = [
   { name: 'Trang chủ', icon: FiHome, to: '/' },
   { name: 'Khóa học', icon: FiTrendingUp, to: '/class' },
   { name: 'Tin nhắn', icon: FiCompass, to: '/chat' },
-  { name: 'Danh sách tài khoản', icon: FiSettings, to: '/user/list' },
-  { name: 'Thêm mới tài khoản', icon: FiSettings, to: '/setting' },
-  { name: 'Danh sách môn học', icon: FiSettings, to: '/setting' },
-  { name: 'Thêm mới môn học', icon: FiSettings, to: '/setting' },
-  { name: 'Danh sách ngành học', icon: FiSettings, to: '/setting' },
-  { name: 'Thêm mới ngành học', icon: FiSettings, to: '/setting' },
   { name: 'Danh sách khóa học', icon: FiSettings, to: '/admin/courses' },
-  //
+  { name: 'Thêm khóa học', icon: FiSettings, to: '/admin/courses/new' },
+
+  { name: 'Thêm mới tài khoản', icon: FiSettings, to: '/user/new' },
+  { name: 'Danh sách môn học', icon: FiSettings, to: '/subject/list' },
+  { name: 'Thêm mới môn học', icon: FiSettings, to: '/subject/new' },
+  { name: 'Danh sách ngành học', icon: FiSettings, to: '/major/list' },
+  { name: 'Thêm mới ngành học', icon: FiSettings, to: '/major/new' },
 ];
 
 function SidebarContent({ onClose, ...rest }) {

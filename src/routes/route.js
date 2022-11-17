@@ -1,4 +1,4 @@
-import Upload from '../pages/Upload/Upload';
+import FileUpload from '../pages/Upload/FileUpload';
 import { AuthLayout, HomeLayout } from '../Layout';
 import Classes from '../pages/Classes/Classes';
 import Home from '../pages/Home/Home';
@@ -36,7 +36,7 @@ const publicRoutes = [
   },
   {
     path: '/upload',
-    component: Upload,
+    component: FileUpload,
     layout: HomeLayout,
     guard: ProtectedAuth,
   },

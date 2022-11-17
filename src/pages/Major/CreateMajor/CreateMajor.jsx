@@ -20,15 +20,20 @@ export default function CreateMajor() {
         values.status = 0;
       }
       console.log(values);
-      navigate('/major/list')
+      navigate('/major/list');
     });
   }
 
   return (
     <Box>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl isInvalid={errors.name} isRequired>
-          <FormLabel htmlFor="name">Tên ngành</FormLabel>
+        <FormControl isInvalid={errors.name}>
+          <FormLabel htmlFor="name">
+            Tên ngành
+            <span role="presentation" aria-hidden="true" style={{ color: 'red', marginLeft: '2px' }}>
+              *
+            </span>
+          </FormLabel>
           <Input
             id="name"
             placeholder="Tên ngành"
