@@ -12,8 +12,11 @@ export default function CreateSubject() {
 
   function onSubmit(values) {
     return new Promise((resolve) => {
-      if (status) values.status = 1;
-      else values.status = 0;
+      if (status) {
+        values.status = 1;
+      } else {
+        values.status = 0;
+      }
       console.log(values);
     });
   }
@@ -63,10 +66,10 @@ export default function CreateSubject() {
             }}
           />
         </FormControl>
+        <Button mt={4} colorScheme="teal" isLoading={isSubmitting} type="submit" w={'100px'}>
+          Thêm mới
+        </Button>
       </form>
-      <Button mt={4} colorScheme="teal" isLoading={isSubmitting} type="submit">
-        Thêm mới
-      </Button>
     </>
   );
 }

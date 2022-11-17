@@ -9,7 +9,7 @@ const LinkItems = [
   { name: 'Tin nhắn', icon: FiCompass, to: '/chat' },
   { name: 'Danh sách khóa học', icon: FiSettings, to: '/admin/courses' },
   { name: 'Thêm khóa học', icon: FiSettings, to: '/admin/courses/new' },
-
+  { name: 'Danh sách tài khoản', icon: FiSettings, to: '/user/list' },
   { name: 'Thêm mới tài khoản', icon: FiSettings, to: '/user/new' },
   { name: 'Danh sách môn học', icon: FiSettings, to: '/subject/list' },
   { name: 'Thêm mới môn học', icon: FiSettings, to: '/subject/new' },

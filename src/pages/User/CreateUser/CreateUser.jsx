@@ -139,10 +139,10 @@ export default function CreateUser() {
           <FormLabel htmlFor="name">Hiển thị</FormLabel>
           <Switch onChange={() => setStatus(!status)} />
         </FormControl>
-      </form>
-      <Button mt={4} colorScheme="teal" isLoading={isSubmitting} type="submit">
+      <Button mt={4} colorScheme="teal" isLoading={isSubmitting} type="submit" w={'100px'}>
         Thêm mới
       </Button>
+      </form>
     </>
   );
 }
