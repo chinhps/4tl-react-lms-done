@@ -1,4 +1,4 @@
-import Upload from '../pages/Upload/Upload';
+import FileUpload from '../pages/Upload/FileUpload';
 import { AuthLayout, HomeLayout } from '../Layout';
 import Classes from '../pages/Classes/Classes';
 import Home from '../pages/Home/Home';
@@ -6,6 +6,8 @@ import Login from '../pages/Auth/Login';
 import Course from '../Components/Core/Course';
 import { ProtectedAuth } from '../guards';
 import DoingQuiz from '../Components/Core/DoingQuiz';
+import AdminCourseCU from '../pages/Admin/Courses/CoursesCU';
+import AdminCourse from '../pages/Admin/Courses/Course';
 import ListUser from '../pages/User/ListUser/ListUser';
 import CreateUser from '../pages/User/CreateUser/CreateUser';
 import UpdateUser from '../pages/User/UpdateUser/UpdateUser';
@@ -31,7 +33,7 @@ const publicRoutes = [
   },
   {
     path: '/upload',
-    component: Upload,
+    component: FileUpload,
     layout: HomeLayout,
     guard: ProtectedAuth,
   },
@@ -53,6 +55,26 @@ const publicRoutes = [
     guard: ProtectedAuth,
   },
   {
+    path: '/admin/courses',
+    component: AdminCourse,
+    layout: HomeLayout,
+
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/admin/courses/new',
+    // children: [{ path: '/courses' }],
+    component: AdminCourseCU,
+    layout: HomeLayout,
+
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/admin/courses/:id',
+    // children: [{ path: '/courses' }],
+    component: AdminCourseCU,
+    layout: HomeLayout,
+
     path: '/user/list',
     component: ListUser,
     layout: HomeLayout,
