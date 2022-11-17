@@ -1,13 +1,14 @@
 import axiosClient from './axiosClient';
-const BASE_URL = '/api/users';
-const userAPI = {
-  getme: () => {
-    const url = `/api/user/get-me`;
+
+const BASE_URL = '/api/courses';
+const coursesAPI = {
+  getMyCourse: (limit) => {
+    const url = '/api/course/joined?limit=' + limit;
     return axiosClient.get(url);
   },
-  login: (data) => {
-    const url = `/api/auth/login`;
-    return axiosClient.post(url, data);
+  joinCourse: (idCourse) => {
+    const url = '/api/course/join';
+    return axiosClient.post(url, { idCourse });
   },
   get: () => {
     return axiosClient.get(`${BASE_URL}`);
@@ -28,4 +29,5 @@ const userAPI = {
     return axiosClient.delete(`${BASE_URL}/${id}`);
   },
 };
-export default userAPI;
+
+export default coursesAPI;

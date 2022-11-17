@@ -24,7 +24,7 @@ import React from 'react';
 import { MdKeyboardReturn } from 'react-icons/md';
 import Card from '../../../Components/Core/Card/Card';
 import { Link as ReachLink, useNavigate } from 'react-router-dom';
-import courseApi from '../../../api/courseAPI';
+import coursesAPI from '../../../api/coursesAPI';
 
 export default function Project({ data, image, link, title }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -37,7 +37,7 @@ export default function Project({ data, image, link, title }) {
   const toast = useToast();
 
   const handelJoinCourse = async (id) => {
-    const data = await courseApi.joinCourse(id);
+    const data = await coursesAPI.joinCourse(id);
 
     onClose();
     

@@ -3,7 +3,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import axiosClient from '../../../api/axiosClient';
-import courseApi from '../../../api/courseAPI';
+import coursesAPI from '../../../api/coursesAPI';
 import Card from '../Card/Card';
 import HistoryItem from './HistoryItem';
 
@@ -16,7 +16,7 @@ function HistoryCourse({ limit = 3 }) {
   }, []);
 
   const fetchCourse = async () => {
-    let data = await courseApi.getMyCourse(limit);
+    let data = await coursesAPI.getMyCourse(limit);
     setMyCourse(data);
   };
 

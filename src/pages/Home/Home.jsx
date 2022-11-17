@@ -1,8 +1,7 @@
 import { Box, Flex, Grid, Link, SimpleGrid, Text, useColorModeValue } from '@chakra-ui/react';
-import React from 'react';
 import { useState } from 'react';
-import { useEffect } from 'react';
 import newsAPI from '../../api/newsAPI';
+import React, { useEffect } from 'react';
 import Banner from '../../Components/Core/Banner';
 import BoxCollection from '../../Components/Core/Card/BoxCollection';
 import MiniCalendar from '../../Components/Core/MiniCalendar/MiniCalendar';

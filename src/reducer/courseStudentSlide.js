@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import courseApi from '../api/courseAPI';
+import coursesAPI from '../api/coursesAPI';
 
-export const joinCourse = createAsyncThunk('courseStudent/courseApi', async (id, user) => {
-    const res = await courseApi.post(id, user);
+export const joinCourse = createAsyncThunk('courseStudent/coursesAPI', async (id, user) => {
+    const res = await coursesAPI.post(id, user);
     return { result: res, id };
 });
 
