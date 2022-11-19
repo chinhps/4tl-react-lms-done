@@ -82,14 +82,13 @@ export default function UpdateSubject() {
     const fetchData = async () => {
       const res = await subjectsAPI.getById(params.id);
       setSubject(res);
-      setStatus(res.status);
       const res2 = await majorsAPI.get();
       setMajor(res2);
       setMajorSelected(Number(res.major_id));
+      setStatus(res.status);
     };
     fetchData().catch((err) => console.log(err));
   }, [params.id]);
-
   return (
     <>
       <Text fontSize="6xl" fontWeight="bold">
@@ -108,7 +107,7 @@ export default function UpdateSubject() {
                 required: 'Vui lòng nhập tên giáo viên',
               })}
             >
-              {major.map((item) => (
+              {major.data?.map((item) => (
                 <option key={item.id} value={item.id}>
                   {item.name}
                 </option>
@@ -159,7 +158,7 @@ export default function UpdateSubject() {
         <FormControl>
           <FormLabel>Hiển thị</FormLabel>
           <Switch
-            isChecked={status}
+            defaultChecked={status}
             onChange={() => {
               setStatus(!status);
             }}

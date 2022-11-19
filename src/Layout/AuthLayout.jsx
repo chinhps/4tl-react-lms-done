@@ -33,7 +33,7 @@ function AuthLayout({children}) {
               position='absolute'
               right='0px'>
               <Flex
-                bg={`url(https://i.imgur.com/sbS3WqA.png)`}
+                bg={`url('/4TL.png')`}
                 justify='center'
                 align='end'
                 w='100%'

@@ -110,13 +110,6 @@ function BoxCollection(props) {
            
             <Link
               href={download}
-              mt={{
-                base: '0px',
-                md: '10px',
-                lg: '0px',
-                xl: '10px',
-                '2xl': '0px',
-              }}
             >
               <Button
                 variant="darkBrand"

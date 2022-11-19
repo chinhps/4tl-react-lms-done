@@ -56,7 +56,7 @@ export default function CreateSubject() {
         })
         .then(() => {
           setTimeout(() => {
-            navigate('/subject');
+            navigate('/subject/list');
           }, 2000);
         })
 
@@ -101,7 +101,7 @@ export default function CreateSubject() {
             })}
           >
             {major ? (
-              major.map((item) => (
+              major.data?.map((item) => (
                 <option value={item.id} key={item.id}>
                   {item.name}
                 </option>

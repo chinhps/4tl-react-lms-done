@@ -190,7 +190,7 @@ export default function UpdateUser() {
             id="phone_number"
             placeholder="Số điện thoại"
             value={userInfo? userInfo.phone_number : ''}
-            type={'tel'}
+            type={'number'}
             {...register('phone_number', {
               required: 'Số điện thoại không được bỏ trống',
               minLength: { value: 10, message: 'Số điện thoai có 10 chữ số' },

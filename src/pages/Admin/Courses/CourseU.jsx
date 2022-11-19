@@ -116,7 +116,7 @@ const CoursesU = () => {
                 required: 'Vui lòng chọn khóa học',
               })}
             >
-              {subject.map((item) => (
+              {subject?.data.map((item) => (
                 <option key={item.id} value={item.id}>
                   {item.name}
                 </option>
@@ -160,7 +160,7 @@ const CoursesU = () => {
                 required: 'Vui lòng nhập tên giáo viên',
               })}
             >
-              {listTeacher.map((item) => (
+              {listTeacher?.data.map((item) => (
                 <option key={item.id} value={item.name}>
                   {item.name}
                 </option>

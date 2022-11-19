@@ -109,7 +109,7 @@ const CoursesC = () => {
       })
       .catch((err) => console.log(err));
   }, []);
-
+  console.log('subject',subject);
   return (
     <>
       <Text fontSize="6xl" fontWeight="bold">
@@ -130,7 +130,7 @@ const CoursesC = () => {
                 required: 'Vui lòng chọn môn học',
               })}
             >
-              {subject.map((item) => (
+              {subject.data?.map((item) => (
                 <option key={item.id} value={item.id}>
                   {item.name}
                 </option>
