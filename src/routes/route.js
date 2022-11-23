@@ -87,6 +87,7 @@ const publicRoutes = [
 
     component: CoursesU,
     layout: HomeLayout,
+    guard: ProtectedAuth,
   },
   {
     path: '/user/list',

@@ -10,6 +10,7 @@ import {
   Switch,
   Flex,
   Text,
+  Checkbox,
 } from '@chakra-ui/react';
 import subjectsAPI from '../../../api/subjectAPI';
 import { useState } from 'react';
@@ -25,16 +26,15 @@ export default function UpdateSubject() {
   } = useForm();
   const toast = useToast();
   const navigate = useNavigate();
-  const [status, setStatus] = useState(false);
   const [major, setMajor] = useState([]);
   const [isSubmit, setIsSubmit] = useState(false);
   const [subject, setSubject] = useState(null);
   const [majorSelected, setMajorSelected] = useState(null);
   const params = useParams();
-
+  const [check, setCheck] = useState();
   function onSubmit(values) {
     return new Promise((resolve) => {
-      if (status) {
+      if (check) {
         values.status = 1;
       } else {
         values.status = 0;
@@ -81,28 +81,29 @@ export default function UpdateSubject() {
   useEffect(() => {
     const fetchData = async () => {
       const res = await subjectsAPI.getById(params.id);
+      setCheck(res.status);
+
       setSubject(res);
       const res2 = await majorsAPI.get();
       setMajor(res2);
       setMajorSelected(Number(res.major_id));
-      setStatus(res.status);
     };
-    fetchData().catch((err) => console.log(err));
+    fetchData();
   }, [params.id]);
+
   return (
     <>
       <Text fontSize="6xl" fontWeight="bold">
         {params.id ? 'Sửa môn học' : 'Thêm mới môn học'}
       </Text>
-
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl isInvalid={errors.major_id}>
           <FormLabel htmlFor="name">Ngành học</FormLabel>
-          {majorSelected ? (
+          {majorSelected != undefined ? (
             <Select
               placeholder="Chọn ngành học"
               id="major_id"
-              defaultValue={majorSelected}
+              value={majorSelected ? majorSelected : ''}
               {...register('major_id', {
                 required: 'Vui lòng nhập tên giáo viên',
               })}
@@ -129,7 +130,7 @@ export default function UpdateSubject() {
           <Input
             id="code"
             placeholder="Mã môn học"
-            defaultValue={subject ? subject.code : ''}
+            value={subject ? subject.code : ''}
             {...register('code', {
               required: 'Mã môn học không được bỏ trống',
               minLength: { value: 2, message: 'Mã môn học phải ít nhất 2 kí tự' },
@@ -147,7 +148,7 @@ export default function UpdateSubject() {
           <Input
             id="name"
             placeholder="Tên môn học"
-            defaultValue={subject ? subject.name : ''}
+            value={subject ? subject.name : ''}
             {...register('name', {
               required: 'Tên môn học không được bỏ trống',
               minLength: { value: 4, message: 'Tên môn học phải ít nhất 4 kí tự' },
@@ -157,12 +158,18 @@ export default function UpdateSubject() {
         </FormControl>
         <FormControl>
           <FormLabel>Hiển thị</FormLabel>
-          <Switch
-            defaultChecked={status}
-            onChange={() => {
-              setStatus(!status);
-            }}
-          />
+
+          {console.log('dưới' + check)}
+          {check != undefined ? (
+            <Switch
+              defaultChecked={check}
+              onChange={() => {
+                setCheck(!check);
+              }}
+            />
+          ) : (
+            <></>
+          )}
         </FormControl>
         <Flex gap={'1rem'}>
           <Button mt={4} bg="gray.300" type="button" onClick={() => navigate('/subject/list')}>

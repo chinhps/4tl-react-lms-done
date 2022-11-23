@@ -23,15 +23,14 @@ export default function UpdateUser() {
   const params = useParams();
   const navigate = useNavigate();
   const toast = useToast();
-
+  const [role, setRole] = useState([]);
+  const [classes, setClasses] = useState([]);
+  const [isSubmit, setIsSubmit] = useState(false);
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = useForm();
-  const [role, setRole] = useState([]);
-  const [classes, setClasses] = useState([]);
-  const [isSubmit, setIsSubmit] = useState(false);
 
   function onSubmit(values) {
     return new Promise((resolve) => {
@@ -49,7 +48,7 @@ export default function UpdateUser() {
         class_id: Number(values.class_id),
       };
 
-      userAPI.put(params.id,putData).then((res) => {
+      userAPI.put(params.id, putData).then((res) => {
         setIsSubmit(false);
         toast({
           title: 'Thông báo',
@@ -58,25 +57,21 @@ export default function UpdateUser() {
           duration: 2000,
           isClosable: true,
         });
-      });
-    })
-      .then(() => {
         setTimeout(() => {
           navigate('/user/list');
         }, 2000);
-      })
-
-      .catch((err) => {
-        setIsSubmit(false);
-
-        toast({
-          title: 'Lỗi',
-          description: err.errorInfo,
-          status: 'error',
-          duration: 2000,
-          isClosable: true,
-        });
       });
+    }).catch((err) => {
+      setIsSubmit(false);
+
+      toast({
+        title: 'Lỗi',
+        description: err.errorInfo,
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      });
+    });
   }
 
   useEffect(() => {
@@ -90,11 +85,10 @@ export default function UpdateUser() {
           setRole(res2);
         });
       });
-    userAPI.getById(params.id)
-    .then(res=> {
+    userAPI.getById(params.id).then((res) => {
       setUserInfo(res);
-      setStatus(res.status)
-    })
+      setStatus(res.status);
+    });
   }, []);
   return (
     <>
@@ -112,8 +106,7 @@ export default function UpdateUser() {
           <Input
             id="code"
             placeholder="Mã tài khoản"
-            defaultValue={userInfo? userInfo.user_code : ''}
-            value={userInfo? userInfo.user_code : ''}
+            defaultValue={userInfo ? userInfo.user_code : ''}
             {...register('code', {
               required: 'Mã tài khoản không được để trống',
               minLength: { value: 4, message: 'Mã tài khoản phải lớn hơn 4 kí tự' },
@@ -131,7 +124,7 @@ export default function UpdateUser() {
           <Input
             id="email"
             placeholder="Email"
-            value={userInfo? userInfo.email : ''}
+            defaultValue={userInfo ? userInfo.email : ''}
             {...register('email', {
               required: 'Email không được bỏ trống',
               pattern: {
@@ -153,6 +146,7 @@ export default function UpdateUser() {
           <Input
             type="password"
             id="password"
+            defaultValue={userInfo.password ? userInfo.password : ''}
             placeholder="password"
             {...register('password', {
               required: 'Mật khẩu không được bỏ trống',
@@ -171,7 +165,7 @@ export default function UpdateUser() {
           <Input
             id="name"
             placeholder="Họ và tên"
-            value={userInfo? userInfo.name : ''}
+            defaultValue={userInfo ? userInfo.name : ''}
             {...register('name', {
               required: 'Họ và tên không được bỏ trống',
               minLength: { value: 2, message: 'Họ và tên phải lớn hơn 2 kí tự' },
@@ -189,7 +183,7 @@ export default function UpdateUser() {
           <Input
             id="phone_number"
             placeholder="Số điện thoại"
-            value={userInfo? userInfo.phone_number : ''}
+            defaultValue={userInfo ? userInfo.phone_number : ''}
             type={'number'}
             {...register('phone_number', {
               required: 'Số điện thoại không được bỏ trống',
@@ -209,7 +203,7 @@ export default function UpdateUser() {
           <Select
             id="role_id"
             placeholder="Vai trò"
-            value={userInfo? userInfo.role_id : ''}
+            value={userInfo ? userInfo.role_id : ''}
             {...register('role_id', {
               required: 'Bạn chưa chọn vai trò',
             })}
@@ -232,7 +226,7 @@ export default function UpdateUser() {
           <Select
             id="class_id"
             placeholder="Lớp"
-            value={userInfo? userInfo.class_id : ''}
+            value={userInfo ? userInfo.class_id : ''}
             {...register('class_id', {
               required: 'Bạn chưa chọn lớp',
             })}
@@ -247,7 +241,7 @@ export default function UpdateUser() {
         </FormControl>
         <FormControl>
           <FormLabel htmlFor="name">Khóa</FormLabel>
-          <Switch isChecked={status} onChange={() => setStatus(!status)} />
+          {status != undefined ? <Switch defaultChecked={!status} onChange={() => setStatus(!status)} /> : <></>}
         </FormControl>
         <Button mt={4} colorScheme="teal" isLoading={isSubmit} type="submit" w={'100px'}>
           Cập nhật

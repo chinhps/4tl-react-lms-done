@@ -35,7 +35,7 @@ const CoursesU = () => {
   const navigate = useNavigate();
   const [isSubmit, setIsSubmit] = useState(false);
   const [defaultName, setDefaultName] = useState(null);
-  const [defaultSwitchValue, setDefaultSwitchValue] = useState(true);
+  const [defaultSwitchValue, setDefaultSwitchValue] = useState();
 
   function onSubmit(values) {
     const postData = {
@@ -160,7 +160,7 @@ const CoursesU = () => {
                 required: 'Vui lòng nhập tên giáo viên',
               })}
             >
-              {listTeacher?.data.map((item) => (
+              {listTeacher?.map((item) => (
                 <option key={item.id} value={item.name}>
                   {item.name}
                 </option>
@@ -175,13 +175,17 @@ const CoursesU = () => {
 
         <FormControl display="flex" alignItems="center" mt="15">
           <FormLabel htmlFor="status" mb="0">
-            Hiện thị
+            Khóa
           </FormLabel>
-          <Switch
-            id="status"
-            isChecked={defaultSwitchValue}
-            onChange={() => setDefaultSwitchValue(!defaultSwitchValue)}
-          />
+          {defaultSwitchValue != undefined ? (
+            <Switch
+              id="status"
+              defaultChecked={!defaultSwitchValue}
+              onChange={() => setDefaultSwitchValue(!defaultSwitchValue)}
+            />
+          ) : (
+            <></>
+          )}
         </FormControl>
         <Button mt={4} colorScheme="teal" isLoading={isSubmit} type="submit">
           Lưu

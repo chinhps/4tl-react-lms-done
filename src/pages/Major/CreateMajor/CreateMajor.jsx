@@ -1,11 +1,14 @@
 import { useForm } from 'react-hook-form';
-import { FormErrorMessage, FormLabel, FormControl, Input, Button, Switch, Box } from '@chakra-ui/react';
+import { FormErrorMessage, FormLabel, FormControl, Input, Button, Switch, Box, useToast, Text } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import majorsAPI from '../../../api/majorAPI';
 
 export default function CreateMajor() {
   const navigate = useNavigate();
   const [status, setStatus] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false);
+  const toast = useToast();
   const {
     handleSubmit,
     register,
@@ -14,18 +17,47 @@ export default function CreateMajor() {
 
   function onSubmit(values) {
     return new Promise((resolve) => {
-      if (status) {
-        values.status = 1;
-      } else {
-        values.status = 0;
-      }
+      if (status) values.status = 1;
+      else values.status = 0;
       console.log(values);
-      navigate('/major/list');
+      const postData = {
+        name: values.name,
+        branchable_type: 'courses',
+        slug: values.name,
+        status: Number(values.status),
+      };
+
+      majorsAPI.new(postData).then((res) => {
+        setIsSubmit(!isSubmit);
+        toast({
+          title: 'Thông báo',
+          description: res.msg,
+          status: 'success',
+          duration: 2000,
+          isClosable: true,
+        });
+        setTimeout(() => {
+          navigate('/major/list');
+        }, 2000);
+      });
+    }).catch((err) => {
+      setIsSubmit(false);
+
+      toast({
+        title: 'Lỗi',
+        description: err.errorInfo,
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      });
     });
   }
 
   return (
     <Box>
+      <Text fontSize="6xl" fontWeight="bold">
+        Thêm ngành học
+      </Text>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl isInvalid={errors.name}>
           <FormLabel htmlFor="name">
@@ -45,7 +77,7 @@ export default function CreateMajor() {
           <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
         </FormControl>
         <FormControl>
-          <FormLabel htmlFor="name">Hiển thị</FormLabel>
+          <FormLabel htmlFor="status">Hiển thị</FormLabel>
           <Switch
             size="lg"
             onChange={() => {
