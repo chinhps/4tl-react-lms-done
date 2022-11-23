@@ -57,25 +57,21 @@ export default function CreateUser() {
           duration: 2000,
           isClosable: true,
         });
-      });
-    })
-      .then(() => {
         setTimeout(() => {
           navigate('/user/list');
         }, 2000);
-      })
-
-      .catch((err) => {
-        setIsSubmit(false);
-
-        toast({
-          title: 'Lỗi',
-          description: err.errorInfo,
-          status: 'error',
-          duration: 2000,
-          isClosable: true,
-        });
       });
+    }).catch((err) => {
+      setIsSubmit(false);
+
+      toast({
+        title: 'Lỗi',
+        description: err.errorInfo,
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      });
+    });
   }
 
   useEffect(() => {
@@ -222,7 +218,8 @@ export default function CreateUser() {
             id="class_id"
             placeholder="Lớp"
             {...register('class_id', {
-              required: 'Bạn chưa chọn lớp',
+              required: true,
+              message: 'Bạn chưa chọn lớp',
             })}
           >
             {classes.map((item) => (

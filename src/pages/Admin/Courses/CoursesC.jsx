@@ -65,7 +65,7 @@ const CoursesC = () => {
         })
         .then(() => {
           setTimeout(() => {
-            navigate('/courses');
+            navigate('/admin/courses');
           }, 2000);
         })
 
@@ -109,7 +109,7 @@ const CoursesC = () => {
       })
       .catch((err) => console.log(err));
   }, []);
-  console.log('subject',subject);
+  console.log('subject', subject);
   return (
     <>
       <Text fontSize="6xl" fontWeight="bold">
@@ -123,19 +123,19 @@ const CoursesC = () => {
               *
             </span>
           </FormLabel>
-            <Select
-              id="subject_id"
-              placeholder="Chọn môn học"
-              {...register('subject_id', {
-                required: 'Vui lòng chọn môn học',
-              })}
-            >
-              {subject.data?.map((item) => (
-                <option key={item.id} value={item.id}>
-                  {item.name}
-                </option>
-              ))}
-            </Select>
+          <Select
+            id="subject_id"
+            placeholder="Chọn môn học"
+            {...register('subject_id', {
+              required: 'Vui lòng chọn môn học',
+            })}
+          >
+            {subject.data?.map((item) => (
+              <option key={item.id} value={item.id}>
+                {item.name}
+              </option>
+            ))}
+          </Select>
           <FormErrorMessage>{errors.subject_id && errors.subject_id.message}</FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={errors.class_code}>
@@ -147,7 +147,6 @@ const CoursesC = () => {
           </FormLabel>
           <Input
             id="class_code"
-            value={''}
             {...register('class_code', {
               required: 'Vui lòng nhập mã lớp',
             })}
@@ -164,15 +163,11 @@ const CoursesC = () => {
           </FormLabel>
           <Select
             id="name"
-            defaultValue={''}
+            placeholder="Chọn giáo viên"
             {...register('name', {
               required: 'Vui lòng nhập tên giáo viên',
             })}
           >
-            <option disabled value="">
-              Tên giáo viên
-            </option>
-
             {listTeacher.map((item) => (
               <option key={item.id} value={item.name}>
                 {item.name}

@@ -1,7 +1,7 @@
 import axiosClient from './axiosClient';
 
-const BASE_URL = '/api/roles';
-const rolesAPI = {
+const BASE_URL = '/api/question_bank';
+const questionsBankAPI = {
   get: () => {
     return axiosClient.get(`${BASE_URL}`);
   },
@@ -19,4 +19,4 @@ const rolesAPI = {
   },
 };
 
-export default rolesAPI;
+export default questionsBankAPI;

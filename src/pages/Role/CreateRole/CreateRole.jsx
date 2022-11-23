@@ -2,11 +2,10 @@ import { useForm } from 'react-hook-form';
 import { FormErrorMessage, FormLabel, FormControl, Input, Button, Switch, Box, useToast, Text } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import majorsAPI from '../../../api/majorAPI';
+import rolesAPI from '../../../api/roleAPI';
 
-export default function CreateMajor() {
+export default function CreateRole() {
   const navigate = useNavigate();
-  const [status, setStatus] = useState(false);
   const [isSubmit, setIsSubmit] = useState(false);
   const toast = useToast();
   const {
@@ -17,17 +16,13 @@ export default function CreateMajor() {
 
   function onSubmit(values) {
     return new Promise((resolve) => {
-      if (status) values.status = 1;
-      else values.status = 0;
       console.log(values);
       const postData = {
-        name: values.name,
-        branchable_type: 'courses',
-        slug: values.name,
-        status: Number(values.status),
+        role_code: values.role_code,
+        role_name: values.role_name,
       };
 
-      majorsAPI.new(postData).then((res) => {
+      rolesAPI.new(postData).then((res) => {
         setIsSubmit(!isSubmit);
         toast({
           title: 'Thông báo',
@@ -37,7 +32,7 @@ export default function CreateMajor() {
           isClosable: true,
         });
         setTimeout(() => {
-          navigate('/major/list');
+          navigate('/role/list');
         }, 2000);
       });
     }).catch((err) => {
@@ -56,36 +51,31 @@ export default function CreateMajor() {
   return (
     <Box>
       <Text fontSize="6xl" fontWeight="bold">
-        Thêm ngành học
+        Thêm quyền
       </Text>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl isInvalid={errors.name}>
-          <FormLabel htmlFor="name">
-            Tên ngành
-            <span role="presentation" aria-hidden="true" style={{ color: 'red', marginLeft: '2px' }}>
-              *
-            </span>
-          </FormLabel>
+        <FormControl isInvalid={errors.role_name} isRequired>
+          <FormLabel htmlFor="role_name">Tên quyền</FormLabel>
           <Input
-            id="name"
-            placeholder="Tên ngành"
-            {...register('name', {
-              required: 'Tên ngành học không được bỏ trống',
-              minLength: { value: 4, message: 'Tên ngành học phải ' },
+            id="role_name"
+            placeholder="Tên quyền"
+            {...register('role_name', {
+              required: 'Tên quyền không được để trống',
             })}
           />
-          <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
+          <FormErrorMessage>{errors.role_name && errors.role_name.message}</FormErrorMessage>
         </FormControl>
-        <FormControl>
-          <FormLabel htmlFor="status">Hiển thị</FormLabel>
-          <Switch
-            size="lg"
-            onChange={() => {
-              setStatus(!status);
-            }}
+        <FormControl isInvalid={errors.role_code} isRequired>
+          <FormLabel htmlFor="role_code">Mã quyền</FormLabel>
+          <Input
+            id="role_code"
+            placeholder="Mã quyền"
+            {...register('role_code', {
+              required: 'Mã quyền không được để trống',
+            })}
           />
+          <FormErrorMessage>{errors.role_code && errors.role_code.message}</FormErrorMessage>
         </FormControl>
-        <br />
         <Button mt={4} colorScheme="teal" isLoading={isSubmitting} type="submit">
           Thêm mới
         </Button>

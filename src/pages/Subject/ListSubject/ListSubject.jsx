@@ -1,4 +1,24 @@
-import { Button, Flex, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr, Icon } from '@chakra-ui/react';
+import {
+  Button,
+  Flex,
+  Table,
+  TableContainer,
+  Tbody,
+  Td,
+  Text,
+  Th,
+  Thead,
+  Tr,
+  Icon,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverBody,
+  useToast,
+} from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import subjectsAPI from '../../../api/subjectAPI';
 import { MdCheckCircle, MdCancel, MdOutlineError } from 'react-icons/md';
@@ -10,10 +30,11 @@ import Card from '../../../Components/Core/Card/Card';
 export default function ListSubject() {
   const navigate = useNavigate();
   const [tableData, setTableData] = useState({});
-
+  const toast = useToast();
+  const [isSubmit, setIsSubmit] = useState(false);
   useEffect(() => {
     fetchSubjects();
-  }, []);
+  }, [isSubmit]);
 
   const fetchSubjects = async () => {
     const data = await subjectsAPI.get();
@@ -24,6 +45,31 @@ export default function ListSubject() {
     axiosClient.get('/api/subjects?page=' + data.page).then((response) => {
       setTableData(response);
     });
+  };
+
+  const deleteSubject = (id) => {
+    setIsSubmit(!isSubmit);
+    subjectsAPI
+      .delete(id)
+      .then((res) => {
+        toast({
+          title: 'Thông báo',
+          description: res.msg,
+          status: 'success',
+          duration: 2000,
+          isClosable: true,
+        });
+      })
+      .catch((err) => {
+        setIsSubmit(!isSubmit);
+        toast({
+          title: 'Lỗi',
+          description: err.errorInfo,
+          status: 'error',
+          duration: 2000,
+          isClosable: true,
+        });
+      });
   };
   return (
     <Card p="20px">
@@ -73,9 +119,32 @@ export default function ListSubject() {
                     <Button flex={1} colorScheme="teal" onClick={() => navigate(`/subject/update/${subject.id}`)}>
                       Sửa
                     </Button>
-                    <Button flex={1} colorScheme="red">
-                      Xóa
-                    </Button>
+                    <Popover isLazy placement="bottom-end">
+                      <PopoverTrigger>
+                        <Button flex={1} colorScheme="red">
+                          Xóa
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <PopoverHeader fontWeight="semibold">Bạn có muốn xóa không ?</PopoverHeader>
+                        <PopoverArrow />
+                        <PopoverCloseButton />
+                        <PopoverBody>
+                          <Button
+                            flex={1}
+                            colorScheme="red"
+                            onClick={() => {
+                              deleteSubject(subject.id);
+                            }}
+                          >
+                            Đồng ý
+                          </Button>
+                          <Button flex={1} colorScheme="gray">
+                            Hủy
+                          </Button>
+                        </PopoverBody>
+                      </PopoverContent>
+                    </Popover>
                   </Td>
                 </Tr>
               ))

@@ -10,6 +10,7 @@ import {
   Switch,
   Flex,
   Text,
+  Checkbox,
 } from '@chakra-ui/react';
 import subjectsAPI from '../../../api/subjectAPI';
 import { useState } from 'react';
@@ -22,15 +23,16 @@ export default function UpdateSubject() {
     handleSubmit,
     register,
     formState: { errors },
+    setValue,
   } = useForm();
   const toast = useToast();
   const navigate = useNavigate();
-  const [status, setStatus] = useState(false);
   const [major, setMajor] = useState([]);
   const [isSubmit, setIsSubmit] = useState(false);
   const [subject, setSubject] = useState(null);
   const [majorSelected, setMajorSelected] = useState(null);
   const params = useParams();
+  const [status, setStatus] = useState();
 
   function onSubmit(values) {
     return new Promise((resolve) => {
@@ -86,23 +88,26 @@ export default function UpdateSubject() {
       setMajor(res2);
       setMajorSelected(Number(res.major_id));
       setStatus(res.status);
+      for (const [key, value] of Object.entries(res)) {
+        setValue(`${key}`, value);
+      }
     };
-    fetchData().catch((err) => console.log(err));
+    fetchData();
   }, [params.id]);
+
   return (
     <>
       <Text fontSize="6xl" fontWeight="bold">
         {params.id ? 'Sửa môn học' : 'Thêm mới môn học'}
       </Text>
-
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl isInvalid={errors.major_id}>
-          <FormLabel htmlFor="name">Ngành học</FormLabel>
-          {majorSelected ? (
+      {subject && majorSelected ? (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <FormControl isInvalid={errors.major_id}>
+            <FormLabel htmlFor="name">Ngành học</FormLabel>
             <Select
               placeholder="Chọn ngành học"
               id="major_id"
-              defaultValue={majorSelected}
+              value={majorSelected}
               {...register('major_id', {
                 required: 'Vui lòng nhập tên giáo viên',
               })}
@@ -113,66 +118,66 @@ export default function UpdateSubject() {
                 </option>
               ))}
             </Select>
-          ) : (
-            <></>
-          )}
 
-          <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
-        </FormControl>
-        <FormControl isInvalid={errors.code}>
-          <FormLabel htmlFor="code">
-            Mã môn học
-            <span role="presentation" aria-hidden="true" style={{ color: 'red', marginLeft: '2px' }}>
-              *
-            </span>
-          </FormLabel>
-          <Input
-            id="code"
-            placeholder="Mã môn học"
-            defaultValue={subject ? subject.code : ''}
-            {...register('code', {
-              required: 'Mã môn học không được bỏ trống',
-              minLength: { value: 2, message: 'Mã môn học phải ít nhất 2 kí tự' },
-            })}
-          />
-          <FormErrorMessage>{errors.code && errors.code.message}</FormErrorMessage>
-        </FormControl>
-        <FormControl isInvalid={errors.name}>
-          <FormLabel htmlFor="name">
-            Tên môn học
-            <span role="presentation" aria-hidden="true" style={{ color: 'red', marginLeft: '2px' }}>
-              *
-            </span>
-          </FormLabel>
-          <Input
-            id="name"
-            placeholder="Tên môn học"
-            defaultValue={subject ? subject.name : ''}
-            {...register('name', {
-              required: 'Tên môn học không được bỏ trống',
-              minLength: { value: 4, message: 'Tên môn học phải ít nhất 4 kí tự' },
-            })}
-          />
-          <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
-        </FormControl>
-        <FormControl>
-          <FormLabel>Hiển thị</FormLabel>
-          <Switch
-            defaultChecked={status}
-            onChange={() => {
-              setStatus(!status);
-            }}
-          />
-        </FormControl>
-        <Flex gap={'1rem'}>
-          <Button mt={4} bg="gray.300" type="button" onClick={() => navigate('/subject/list')}>
-            Quay lại
-          </Button>
-          <Button mt={4} colorScheme="teal" isLoading={isSubmit} type="submit">
-            Sửa
-          </Button>
-        </Flex>
-      </form>
+            <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
+          </FormControl>
+          <FormControl isInvalid={errors.code}>
+            <FormLabel htmlFor="code">
+              Mã môn học
+              <span role="presentation" aria-hidden="true" style={{ color: 'red', marginLeft: '2px' }}>
+                *
+              </span>
+            </FormLabel>
+            <Input
+              id="code"
+              placeholder="Mã môn học"
+              defaultValue={subject ? subject.code : ''}
+              {...register('code', {
+                required: 'Mã môn học không được bỏ trống',
+                minLength: { value: 2, message: 'Mã môn học phải ít nhất 2 kí tự' },
+              })}
+            />
+            <FormErrorMessage>{errors.code && errors.code.message}</FormErrorMessage>
+          </FormControl>
+          <FormControl isInvalid={errors.name}>
+            <FormLabel htmlFor="name">
+              Tên môn học
+              <span role="presentation" aria-hidden="true" style={{ color: 'red', marginLeft: '2px' }}>
+                *
+              </span>
+            </FormLabel>
+            <Input
+              id="name"
+              placeholder="Tên môn học"
+              defaultValue={subject ? subject.name : ''}
+              {...register('name', {
+                required: 'Tên môn học không được bỏ trống',
+                minLength: { value: 4, message: 'Tên môn học phải ít nhất 4 kí tự' },
+              })}
+            />
+            <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
+          </FormControl>
+          <FormControl>
+            <FormLabel>Hiển thị</FormLabel>
+            <Switch
+              defaultChecked={status}
+              onChange={() => {
+                setStatus(!status);
+              }}
+            />
+          </FormControl>
+          <Flex gap={'1rem'}>
+            <Button mt={4} bg="gray.300" type="button" onClick={() => navigate('/subject/list')}>
+              Quay lại
+            </Button>
+            <Button mt={4} colorScheme="teal" isLoading={isSubmit} type="submit">
+              Sửa
+            </Button>
+          </Flex>
+        </form>
+      ) : (
+        <></>
+      )}
     </>
   );
 }

@@ -98,6 +98,34 @@ const LinkItems = [
         name: 'Thêm tài khoản',
       }
     ],
+  },
+  {
+    name: 'Ngân hàng câu hỏi',
+    icon: FiBriefcase,
+    children: [
+      {
+        to: '/question-bank/list',
+        name: 'Danh sách',
+      },
+      {
+        to: '/question-bank/new',
+        name: 'Thêm mới câu hỏi',
+      }
+    ],
+  },
+  {
+    name: 'Phân quyền',
+    icon: FiBriefcase,
+    children: [
+      {
+        to: '/role/list',
+        name: 'Danh sách',
+      },
+      {
+        to: '/role/new',
+        name: 'Thêm mới quyền',
+      }
+    ],
   }
 ];
 

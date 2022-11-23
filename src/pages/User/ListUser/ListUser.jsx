@@ -1,6 +1,13 @@
 import {
   Button,
   Flex,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTrigger,
   Table,
   TableCaption,
   TableContainer,
@@ -11,6 +18,7 @@ import {
   Th,
   Thead,
   Tr,
+  useToast,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -22,10 +30,12 @@ import Card from '../../../Components/Core/Card/Card';
 export default function ListUser() {
   const navigate = useNavigate();
   const [tableData, setTableData] = useState({});
+  const toast = useToast();
+  const [isSubmit, setIsSubmit] = useState(false);
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [isSubmit]);
 
   const fetchUsers = async () => {
     const data = await userAPI.get();
@@ -38,8 +48,33 @@ export default function ListUser() {
       setTableData(response);
     });
   };
+
+  const deleteUser = (id) => {
+    setIsSubmit(false);
+    userAPI
+      .delete(id)
+      .then((res) => {
+        toast({
+          title: 'Thông báo',
+          description: res.msg,
+          status: 'success',
+          duration: 2000,
+          isClosable: true,
+        });
+      })
+      .catch((err) => {
+        setIsSubmit(false);
+        toast({
+          title: 'Lỗi',
+          description: err.errorInfo,
+          status: 'error',
+          duration: 2000,
+          isClosable: true,
+        });
+      });
+  };
   return (
-    <Card p='20px'>
+    <Card p="20px">
       <TableContainer>
         <Flex px="25px" justify="space-between" mb="20px" align="center">
           <Text fontSize="22px" fontWeight="700" lineHeight="100%">
@@ -57,8 +92,6 @@ export default function ListUser() {
               <Th>Trạng thái</Th>
               <Th>Vai trò</Th>
               <Th>Lớp</Th>
-              <Th>Ngày tạo</Th>
-              <Th>Cập nhật lúc</Th>
               <Th textAlign={'center'}>Thao tác</Th>
             </Tr>
           </Thead>
@@ -74,15 +107,37 @@ export default function ListUser() {
                   <Td>{user.status == 1 ? 'Không bị khóa' : 'Bị khóa'}</Td>
                   <Td>{user.role_name}</Td>
                   <Td>{user.class_name}</Td>
-                  <Td>{user.created_at}</Td>
-                  <Td>{user.created_at}</Td>
+
                   <Td display={'flex'} gap={'5px'}>
                     <Button flex={1} colorScheme="teal" onClick={() => navigate(`/user/update/${user.id}`)}>
                       Sửa
                     </Button>
-                    <Button flex={1} colorScheme="red">
-                      Xóa
-                    </Button>
+                    <Popover isLazy placement="bottom-end">
+                      <PopoverTrigger>
+                        <Button flex={1} colorScheme="red">
+                          Xóa
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <PopoverHeader fontWeight="semibold">Bạn có muốn xóa không ?</PopoverHeader>
+                        <PopoverArrow />
+                        <PopoverCloseButton />
+                        <PopoverBody>
+                          <Button
+                            flex={1}
+                            colorScheme="red"
+                            onClick={() => {
+                              deleteUser(user.id);
+                            }}
+                          >
+                            Đồng ý
+                          </Button>
+                          <Button flex={1} colorScheme="gray">
+                            Hủy
+                          </Button>
+                        </PopoverBody>
+                      </PopoverContent>
+                    </Popover>
                   </Td>
                 </Tr>
               ))

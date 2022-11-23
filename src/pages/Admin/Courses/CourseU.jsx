@@ -30,12 +30,13 @@ const CoursesU = () => {
     handleSubmit,
     register,
     formState: { errors },
+    setValue,
   } = useForm();
   const params = useParams();
   const navigate = useNavigate();
   const [isSubmit, setIsSubmit] = useState(false);
   const [defaultName, setDefaultName] = useState(null);
-  const [defaultSwitchValue, setDefaultSwitchValue] = useState(true);
+  const [defaultSwitchValue, setDefaultSwitchValue] = useState();
 
   function onSubmit(values) {
     const postData = {
@@ -89,27 +90,30 @@ const CoursesU = () => {
 
       setListTeacher(res2);
       setSubject(res3);
+      for (const [key, value] of Object.entries(res)) {
+        setValue(`${key}`, value);
+      }
       setDefaultSubject(res.subject_id);
     };
     fetchData().catch((err) => console.log(err));
   }, []);
-
+  console.log(defaultName);
   return (
     <>
       <Text fontSize="6xl" fontWeight="bold">
         {params.id ? 'Sửa khóa học' : 'Thêm mới khóa học'}
       </Text>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl isInvalid={errors.subject_id}>
-          <FormLabel htmlFor="subject_id">
-            Môn học
-            <span role="presentation" aria-hidden="true" style={{ color: 'red', marginLeft: '2px' }}>
-              *
-            </span>
-          </FormLabel>
-          {defaultSubject ? (
+      {defaultSubject && listTeacher && course ? (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <FormControl isInvalid={errors.subject_id}>
+            <FormLabel htmlFor="subject_id">
+              Môn học
+              <span role="presentation" aria-hidden="true" style={{ color: 'red', marginLeft: '2px' }}>
+                *
+              </span>
+            </FormLabel>
             <Select
-              defaultValue={defaultSubject}
+              value={defaultSubject}
               id="subject_id"
               placeholder="Chọn môn học"
               {...register('subject_id', {
@@ -122,71 +126,64 @@ const CoursesU = () => {
                 </option>
               ))}
             </Select>
-          ) : (
-            <></>
-          )}
-          <FormErrorMessage>{errors.subject_id && errors.subject_id.message}</FormErrorMessage>
-        </FormControl>
-        <FormControl isInvalid={errors.class_code}>
-          <FormLabel htmlFor="class_code">
-            Mã lớp
-            <span role="presentation" aria-hidden="true" style={{ color: 'red', marginLeft: '2px' }}>
-              *
-            </span>
-          </FormLabel>
-          <Input
-            id="class_code"
-            defaultValue={course ? course.class_code : ''}
-            {...register('class_code', {
-              required: 'Vui lòng nhập mã lớp',
-            })}
-          />
-          <FormErrorMessage>{errors.class_code && errors.class_code.message}</FormErrorMessage>
-        </FormControl>
-
-        <FormControl isInvalid={errors.name}>
-          <FormLabel htmlFor="name">
-            Tên giáo viên
-            <span role="presentation" aria-hidden="true" style={{ color: 'red', marginLeft: '2px' }}>
-              *
-            </span>
-          </FormLabel>
-          {defaultName ? (
+            <FormErrorMessage>{errors.subject_id && errors.subject_id.message}</FormErrorMessage>
+          </FormControl>
+          <FormControl isInvalid={errors.class_code}>
+            <FormLabel htmlFor="class_code">
+              Mã lớp
+              <span role="presentation" aria-hidden="true" style={{ color: 'red', marginLeft: '2px' }}>
+                *
+              </span>
+            </FormLabel>
+            <Input
+              id="class_code"
+              defaultValue={course ? course.class_code : ''}
+              {...register('class_code', {
+                required: 'Vui lòng nhập mã lớp',
+              })}
+            />
+            <FormErrorMessage>{errors.class_code && errors.class_code.message}</FormErrorMessage>
+          </FormControl>
+          <FormControl isInvalid={errors.name}>
+            <FormLabel htmlFor="name">
+              Tên giáo viên
+              <span role="presentation" aria-hidden="true" style={{ color: 'red', marginLeft: '2px' }}>
+                *
+              </span>
+            </FormLabel>
             <Select
               placeholder="Chọn giáo viên"
               id="name"
-              defaultValue={defaultName}
+              value={defaultName}
               {...register('name', {
                 required: 'Vui lòng nhập tên giáo viên',
               })}
             >
-              {listTeacher?.map((item) => (
+              {listTeacher.data?.map((item) => (
                 <option key={item.id} value={item.name}>
                   {item.name}
                 </option>
               ))}
             </Select>
-          ) : (
-            <></>
-          )}
-
-          <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
-        </FormControl>
-
-        <FormControl display="flex" alignItems="center" mt="15">
-          <FormLabel htmlFor="status" mb="0">
-            Hiện thị
-          </FormLabel>
-          <Switch
-            id="status"
-            isChecked={defaultSwitchValue}
-            onChange={() => setDefaultSwitchValue(!defaultSwitchValue)}
-          />
-        </FormControl>
-        <Button mt={4} colorScheme="teal" isLoading={isSubmit} type="submit">
-          Lưu
-        </Button>
-      </form>
+            <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
+          </FormControl>
+          <FormControl display="flex" alignItems="center" mt="15">
+            <FormLabel htmlFor="status" mb="0">
+              Hiện thị
+            </FormLabel>
+            <Switch
+              id="status"
+              isChecked={defaultSwitchValue}
+              onChange={() => setDefaultSwitchValue(!defaultSwitchValue)}
+            />
+          </FormControl>
+          <Button mt={4} colorScheme="teal" isLoading={isSubmit} type="submit">
+            Lưu
+          </Button>
+        </form>
+      ) : (
+        <></>
+      )}
     </>
   );
 };
