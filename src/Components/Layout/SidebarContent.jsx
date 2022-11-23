@@ -15,6 +15,8 @@ const LinkItems = [
   { name: 'Thêm mới môn học', icon: FiBook, to: '/subject/new' },
   { name: 'Danh sách ngành học', icon: FiBriefcase, to: '/major/list' },
   { name: 'Thêm mới ngành học', icon: FiBriefcase, to: '/major/new' },
+  { name: 'Danh sách câu hỏi', icon: FiBriefcase, to: '/question-bank/list' },
+  { name: 'Thêm mới câu hỏi', icon: FiBriefcase, to: '/question-bank/new' },
 ];
 
 function SidebarContent({ onClose, ...rest }) {

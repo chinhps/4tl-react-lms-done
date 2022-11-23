@@ -32,11 +32,9 @@ function HomeLayout({ children }) {
               <BreadcrumbItem>
                 <BreadcrumbLink href="/">Trang chủ</BreadcrumbLink>
               </BreadcrumbItem>
-
               <BreadcrumbItem>
                 <BreadcrumbLink href="#">Thông tin</BreadcrumbLink>
               </BreadcrumbItem>
-
             </Breadcrumb>
           </Box>
           {children}

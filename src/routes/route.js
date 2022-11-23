@@ -20,6 +20,8 @@ import ListMajor from '../pages/Major/ListMajor/ListMajor';
 import CreateMajor from '../pages/Major/CreateMajor/CreateMajor';
 import UpdateMajor from '../pages/Major/UpdateMajor/UpdateMajor';
 import CoursesC from '../pages/Admin/Courses/CoursesC';
+import ListQuestion from '../pages/QuestionBank/ListQuestion/ListQuestion';
+import CreateQuestion from '../pages/QuestionBank/CreateQuestion/CreateQuestion';
 
 const publicRoutes = [
   {
@@ -142,6 +144,17 @@ const publicRoutes = [
     layout: HomeLayout,
     guard: ProtectedAuth,
   },
+  {
+    path: '/question-bank/list',
+    component: ListQuestion,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/question-bank/new',
+    component: CreateQuestion,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
 ];
-
 export { publicRoutes };
