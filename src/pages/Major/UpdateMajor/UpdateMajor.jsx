@@ -67,19 +67,33 @@ export default function UpdateMajor() {
         Sửa ngành học
       </Text>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <FormControl isInvalid={errors.name} isRequired>
-          <FormLabel htmlFor="name">Tên ngành</FormLabel>
+        <FormControl isInvalid={errors.name}>
+          <FormLabel htmlFor="name">
+            Tên ngành
+            <span role="presentation" aria-hidden="true" style={{ color: 'red', marginLeft: '2px' }}>
+              *
+            </span>
+          </FormLabel>
           <Input
             id="name"
-            defaultValue={major.name ? major.name : ''}
             placeholder="Tên ngành"
             {...register('name', {
-              required: 'This is required',
-              minLength: { value: 4, message: 'Minimum length should be 4' },
+              required: 'Tên ngành học không được bỏ trống',
+              minLength: { value: 4, message: 'Tên ngành học phải ' },
             })}
           />
           <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
         </FormControl>
+        <FormControl>
+          <FormLabel htmlFor="status">Hiển thị</FormLabel>
+          <Switch
+            size="lg"
+            onChange={() => {
+              setStatus(!status);
+            }}
+          />
+        </FormControl>
+        <br />
         <FormControl>
           <FormLabel htmlFor="status">Hiển thị</FormLabel>
           {status != undefined ? (

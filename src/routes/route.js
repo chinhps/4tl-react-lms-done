@@ -20,6 +20,9 @@ import ListMajor from '../pages/Major/ListMajor/ListMajor';
 import CreateMajor from '../pages/Major/CreateMajor/CreateMajor';
 import UpdateMajor from '../pages/Major/UpdateMajor/UpdateMajor';
 import CoursesC from '../pages/Admin/Courses/CoursesC';
+import ListRole from '../pages/Role/ListRole/ListRole';
+import CreateRole from '../pages/Role/CreateRole/CreateRole';
+import UpdateRole from '../pages/Role/UpdateRole/UpdateRole';
 
 const publicRoutes = [
   {
@@ -140,6 +143,24 @@ const publicRoutes = [
   {
     path: '/major/update/:id',
     component: UpdateMajor,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/role/list',
+    component: ListRole,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/role/new',
+    component: CreateRole,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/role/update/:id',
+    component: UpdateRole,
     layout: HomeLayout,
     guard: ProtectedAuth,
   },
