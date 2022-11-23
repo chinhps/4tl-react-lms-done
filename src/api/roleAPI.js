@@ -11,9 +11,6 @@ const rolesAPI = {
   put: (id, data) => {
     return axiosClient.put(`${BASE_URL}/${id}`, data);
   },
-  getTeacher: () => {
-    return axiosClient.get(`${BASE_URL}/get-teacher`);
-  },
   getById: (id) => {
     return axiosClient.get(`${BASE_URL}/${id}`);
   },

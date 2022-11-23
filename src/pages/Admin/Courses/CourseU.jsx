@@ -36,7 +36,7 @@ const CoursesU = () => {
   const navigate = useNavigate();
   const [isSubmit, setIsSubmit] = useState(false);
   const [defaultName, setDefaultName] = useState(null);
-  const [defaultSwitchValue, setDefaultSwitchValue] = useState(true);
+  const [defaultSwitchValue, setDefaultSwitchValue] = useState();
 
   function onSubmit(values) {
     const postData = {

@@ -1,7 +1,20 @@
 import React from 'react';
 import { Box, CloseButton, Flex, Icon, useColorModeValue, Link, Text } from '@chakra-ui/react';
 import { Link as ReachLink } from 'react-router-dom';
-import { FiHome, FiTrendingUp, FiCompass, FiStar, FiSettings, FiUser, FiUserPlus, FiBookOpen, FiBook, FiBriefcase, FiBookmark, FiPlus } from 'react-icons/fi';
+import {
+  FiHome,
+  FiTrendingUp,
+  FiCompass,
+  FiStar,
+  FiSettings,
+  FiUser,
+  FiUserPlus,
+  FiBookOpen,
+  FiBook,
+  FiBriefcase,
+  FiBookmark,
+  FiPlus,
+} from 'react-icons/fi';
 
 const LinkItems = [
   { name: 'Trang chủ', icon: FiHome, to: '/' },
@@ -17,6 +30,8 @@ const LinkItems = [
   { name: 'Thêm mới ngành học', icon: FiBriefcase, to: '/major/new' },
   { name: 'Danh sách câu hỏi', icon: FiBriefcase, to: '/question-bank/list' },
   { name: 'Thêm mới câu hỏi', icon: FiBriefcase, to: '/question-bank/new' },
+  { name: 'Danh sách quyền', icon: FiBriefcase, to: '/role/list' },
+  { name: 'Thêm mới quyền', icon: FiBriefcase, to: '/role/new' },
 ];
 
 function SidebarContent({ onClose, ...rest }) {

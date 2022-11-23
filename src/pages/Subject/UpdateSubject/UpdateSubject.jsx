@@ -10,6 +10,7 @@ import {
   Switch,
   Flex,
   Text,
+  Checkbox,
 } from '@chakra-ui/react';
 import subjectsAPI from '../../../api/subjectAPI';
 import { useState } from 'react';
@@ -26,12 +27,12 @@ export default function UpdateSubject() {
   } = useForm();
   const toast = useToast();
   const navigate = useNavigate();
-  const [status, setStatus] = useState(false);
   const [major, setMajor] = useState([]);
   const [isSubmit, setIsSubmit] = useState(false);
   const [subject, setSubject] = useState(null);
   const [majorSelected, setMajorSelected] = useState(null);
   const params = useParams();
+  const [status, setStatus] = useState();
 
   function onSubmit(values) {
     return new Promise((resolve) => {
@@ -91,31 +92,32 @@ export default function UpdateSubject() {
         setValue(`${key}`, value);
       }
     };
-    fetchData().catch((err) => console.log(err));
+    fetchData();
   }, [params.id]);
+
   return (
     <>
       <Text fontSize="6xl" fontWeight="bold">
         {params.id ? 'Sửa môn học' : 'Thêm mới môn học'}
       </Text>
-      {(subject && majorSelected) ? (
+      {subject && majorSelected ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           <FormControl isInvalid={errors.major_id}>
             <FormLabel htmlFor="name">Ngành học</FormLabel>
-              <Select
-                placeholder="Chọn ngành học"
-                id="major_id"
-                value={majorSelected}
-                {...register('major_id', {
-                  required: 'Vui lòng nhập tên giáo viên',
-                })}
-              >
-                {major.data?.map((item) => (
-                  <option key={item.id} value={item.id}>
-                    {item.name}
-                  </option>
-                ))}
-              </Select>
+            <Select
+              placeholder="Chọn ngành học"
+              id="major_id"
+              value={majorSelected}
+              {...register('major_id', {
+                required: 'Vui lòng nhập tên giáo viên',
+              })}
+            >
+              {major.data?.map((item) => (
+                <option key={item.id} value={item.id}>
+                  {item.name}
+                </option>
+              ))}
+            </Select>
 
             <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
           </FormControl>

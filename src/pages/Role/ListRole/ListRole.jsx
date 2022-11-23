@@ -1,14 +1,6 @@
 import {
   Button,
   Flex,
-  Icon,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverHeader,
-  PopoverTrigger,
   Table,
   TableContainer,
   Tbody,
@@ -17,35 +9,43 @@ import {
   Th,
   Thead,
   Tr,
+  Icon,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverBody,
   useToast,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import coursesAPI from '../../../api/coursesAPI';
+import rolesAPI from '../../../api/roleAPI';
 import { useNavigate } from 'react-router-dom';
 import { Pagination } from 'react-laravel-paginex';
 import axiosClient from '../../../api/axiosClient';
 import Card from '../../../Components/Core/Card/Card';
-import { MdCancel, MdCheckCircle } from 'react-icons/md';
 
-export default function Course() {
+export default function ListRole() {
   const navigate = useNavigate();
   const [tableData, setTableData] = useState({});
   const toast = useToast();
   const [isSubmit, setIsSubmit] = useState(false);
+
   useEffect(() => {
-    coursesAPI.get().then((course) => {
-      setTableData(course);
+    rolesAPI.get().then((major) => {
+      setTableData(major);
     });
   }, [isSubmit]);
   const getData = async (data) => {
-    axiosClient.get('/api/courses?page=' + data.page).then((response) => {
+    axiosClient.get('/api/role?page=' + data.page).then((response) => {
       setTableData(response);
     });
   };
 
-  const deleteCourses = (id) => {
+  const deleteRole = (id) => {
     setIsSubmit(!isSubmit);
-    coursesAPI
+    rolesAPI
       .delete(id)
       .then((res) => {
         toast({
@@ -72,51 +72,31 @@ export default function Course() {
       <TableContainer>
         <Flex px="25px" justify="space-between" mb="20px" align="center">
           <Text fontSize="22px" fontWeight="700" lineHeight="100%">
-            Danh sách khóa học
+            Danh sách ngành học
           </Text>
         </Flex>
         <Table variant="simple">
           <Thead>
             <Tr>
               <Th>ID</Th>
-              <Th>Mã lớp</Th>
-              <Th>Môn học</Th>
-              <Th>Giáo viên</Th>
-              <Th>Trạng thái</Th>
+              <Th>Mã Quyền </Th>
+              <Th>Tên Quyền</Th>
               <Th textAlign={'center'}>Thao tác</Th>
             </Tr>
           </Thead>
           <Tbody>
             {tableData.data ? (
-              tableData.data.map((course, index) => (
+              tableData.data.map((role, index) => (
                 <Tr key={index}>
-                  <Td>{course.id}</Td>
-                  <Td>{course.class_code}</Td>
-                  <Td>{course.subject_name}</Td>
-                  <Td>{course.course_name}</Td>
-                  <Td>
-                    {course.status == 1 ? (
-                      <Flex align="center">
-                        <Icon w="24px" h="24px" me="5px" color={'green.500'} as={MdCheckCircle} />
-                        <Text fontSize="sm" fontWeight="700">
-                          Bình thường
-                        </Text>
-                      </Flex>
-                    ) : (
-                      <Flex align="center">
-                        <Icon w="24px" h="24px" me="5px" color={'red.500'} as={MdCancel} />
-                        <Text fontSize="sm" fontWeight="700">
-                          Khóa
-                        </Text>
-                      </Flex>
-                    )}
-                  </Td>
+                  <Td>{role.id}</Td>
+                  <Td>{role.role_code}</Td>
+                  <Td>{role.role_name}</Td>
                   <Td display={'flex'} gap={'5px'}>
                     <Button
                       flex={1}
                       colorScheme="teal"
                       onClick={() => {
-                        navigate(`/admin/courses/${course.id}`);
+                        navigate(`/role/update/${role.id}`);
                       }}
                     >
                       Sửa
@@ -136,7 +116,7 @@ export default function Course() {
                             flex={1}
                             colorScheme="red"
                             onClick={() => {
-                              deleteCourses(course.id);
+                              deleteRole(role.id);
                             }}
                           >
                             Đồng ý

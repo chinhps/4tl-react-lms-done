@@ -23,16 +23,15 @@ export default function UpdateUser() {
   const params = useParams();
   const navigate = useNavigate();
   const toast = useToast();
-
+  const [role, setRole] = useState([]);
+  const [classes, setClasses] = useState([]);
+  const [isSubmit, setIsSubmit] = useState(false);
   const {
     handleSubmit,
     register,
     formState: { errors },
     setValue,
   } = useForm();
-  const [role, setRole] = useState([]);
-  const [classes, setClasses] = useState([]);
-  const [isSubmit, setIsSubmit] = useState(false);
 
   function onSubmit(values) {
     return new Promise((resolve) => {
@@ -59,25 +58,21 @@ export default function UpdateUser() {
           duration: 2000,
           isClosable: true,
         });
-      });
-    })
-      .then(() => {
         setTimeout(() => {
           navigate('/user/list');
         }, 2000);
-      })
-
-      .catch((err) => {
-        setIsSubmit(false);
-
-        toast({
-          title: 'Lỗi',
-          description: err.errorInfo,
-          status: 'error',
-          duration: 2000,
-          isClosable: true,
-        });
       });
+    }).catch((err) => {
+      setIsSubmit(false);
+
+      toast({
+        title: 'Lỗi',
+        description: err.errorInfo,
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      });
+    });
   }
 
   useEffect(() => {
@@ -104,7 +99,7 @@ export default function UpdateUser() {
       <Text fontSize="6xl" fontWeight="bold">
         {params.id ? 'Sửa người dùng' : 'Thêm mới người dùng'}
       </Text>
-      {(userInfo) ? (
+      {userInfo ? (
         <form onSubmit={handleSubmit(onSubmit)} style={{ gap: '20px', display: 'flex', flexDirection: 'column' }}>
           <FormControl isInvalid={errors.user_code}>
             <FormLabel htmlFor="user_code">

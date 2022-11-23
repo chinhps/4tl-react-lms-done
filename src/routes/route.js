@@ -20,8 +20,14 @@ import ListMajor from '../pages/Major/ListMajor/ListMajor';
 import CreateMajor from '../pages/Major/CreateMajor/CreateMajor';
 import UpdateMajor from '../pages/Major/UpdateMajor/UpdateMajor';
 import CoursesC from '../pages/Admin/Courses/CoursesC';
+<<<<<<< HEAD
 import ListQuestion from '../pages/QuestionBank/ListQuestion/ListQuestion';
 import CreateQuestion from '../pages/QuestionBank/CreateQuestion/CreateQuestion';
+=======
+import ListRole from '../pages/Role/ListRole/ListRole';
+import CreateRole from '../pages/Role/CreateRole/CreateRole';
+import UpdateRole from '../pages/Role/UpdateRole/UpdateRole';
+>>>>>>> 638f9656fe117ada869732ab9a640b68d9b156a5
 
 const publicRoutes = [
   {
@@ -89,6 +95,7 @@ const publicRoutes = [
     guard: ProtectedAuth,
     component: CoursesU,
     layout: HomeLayout,
+    guard: ProtectedAuth,
   },
   {
     path: '/user/list',
@@ -145,14 +152,30 @@ const publicRoutes = [
     guard: ProtectedAuth,
   },
   {
+<<<<<<< HEAD
     path: '/question-bank/list',
     component: ListQuestion,
+=======
+    path: '/role/list',
+    component: ListRole,
+>>>>>>> 638f9656fe117ada869732ab9a640b68d9b156a5
     layout: HomeLayout,
     guard: ProtectedAuth,
   },
   {
+<<<<<<< HEAD
     path: '/question-bank/new',
     component: CreateQuestion,
+=======
+    path: '/role/new',
+    component: CreateRole,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/role/update/:id',
+    component: UpdateRole,
+>>>>>>> 638f9656fe117ada869732ab9a640b68d9b156a5
     layout: HomeLayout,
     guard: ProtectedAuth,
   },
