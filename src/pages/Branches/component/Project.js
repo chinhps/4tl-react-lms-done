@@ -51,7 +51,7 @@ export default function Project({ data, image, link, title }) {
       });
     }
 
-    navigate('/course');
+    navigate('/course/'+data.slug);
   };
 
   const handelClickProject = (data) => {

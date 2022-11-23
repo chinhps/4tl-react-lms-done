@@ -4,13 +4,15 @@ import { Box, Flex, Icon, Image, Link, Text, useColorModeValue } from '@chakra-u
 // Assets
 import { MdAccessTime, MdCallMissed, MdKeyboardReturn } from 'react-icons/md';
 import Card from '../../../Components/Core/Card/Card';
+import moment from 'moment';
+import "moment/locale/vi";
 
-function CouseItem({ name, description, type, history, dateline }, rest) {
+function CouseItem({ name, description, type, history, deadline }, rest) {
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue('secondaryGray.900', 'white');
   const textColorSecondary = 'gray.400';
   const bg = useColorModeValue('white', 'navy.700');
-  const rdBg = ['https://i.imgur.com/iZSJCDq.png', 'https://i.imgur.com/hF9bSEF.png'];
+  const rdBg = ['https://i.imgur.com/iZSJCDq.png', 'https://i.imgur.com/hF9bSEF.png', 'https://i.imgur.com/TVo32ES.png'];
 
   return (
     <Card bg={bg} {...rest} p="20px">
@@ -43,10 +45,10 @@ function CouseItem({ name, description, type, history, dateline }, rest) {
 
             <Text color={textColorPrimary}>
               <Flex alignItems="center" gap="10px">
-                {dateline ? (
+                {deadline ? (
                   <>
                     <MdAccessTime />
-                    {dateline}
+                    {  moment(deadline.time_end).locale('vi').subtract(deadline.time_start).calendar() }
                   </>
                 ) : (
                   <>

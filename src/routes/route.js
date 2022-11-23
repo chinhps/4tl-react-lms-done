@@ -58,7 +58,7 @@ const publicRoutes = [
     layout: AuthLayout,
   },
   {
-    path: '/course',
+    path: '/course/:slugCourse',
     component: Coures,
     layout: HomeLayout,
     guard: ProtectedAuth,
@@ -77,14 +77,13 @@ const publicRoutes = [
   },
   {
     path: '/admin/courses/new',
-
     component: CoursesC,
     layout: HomeLayout,
     guard: ProtectedAuth,
   },
   {
     path: '/admin/courses/:id',
-
+    guard: ProtectedAuth,
     component: CoursesU,
     layout: HomeLayout,
   },

@@ -10,7 +10,7 @@ function HomeLayout({ children }) {
 
   return (
     <>
-      <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
+      <Box minH="100vh" bg={useColorModeValue('#f4f7fe', 'gray.900')}>
         <SidebarContent onClose={() => onClose} display={{ base: 'none', md: 'block' }} />
         <Drawer
           autoFocus={false}

@@ -160,7 +160,7 @@ const CoursesU = () => {
                 required: 'Vui lòng nhập tên giáo viên',
               })}
             >
-              {listTeacher?.data.map((item) => (
+              {listTeacher?.map((item) => (
                 <option key={item.id} value={item.name}>
                   {item.name}
                 </option>

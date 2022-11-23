@@ -47,7 +47,7 @@ export default function Banner() {
         fontWeight='500'
         mb='40px'
         lineHeight='28px'>
-        Học không phải là con đường ngắn nhất để dẫn tới thành công nhưng là con đường ngắn nhất!
+        Học không phải là con đường duy nhất để dẫn tới thành công nhưng là con đường ngắn nhất!
       </Text>
       <Flex align='center'>
         <Button

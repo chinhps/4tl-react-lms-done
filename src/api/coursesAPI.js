@@ -6,6 +6,10 @@ const coursesAPI = {
     const url = '/api/course/joined?limit=' + limit;
     return axiosClient.get(url);
   },
+  getDocQuizLab: (slugCourse) => {
+    const url = '/api/course/' + slugCourse;
+    return axiosClient.get(url);
+  },
   joinCourse: (idCourse) => {
     const url = '/api/course/join';
     return axiosClient.post(url, { idCourse });

@@ -35,6 +35,7 @@ function HistoryCourse({ limit = 3 }) {
               key={i}
               name={data.name}
               author={data.class_code}
+              link={data.slug}
               image={'https://i.imgur.com/v4YUHjU.png'}
             />
           ))

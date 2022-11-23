@@ -1,20 +1,104 @@
 import React from 'react';
-import { Box, CloseButton, Flex, Icon, useColorModeValue, Link, Text } from '@chakra-ui/react';
+import {
+  Box,
+  CloseButton,
+  Flex,
+  Icon,
+  useColorModeValue,
+  Link,
+  Text,
+  Accordion,
+  AccordionItem,
+  AccordionButton,
+  AccordionPanel,
+  AccordionIcon,
+} from '@chakra-ui/react';
 import { Link as ReachLink } from 'react-router-dom';
-import { FiHome, FiTrendingUp, FiCompass, FiStar, FiSettings, FiUser, FiUserPlus, FiBookOpen, FiBook, FiBriefcase, FiBookmark, FiPlus } from 'react-icons/fi';
+import {
+  FiHome,
+  FiTrendingUp,
+  FiCompass,
+  FiStar,
+  FiSettings,
+  FiUser,
+  FiUserPlus,
+  FiBookOpen,
+  FiBook,
+  FiBriefcase,
+  FiBookmark,
+  FiPlus,
+  FiChevronRight,
+} from 'react-icons/fi';
 
 const LinkItems = [
   { name: 'Trang chủ', icon: FiHome, to: '/' },
-  { name: 'Khóa học', icon: FiTrendingUp, to: '/branches' },
-  // { name: 'Tin nhắn', icon: FiCompass, to: '/chat' },
-  { name: 'Danh sách khóa học', icon: FiBookmark, to: '/admin/courses' },
-  { name: 'Thêm khóa học', icon: FiPlus, to: '/admin/courses/new' },
-  { name: 'Danh sách tài khoản', icon: FiUser, to: '/user/list' },
-  { name: 'Thêm mới tài khoản', icon: FiUserPlus, to: '/user/new' },
-  { name: 'Danh sách môn học', icon: FiBookOpen, to: '/subject/list' },
-  { name: 'Thêm mới môn học', icon: FiBook, to: '/subject/new' },
-  { name: 'Danh sách ngành học', icon: FiBriefcase, to: '/major/list' },
-  { name: 'Thêm mới ngành học', icon: FiBriefcase, to: '/major/new' },
+  { name: 'Kho kiến thức', icon: FiTrendingUp, to: '/branches' },
+  {
+    name: 'Tin nhắn',
+    icon: FiCompass,
+    children: [
+      {
+        to: '/',
+        name: 'Danh sách',
+      }
+    ],
+  },
+  {
+    name: 'Khóa học',
+    icon: FiBookmark,
+    children: [
+      {
+        to: '/admin/courses',
+        name: 'Danh sách',
+      },
+      {
+        to: '/admin/courses/new',
+        name: 'Thêm khóa học',
+      }
+    ],
+  },
+  {
+    name: 'Môn học',
+    icon: FiBook,
+    children: [
+      {
+        to: '/subject/list',
+        name: 'Danh sách',
+      },
+      {
+        to: '/subject/new',
+        name: 'Thêm môn học',
+      }
+    ],
+  },
+  {
+    name: 'Ngành học',
+    icon: FiBriefcase,
+    children: [
+      {
+        to: '/major/list',
+        name: 'Danh sách',
+      },
+      {
+        to: '/major/new',
+        name: 'Thêm ngành học',
+      }
+    ],
+  },
+  {
+    name: 'Người dùng',
+    icon: FiUser,
+    children: [
+      {
+        to: '/user/list',
+        name: 'Danh sách',
+      },
+      {
+        to: '/user/new',
+        name: 'Thêm tài khoản',
+      }
+    ],
+  }
 ];
 
 function SidebarContent({ onClose, ...rest }) {
@@ -36,24 +120,56 @@ function SidebarContent({ onClose, ...rest }) {
           </Text>
           <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
         </Flex>
-        {LinkItems.map((link) => (
-          <NavItem key={link.name} icon={link.icon} link={link.to}>
-            {link.name}
-          </NavItem>
-        ))}
+        <Accordion allowMultiple>
+          {LinkItems.map((link) => (
+            <AccordionItem border="0" key={link.name}>
+              <AccordionButton padding="0" w="100%">
+                <NavItem icon={link.icon} link={link.to}>
+                  {link.name}
+                </NavItem>
+              </AccordionButton>
+              {link.children
+                ? link.children.map((child, index) => (
+                    <AccordionPanel py="0" key={index}>
+                      <NavItem icon={FiChevronRight} link={child.to}>
+                        {child.name}
+                      </NavItem>
+                    </AccordionPanel>
+                  ))
+                : null}
+            </AccordionItem>
+          ))}
+        </Accordion>
       </Box>
     </>
   );
 }
 
+const NavLink = ({ link, children }) => {
+  return (
+    <>
+      {link ? (
+        <Link as={ReachLink} to={link} style={{ textDecoration: 'none' }} w="100%" _focus={{ boxShadow: 'none' }}>
+          {children}
+        </Link>
+      ) : (
+        <Link style={{ textDecoration: 'none' }} w="100%" _focus={{ boxShadow: 'none' }}>
+          {children}
+        </Link>
+      )}
+    </>
+  );
+};
+
 const NavItem = ({ link, icon, children, ...rest }) => {
   return (
-    <Link as={ReachLink} to={link} style={{ textDecoration: 'none' }} _focus={{ boxShadow: 'none' }}>
+    <NavLink link={link ?? null}>
       <Flex
         align="center"
-        p="4"
-        mx="4"
-        borderRadius="lg"
+        px="25px"
+        py="15px"
+        mx="0"
+        w="100%"
         role="group"
         cursor="pointer"
         _hover={{
@@ -74,7 +190,7 @@ const NavItem = ({ link, icon, children, ...rest }) => {
         )}
         {children}
       </Flex>
-    </Link>
+    </NavLink>
   );
 };
 

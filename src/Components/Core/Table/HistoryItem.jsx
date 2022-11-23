@@ -5,9 +5,10 @@ import { Button, Flex, Icon, Image, Text, useColorModeValue } from "@chakra-ui/r
 // Assets
 import { FaEthereum } from "react-icons/fa";
 import Card from "../Card/Card";
+import { Link } from "react-router-dom";
 
 export default function NFT(props) {
-  const { image, name, author } = props;
+  const { image, name, author, link } = props;
   // Chakra Color Mode
   const textColor = useColorModeValue("brands.900", "white");
   const bgItem = useColorModeValue(
@@ -51,7 +52,9 @@ export default function NFT(props) {
             </Text>
           </Flex>
           <Flex >
-            <Button variant="action">Chi tiết</Button>
+            <Link to={`/course/` + link}>
+              <Button variant="action">Chi tiết</Button>
+            </Link>
           </Flex>
         </Flex>
       </Flex>
