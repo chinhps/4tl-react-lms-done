@@ -21,7 +21,7 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import majorAPI from '../../../api/majorAPI';
-import { MdCheckCircle, MdCancel, MdOutlineError } from 'react-icons/md';
+import { MdCheckCircle, MdCancel } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { Pagination } from 'react-laravel-paginex';
 import axiosClient from '../../../api/axiosClient';
