@@ -8,7 +8,7 @@ export const itemSettings = [
   { title: 'Nhắn tin', icon: 'fa-solid fa-message', link: 'message' },
 ];
 
-export const imageConfig = {
+export const imgConfig = {
   default: fileDefault,
   pdf: filePdf,
   css: fileCss,
