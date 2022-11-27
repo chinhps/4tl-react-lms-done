@@ -9,12 +9,10 @@ import {
   PopoverHeader,
   PopoverTrigger,
   Table,
-  TableCaption,
   TableContainer,
   Tbody,
   Td,
   Text,
-  Tfoot,
   Th,
   Thead,
   Tr,
@@ -104,7 +102,7 @@ export default function ListUser() {
                   <Td>{user.name}</Td>
                   <Td>{user.email}</Td>
                   <Td>{user.phone_number}</Td>
-                  <Td>{user.status == 1 ? 'Không bị khóa' : 'Bị khóa'}</Td>
+                  <Td>{user.status === 1 ? 'Không bị khóa' : 'Bị khóa'}</Td>
                   <Td>{user.role_name}</Td>
                   <Td>{user.class_name}</Td>
 

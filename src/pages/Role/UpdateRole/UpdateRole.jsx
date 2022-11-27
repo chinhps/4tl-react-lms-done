@@ -48,10 +48,9 @@ export default function UpdateRole() {
   }
   useEffect(() => {
     rolesAPI.getById(id).then((res) => {
-      console.log(res);
       setRole(res);
     });
-  }, []);
+  }, [id]);
 
   return (
     <Box>
@@ -65,7 +64,7 @@ export default function UpdateRole() {
               <FormLabel htmlFor="role_name">Tên quyền</FormLabel>
               <Input
                 id="role_name"
-                defaultValue={role.role_name ? role.role_name : ''}
+                defaultValue={role.role_name ? role?.role_name : ''}
                 placeholder="Tên quyền"
                 {...register('role_name', {
                   required: 'Tên quyền không được để trống',
@@ -77,7 +76,7 @@ export default function UpdateRole() {
               <FormLabel htmlFor="role_code">Mã quyền</FormLabel>
               <Input
                 id="role_code"
-                defaultValue={role.role_code ? role.role_code : ''}
+                defaultValue={role.role_code ? role?.role_code : ''}
                 placeholder="Mã quyền"
                 {...register('role_code', {
                   required: 'Mã quyền không được để trống',
