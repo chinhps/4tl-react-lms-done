@@ -9,6 +9,14 @@ const userAPI = {
     const url = `/api/auth/login`;
     return axiosClient.post(url, data);
   },
+  urlLoginGoogle: () => {
+    const url = `/api/auth/get-google-sign-in-url`;
+    return axiosClient.post(url);
+  },
+  loginWithGoogle: (code) => {
+    const url = `/api/auth/callback?code=${code}`;
+    return axiosClient.get(url);
+  },
   get: () => {
     return axiosClient.get(`${BASE_URL}`);
   },

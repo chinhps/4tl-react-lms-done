@@ -25,6 +25,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchLogin } from '../../reducer/userSlide';
 import { useEffect } from 'react';
 import { setLogin } from '../../utils/auth';
+import userAPI from '../../api/userAPI';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 function Login() {
     // Chakra color mode
@@ -39,6 +41,8 @@ function Login() {
     const googleActive = useColorModeValue({ bg: 'secondaryGray.300' }, { bg: 'whiteAlpha.200' });
     const [show, setShow] = useState(false);
     const handleClick = () => setShow(!show);
+    const [pendingGoogle,setPendingGoogle] = useState(false);
+    const [searchParams, setSearchParams] = useSearchParams();
 
     const {
         register,
@@ -60,6 +64,7 @@ function Login() {
             }),
         );
     };
+
     useEffect(() => {
         if (GetError) {
             toast({
@@ -73,6 +78,22 @@ function Login() {
         }
         console.log(GetUser);
     }, [GetPending]);
+
+    useEffect(() => {
+        if(searchParams.get('code')) {
+            setPendingGoogle(true)
+            userAPI.loginWithGoogle(searchParams.get('code')).then(data => {
+                console.log('google',data);
+                setLogin();
+            });
+        }
+
+    },[]);
+
+    const handelLoginWithGoogle = async () => {
+        const url = await userAPI.urlLoginGoogle();
+        window.location = url.url;
+    }
 
     return (
         <>
@@ -122,6 +143,9 @@ function Login() {
                             _hover={googleHover}
                             _active={googleActive}
                             _focus={googleActive}
+                            onClick={() => handelLoginWithGoogle()}
+                            isLoading={pendingGoogle}
+                            loadingText='Đang đăng nhập'
                         >
                             <Icon as={FcGoogle} w="20px" h="20px" me="10px" />
                             Đăng nhập với Google
