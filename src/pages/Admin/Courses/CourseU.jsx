@@ -97,7 +97,6 @@ const CoursesU = () => {
     };
     fetchData().catch((err) => console.log(err));
   }, []);
-  console.log(defaultName);
   return (
     <>
       <Text fontSize="6xl" fontWeight="bold">
@@ -113,7 +112,7 @@ const CoursesU = () => {
               </span>
             </FormLabel>
             <Select
-              value={defaultSubject}
+              value={defaultSubject? defaultSubject : null}
               id="subject_id"
               placeholder="Chọn môn học"
               {...register('subject_id', {

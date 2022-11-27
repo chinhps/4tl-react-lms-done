@@ -211,7 +211,7 @@ export default function UpdateUser() {
                 required: 'Bạn chưa chọn vai trò',
               })}
             >
-              {role.map((item) => (
+              {role.data?.map((item) => (
                 <option key={item.id} value={item.id}>
                   {item.role_name}
                 </option>
