@@ -28,7 +28,7 @@ import UpdateRole from '../pages/Role/UpdateRole/UpdateRole';
 import ListPermission from '../pages/Permission/ListPermission/ListPermission';
 import CreatePermission from '../pages/Permission/CreatePermission/CreatePermission';
 import UpdatePermission from '../pages/Permission/UpdatePermission/UpdatePermission';
-
+import ChatBox from '../pages/Chat/ChatBox';
 const publicRoutes = [
   {
     path: '/',
@@ -94,7 +94,6 @@ const publicRoutes = [
     guard: ProtectedAuth,
     component: CoursesU,
     layout: HomeLayout,
-    guard: ProtectedAuth,
   },
   {
     path: '/user/list',
@@ -195,6 +194,12 @@ const publicRoutes = [
   {
     path: '/permission/update/:id',
     component: UpdatePermission,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/chat',
+    component: ChatBox,
     layout: HomeLayout,
     guard: ProtectedAuth,
   },

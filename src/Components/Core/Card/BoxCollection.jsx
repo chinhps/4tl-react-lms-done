@@ -7,19 +7,13 @@ import Card from './Card';
 function BoxCollection(props) {
   const { image, name, author, download } = props;
   const [like, setLike] = useState(false);
-  const textColor = useColorModeValue("navy.700", "white");
-  const textColorBid = useColorModeValue("brand.500", "white");
+  const textColor = useColorModeValue('navy.700', 'white');
+  const textColorBid = useColorModeValue('brand.500', 'white');
   return (
-    <Card p="20px">
+    <Card p="20px" style={{ cursor: 'pointer' }}>
       <Flex direction={{ base: 'column' }} justify="center">
         <Box mb={{ base: '20px', '2xl': '20px' }} position="relative">
-          <Image
-            src={image}
-            w={{ base: '100%', '3xl': '100%' }}
-            h={'200px'}
-            objectFit="cover"
-            borderRadius="20px"
-          />
+          <Image src={image} w={{ base: '100%', '3xl': '100%' }} h={'200px'} objectFit="cover" borderRadius="20px" />
           <Button
             position="absolute"
             bg="white"
@@ -36,7 +30,7 @@ function BoxCollection(props) {
               setLike(!like);
             }}
           >
-            <Icon transition="0.2s linear" w="20px" h="20px"  color="brand.500" />
+            <Icon transition="0.2s linear" w="20px" h="20px" color="brand.500" />
           </Button>
         </Box>
         <Flex flexDirection="column" justify="space-between" h="100%">
@@ -91,9 +85,7 @@ function BoxCollection(props) {
                 '2xl': '0px',
               }}
               fontSize="12px"
-            >
-
-            </AvatarGroup>
+            ></AvatarGroup>
           </Flex>
           <Flex
             align="start"
@@ -107,10 +99,7 @@ function BoxCollection(props) {
             }}
             mt="25px"
           >
-           
-            <Link
-              href={download}
-            >
+            <Link href={download}>
               <Button
                 variant="darkBrand"
                 color="white"
