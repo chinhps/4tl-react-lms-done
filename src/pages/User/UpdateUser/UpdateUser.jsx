@@ -9,6 +9,7 @@ import {
   Switch,
   Text,
   useToast,
+  Spinner,
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -251,7 +252,7 @@ export default function UpdateUser() {
           </Button>
         </form>
       ) : (
-        <></>
+        <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
       )}
     </>
   );

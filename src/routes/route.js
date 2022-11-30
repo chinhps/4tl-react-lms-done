@@ -25,6 +25,9 @@ import CreateQuestion from '../pages/QuestionBank/CreateQuestion/CreateQuestion'
 import ListRole from '../pages/Role/ListRole/ListRole';
 import CreateRole from '../pages/Role/CreateRole/CreateRole';
 import UpdateRole from '../pages/Role/UpdateRole/UpdateRole';
+import ListPermission from '../pages/Permission/ListPermission/ListPermission';
+import CreatePermission from '../pages/Permission/CreatePermission/CreatePermission';
+import UpdatePermission from '../pages/Permission/UpdatePermission/UpdatePermission';
 
 const publicRoutes = [
   {
@@ -174,6 +177,24 @@ const publicRoutes = [
   {
     path: '/role/update/:id',
     component: UpdateRole,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/permission/list',
+    component: ListPermission,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/permission/new',
+    component: CreatePermission,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/permission/update/:id',
+    component: UpdatePermission,
     layout: HomeLayout,
     guard: ProtectedAuth,
   },

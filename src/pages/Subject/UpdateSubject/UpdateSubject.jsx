@@ -11,6 +11,7 @@ import {
   Flex,
   Text,
   Checkbox,
+  Spinner,
 } from '@chakra-ui/react';
 import subjectsAPI from '../../../api/subjectAPI';
 import { useState } from 'react';
@@ -171,12 +172,12 @@ export default function UpdateSubject() {
               Quay lại
             </Button>
             <Button mt={4} colorScheme="teal" isLoading={isSubmit} type="submit">
-              Sửa
+              Cập nhật
             </Button>
           </Flex>
         </form>
       ) : (
-        <></>
+        <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
       )}
     </>
   );

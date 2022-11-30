@@ -1,14 +1,6 @@
 import {
   Button,
   Flex,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverHeader,
-  PopoverTrigger,
-  Spinner,
   Table,
   TableContainer,
   Tbody,
@@ -17,40 +9,44 @@ import {
   Th,
   Thead,
   Tr,
+  Icon,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverBody,
   useToast,
+  Spinner,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import userAPI from '../../../api/userAPI';
 import { Pagination } from 'react-laravel-paginex';
 import axiosClient from '../../../api/axiosClient';
 import Card from '../../../Components/Core/Card/Card';
+import permissionsAPI from '../../../api/permissionsAPI';
 
-export default function ListUser() {
+export default function ListPermissionGroup() {
   const navigate = useNavigate();
   const [tableData, setTableData] = useState({});
   const toast = useToast();
   const [isSubmit, setIsSubmit] = useState(false);
 
   useEffect(() => {
-    fetchUsers();
+    permissionsAPI.get().then((major) => {
+      setTableData(major);
+    });
   }, [isSubmit]);
-
-  const fetchUsers = async () => {
-    const data = await userAPI.get();
-    setTableData(data);
-    console.log(data);
-  };
-
   const getData = async (data) => {
-    axiosClient.get('/api/users?page=' + data.page).then((response) => {
+    axiosClient.get('/api/permission?page=' + data.page).then((response) => {
       setTableData(response);
     });
   };
 
-  const deleteUser = (id) => {
-    setIsSubmit(false);
-    userAPI
+  const deletePermission = (id) => {
+    setIsSubmit(!isSubmit);
+    permissionsAPI
       .delete(id)
       .then((res) => {
         toast({
@@ -62,7 +58,7 @@ export default function ListUser() {
         });
       })
       .catch((err) => {
-        setIsSubmit(false);
+        setIsSubmit(!isSubmit);
         toast({
           title: 'Lỗi',
           description: err.errorInfo,
@@ -72,43 +68,43 @@ export default function ListUser() {
         });
       });
   };
+
   return (
     <Card p="20px">
       <TableContainer>
         <Flex px="25px" justify="space-between" mb="20px" align="center">
           <Text fontSize="22px" fontWeight="700" lineHeight="100%">
-            Danh sách tài khoản
+            Danh sách quyền
           </Text>
         </Flex>
         <Table variant="simple">
           <Thead>
             <Tr>
               <Th>ID</Th>
-              <Th>Mã số</Th>
-              <Th>Họ và tên</Th>
-              <Th>Email</Th>
-              <Th>Số điện thoại</Th>
-              <Th>Trạng thái</Th>
-              <Th>Vai trò</Th>
-              <Th>Lớp</Th>
+              <Th>Mã Quyền </Th>
+              <Th>Tên Quyền</Th>
+              <Th>Thể loại </Th>
+
               <Th textAlign={'center'}>Thao tác</Th>
             </Tr>
           </Thead>
           <Tbody>
             {tableData.data ? (
-              tableData.data.map((user, index) => (
+              tableData.data.map((permission, index) => (
                 <Tr key={index}>
-                  <Td>{user.id}</Td>
-                  <Td>{user.user_code}</Td>
-                  <Td>{user.name}</Td>
-                  <Td>{user.email}</Td>
-                  <Td>{user.phone_number}</Td>
-                  <Td>{user.status === 1 ? 'Không bị khóa' : 'Bị khóa'}</Td>
-                  <Td>{user.role_name}</Td>
-                  <Td>{user.class_name}</Td>
+                  <Td>{permission.id}</Td>
+                  <Td>{permission.ps_code}</Td>
+                  <Td>{permission.ps_name}</Td>
+                  <Td>{permission.ps_group}</Td>
 
                   <Td display={'flex'} gap={'5px'}>
-                    <Button flex={1} colorScheme="teal" onClick={() => navigate(`/user/update/${user.id}`)}>
+                    <Button
+                      flex={1}
+                      colorScheme="teal"
+                      onClick={() => {
+                        navigate(`/permission/update/${permission.id}`);
+                      }}
+                    >
                       Sửa
                     </Button>
                     <Popover isLazy placement="bottom-end">
@@ -126,7 +122,7 @@ export default function ListUser() {
                             flex={1}
                             colorScheme="red"
                             onClick={() => {
-                              deleteUser(user.id);
+                              deletePermission(permission.id);
                             }}
                           >
                             Đồng ý
