@@ -1,5 +1,15 @@
 import { useForm } from 'react-hook-form';
-import { FormErrorMessage, FormLabel, FormControl, Input, Button, Box, useToast, Text } from '@chakra-ui/react';
+import {
+  FormErrorMessage,
+  FormLabel,
+  FormControl,
+  Input,
+  Button,
+  Box,
+  useToast,
+  Text,
+  Spinner,
+} from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import rolesAPI from '../../../api/roleAPI';
@@ -55,41 +65,42 @@ export default function UpdateRole() {
   return (
     <Box>
       <Text fontSize="6xl" fontWeight="bold">
-        Sửa quyền
+        Sửa vai trò
       </Text>
       <form onSubmit={handleSubmit(onSubmit)}>
         {role ? (
           <>
             <FormControl isInvalid={errors.role_name} isRequired>
-              <FormLabel htmlFor="role_name">Tên quyền</FormLabel>
+              <FormLabel htmlFor="role_name">Tên vai trò</FormLabel>
               <Input
                 id="role_name"
                 defaultValue={role.role_name ? role?.role_name : ''}
-                placeholder="Tên quyền"
+                placeholder="Tên vai trò"
                 {...register('role_name', {
-                  required: 'Tên quyền không được để trống',
+                  required: 'Tên vai trò không được để trống',
                 })}
               />
               <FormErrorMessage>{errors.role_name && errors.role_name.message}</FormErrorMessage>
             </FormControl>
             <FormControl isInvalid={errors.role_code} isRequired>
-              <FormLabel htmlFor="role_code">Mã quyền</FormLabel>
+              <FormLabel htmlFor="role_code">Mã vai trò</FormLabel>
               <Input
                 id="role_code"
                 defaultValue={role.role_code ? role?.role_code : ''}
-                placeholder="Mã quyền"
+                placeholder="Mã vai trò"
                 {...register('role_code', {
-                  required: 'Mã quyền không được để trống',
+                  required: 'Mã vai trò không được để trống',
                 })}
               />
               <FormErrorMessage>{errors.role_code && errors.role_code.message}</FormErrorMessage>
             </FormControl>
+            <Button mt={4} colorScheme="teal" isLoading={isSubmitting} type="submit">
+              Sửa
+            </Button>
           </>
-        ) : null}
-
-        <Button mt={4} colorScheme="teal" isLoading={isSubmitting} type="submit">
-          Sửa
-        </Button>
+        ) : (
+          <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+        )}
       </form>
     </Box>
   );

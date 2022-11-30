@@ -18,6 +18,7 @@ import {
   PopoverCloseButton,
   PopoverBody,
   useToast,
+  Spinner,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import rolesAPI from '../../../api/roleAPI';
@@ -72,15 +73,15 @@ export default function ListRole() {
       <TableContainer>
         <Flex px="25px" justify="space-between" mb="20px" align="center">
           <Text fontSize="22px" fontWeight="700" lineHeight="100%">
-            Danh sách ngành học
+            Danh sách vai trò
           </Text>
         </Flex>
         <Table variant="simple">
           <Thead>
             <Tr>
               <Th>ID</Th>
-              <Th>Mã Quyền </Th>
-              <Th>Tên Quyền</Th>
+              <Th>Mã vai trò </Th>
+              <Th>Tên vai trò</Th>
               <Th textAlign={'center'}>Thao tác</Th>
             </Tr>
           </Thead>
@@ -131,7 +132,7 @@ export default function ListRole() {
                 </Tr>
               ))
             ) : (
-              <></>
+              <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
             )}
           </Tbody>
         </Table>

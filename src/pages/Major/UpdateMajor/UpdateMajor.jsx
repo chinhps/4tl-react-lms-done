@@ -1,5 +1,16 @@
 import { useForm } from 'react-hook-form';
-import { FormErrorMessage, FormLabel, FormControl, Input, Button, Switch, Box, useToast, Text } from '@chakra-ui/react';
+import {
+  FormErrorMessage,
+  FormLabel,
+  FormControl,
+  Input,
+  Button,
+  Switch,
+  Box,
+  useToast,
+  Text,
+  Spinner,
+} from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import majorsAPI from '../../../api/majorAPI';
@@ -105,7 +116,7 @@ export default function UpdateMajor() {
               }}
             />
           ) : (
-            <></>
+            <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
           )}
         </FormControl>
         <br />

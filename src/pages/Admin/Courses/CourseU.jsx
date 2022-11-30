@@ -11,6 +11,7 @@ import {
   Switch,
   Toast,
   useToast,
+  Spinner,
 } from '@chakra-ui/react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
@@ -182,7 +183,7 @@ const CoursesU = () => {
           </Button>
         </form>
       ) : (
-        <></>
+        <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
       )}
     </>
   );
