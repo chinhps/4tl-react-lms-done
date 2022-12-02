@@ -1,5 +1,5 @@
-import { Avatar, AvatarBadge, AvatarGroup, Box, Center, Flex, Grid, GridItem, Text } from '@chakra-ui/react';
-import { AiFillCheckCircle } from 'react-icons/ai';
+import { Avatar, AvatarBadge, AvatarGroup, Box, Flex, Grid, GridItem, Text } from '@chakra-ui/react';
+// import { AiFillCheckCircle } from 'react-icons/ai';
 
 import React from 'react';
 

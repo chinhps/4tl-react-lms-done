@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 // Chakra imports
-import { AvatarGroup, Avatar, Box, Button, Flex, Icon, Image, Link, Text, useColorModeValue } from '@chakra-ui/react';
+import { AvatarGroup, Box, Button, Flex, Icon, Image, Link, Text, useColorModeValue } from '@chakra-ui/react';
 // Custom components
 import Card from './Card';
 
 function BoxCollection(props) {
-  const { image, name, author, download } = props;
+  const { image, name, download } = props;
   const [like, setLike] = useState(false);
   const textColor = useColorModeValue('navy.700', 'white');
   const textColorBid = useColorModeValue('brand.500', 'white');
