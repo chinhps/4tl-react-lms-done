@@ -1,82 +1,44 @@
-import React from 'react'
-import { Link, Grid, GridItem, Stack, List, ListItem, Text } from '@chakra-ui/react'
-import { newsActivity, newsFee, newsLearn, newsWork } from '../../utils/constants'
+import React, { useEffect, useState } from 'react';
+import { Box, Grid, SimpleGrid } from '@chakra-ui/react';
+
+import newsAPI from '../../api/newsAPI';
+import BoxCollection from '../../Components/Core/Card/BoxCollection';
+import { Link, useNavigate } from 'react-router-dom';
 
 const News = () => {
-    return (
-        <Stack direction='column' p='20px' h='100vh' bg='gray.50'>
-            <Grid templateColumns={{ sm: 'repeat(1, 1fr)', md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)' }} boxShadow='md' rounded='lg' bg='white' h='full'>
-                <GridItem p='16px' overflowY='scroll' borderRight={{ sm: 'none', md: '1px solid black', lg: '1px solid black' }} className='hide-scrollbar'>
-                    <Stack direction='column'>
-                        <Link href='/news-list/:listId' color='blue' fontWeight={700} _hover={{ color: 'blue.500' }}>
-                            <Text fontSize='lg'>Thông tin học tập</Text>
-                        </Link>
+  const navigate = useNavigate();
+  const [news, setNews] = useState();
+  useEffect(() => {
+    const getNew = () => {
+      newsAPI.getAll(999).then((res) => {
+        setNews(res);
+      });
+    };
+    getNew();
+  }, []);
+  return (
+    <Box p={5} bg="gray.50">
+      {/* <Grid templateColumns={{ sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }} gap={4}>
+        {news ? news.map((news) => <NewsItem news={news} key={news.id} />) : <></>}
+      </Grid> */}
+      <SimpleGrid columns={{ base: 1, md: 3 }} gap="20px">
+        {news ? (
+          news.map((vl, index) => (
+            <div
+              key={index}
+              onClick={() => {
+                navigate(`/news-detail/${vl.id}`);
+              }}
+            >
+              <BoxCollection name={vl.title} author={vl.user_id} bidders={[]} image={vl.thumb} />
+            </div>
+          ))
+        ) : (
+          <></>
+        )}
+      </SimpleGrid>
+    </Box>
+  );
+};
 
-                        <List>
-                            {newsLearn.map((learn) => (
-                                <ListItem py='12px' borderBottom='1px dashed rgba(0, 0, 0, 0.1)' key={learn.name}>
-                                    <Link href={`/news-detail/${learn.name}`} color='red' fontWeight={500} _hover={{ color: 'red.500' }}>
-                                        {learn.name}
-                                    </Link>
-                                </ListItem>
-                            ))} 
-                        </List>
-                    </Stack>
-                </GridItem>
-                <GridItem p='16px' overflowY='scroll' borderRight={{ sm: 'none', md: '1px solid black' }} className='hide-scrollbar'>
-                    <Stack direction='column'>
-                        <Link href='/news-list/:listId' color='blue' fontWeight={700} _hover={{ color: 'blue.500' }}>
-                            <Text fontSize='lg'>Thông tin hoạt động</Text>
-                        </Link>
-
-                        <List>
-                            {newsActivity.map((activity) => (
-                                <ListItem py='12px' borderBottom='1px dashed rgba(0, 0, 0, 0.1)' key={activity.name}>
-                                    <Link href={`/news-detail/${activity.name}`} color='red' fontWeight={500} _hover={{ color: 'red.500' }}>
-                                        {activity.name}
-                                    </Link>
-                                </ListItem>
-                            ))}
-                        </List>
-                    </Stack>
-                </GridItem>
-                <GridItem p='16px' overflowY='scroll' borderRight={{ sm: 'none', md: '1px solid black' }} className='hide-scrollbar'>
-                    <Stack direction='column'>
-                        <Link href='/news-list/:listId' color='blue' fontWeight={700} _hover={{ color: 'blue.500' }}>
-                            <Text fontSize='lg'>Thông tin học phí</Text>
-                        </Link>
-
-                        <List>
-                            {newsFee.map((fee) => (
-                                <ListItem py='12px' borderBottom='1px dashed rgba(0, 0, 0, 0.1)' key={fee.name}>
-                                    <Link href={`/news-detail/${fee.name}`} color='red' fontWeight={500} _hover={{ color: 'red.500' }}>
-                                        {fee.name}
-                                    </Link>
-                                </ListItem>
-                            ))}
-                        </List>
-                    </Stack>
-                </GridItem>
-                <GridItem p='16px' overflowY='scroll' className='hide-scrollbar'>
-                    <Stack direction='column'>
-                        <Link href='/news-list/:listId' color='blue' fontWeight={700} _hover={{ color: 'blue.500' }}>
-                            <Text fontSize='lg'>Thông tin việc làm</Text>
-                        </Link>
-
-                        <List>
-                            {newsWork.map((work) => (
-                                <ListItem py='12px' borderBottom='1px dashed rgba(0, 0, 0, 0.1)' key={work.name}>
-                                    <Link href={`/news-detail/${work.name}`} color='red' fontWeight={500} _hover={{ color: 'red.500' }}>
-                                        {work.name}
-                                    </Link>
-                                </ListItem>
-                            ))}
-                        </List>
-                    </Stack>
-                </GridItem>
-            </Grid>
-        </Stack>
-    )
-}
-
-export default News
+export default News;
