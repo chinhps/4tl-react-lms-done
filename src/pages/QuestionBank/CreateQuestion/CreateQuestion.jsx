@@ -6,7 +6,6 @@ import {
   Input,
   Button,
   Select,
-  Switch,
   Text,
   useToast,
   Checkbox,
@@ -14,18 +13,14 @@ import {
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import classesAPI from '../../../api/classesAPI';
-import roleAPI from '../../../api/roleAPI';
-import userAPI from '../../../api/userAPI';
 import subjectsAPI from '../../../api/subjectAPI';
 import questionsBankAPI from '../../../api/questionBankAPI';
+import { userSelector } from '../../../selectors';
+import { useSelector } from 'react-redux';
 
 export default function CreateQuestion() {
-  const [status, setStatus] = useState(false);
-  const params = useParams();
-  const navigate = useNavigate();
-  const toast = useToast();
-  let answers = [
+  const user = useSelector(userSelector);
+  const [answers, setAnswers] = useState([
     {
       id: 1,
       answer: '',
@@ -46,66 +41,97 @@ export default function CreateQuestion() {
       answer: '',
       isCorrect: false,
     },
-  ];
+  ]);
+  const params = useParams();
+  const navigate = useNavigate();
+  const toast = useToast();
+
   const handleOnCheck = (index) => {
     answers[index].isCorrect = !answers[index].isCorrect;
-    console.log(answers);
   };
   const {
     handleSubmit,
     register,
     formState: { errors },
+    getValues,
   } = useForm();
   const [subjects, setSubject] = useState([]);
   const [isSubmit, setIsSubmit] = useState(false);
 
   function onSubmit(values) {
     return new Promise((resolve) => {
-      console.log(values);
-      answers[0].answer = values.answer1;
-      answers[1].answer = values.answer2;
-      answers[2].answer = values.answer3;
-      answers[3].answer = values.answer4;
-      const postData = {
-        subject_id: values.subject_id,
-        question: values.question,
-        answers: JSON.stringify(answers),
-        level: values.level,
-        user_id: 0,
-      };
-
-      questionsBankAPI.new(postData).then((res) => {
-        setIsSubmit(false);
+      const tempAnswer = [];
+      let tempId = 1;
+      answers.forEach((element) => {
+        if (element.answer !== '') {
+          tempAnswer.push({
+            id: tempId,
+            answer: element.answer,
+            isCorrect: element.isCorrect,
+          });
+          tempId++;
+        }
+      });
+      if (tempAnswer.length === 0) {
         toast({
           title: 'Thông báo',
-          description: res.msg,
-          status: 'success',
-          duration: 2000,
-          isClosable: true,
-        });
-      });
-    })
-      .then(() => {
-        setTimeout(() => {
-          navigate('/question-bank/list');
-        }, 2000);
-      })
-
-      .catch((err) => {
-        setIsSubmit(false);
-
-        toast({
-          title: 'Lỗi',
-          description: err.errorInfo,
+          description: 'Bạn chưa nhập câu trả lời nào',
           status: 'error',
           duration: 2000,
           isClosable: true,
         });
-      });
-  }
+        return;
+      } else if (values.level > 8 || values.level < 1) {
+        toast({
+          title: 'Thông báo',
+          description: 'Level là số từ 1 đến 8',
+          status: 'error',
+          duration: 2000,
+          isClosable: true,
+        });
+        return;
+      }
+      const postData = {
+        subject_id: values.subject_id,
+        question: values.question,
+        answers: JSON.stringify(tempAnswer),
+        level: values.level,
+        user_id: user ? user.id : 0,
+      };
+      console.log(postData);
+      questionsBankAPI
+        .new(postData)
+        .then((res) => {
+          setIsSubmit(false);
+          toast({
+            title: 'Thông báo',
+            description: res.msg,
+            status: 'success',
+            duration: 2000,
+            isClosable: true,
+          });
+        })
+        .then(() => {
+          setTimeout(() => {
+            navigate('/question-bank/list');
+          }, 2000);
+        })
 
+        .catch((err) => {
+          setIsSubmit(false);
+
+          toast({
+            title: 'Lỗi',
+            description: err.errorInfo,
+            status: 'error',
+            duration: 2000,
+            isClosable: true,
+          });
+        });
+    });
+  }
   useEffect(() => {
-    subjectsAPI.get().then((res) => {
+    subjectsAPI.getWithoutPaginate().then((res) => {
       setSubject(res);
     });
   }, []);
@@ -154,31 +180,59 @@ export default function CreateQuestion() {
           <FormErrorMessage>{errors.question && errors.question.message}</FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={errors.answer1}>
-          <FormLabel htmlFor="answer1">
-            Câu trả lời
-          </FormLabel>
-          <Input id="answer1" placeholder="Câu trả lời" {...register('answer1')} />
+          <FormLabel htmlFor="answer1">Câu trả lời</FormLabel>
+          <Input
+            id="answer1"
+            placeholder="Câu trả lời"
+            {...register('answer1')}
+            onChange={(e) => {
+              const temp = [...answers];
+              temp[0].answer = e.target.value;
+              setAnswers(temp);
+            }}
+          />
           <FormErrorMessage>{errors.answer1 && errors.answer1.message}</FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={errors.answer2}>
-          <FormLabel htmlFor="answer2">
-            Câu trả lời
-          </FormLabel>
-          <Input id="answer2" placeholder="Câu trả lời" {...register('answer2')} />
+          <FormLabel htmlFor="answer2">Câu trả lời</FormLabel>
+          <Input
+            id="answer2"
+            placeholder="Câu trả lời"
+            {...register('answer2')}
+            onChange={(e) => {
+              const temp = [...answers];
+              temp[1].answer = e.target.value;
+              setAnswers(temp);
+            }}
+          />
           <FormErrorMessage>{errors.answer2 && errors.answer2.message}</FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={errors.answer3}>
-          <FormLabel htmlFor="answer3">
-            Câu trả lời
-          </FormLabel>
-          <Input id="answer3" placeholder="Câu trả lời" {...register('answer3')} />
+          <FormLabel htmlFor="answer3">Câu trả lời</FormLabel>
+          <Input
+            id="answer3"
+            placeholder="Câu trả lời"
+            {...register('answer3')}
+            onChange={(e) => {
+              const temp = [...answers];
+              temp[2].answer = e.target.value;
+              setAnswers(temp);
+            }}
+          />
           <FormErrorMessage>{errors.answer3 && errors.answer3.message}</FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={errors.answer4}>
-          <FormLabel htmlFor="answer4">
-            Câu trả lời
-          </FormLabel>
-          <Input id="answer4" placeholder="Câu trả lời" {...register('answer4')} />
+          <FormLabel htmlFor="answer4">Câu trả lời</FormLabel>
+          <Input
+            id="answer4"
+            placeholder="Câu trả lời"
+            {...register('answer4')}
+            onChange={(e) => {
+              const temp = [...answers];
+              temp[3].answer = e.target.value;
+              setAnswers(temp);
+            }}
+          />
           <FormErrorMessage>{errors.answer4 && errors.answer4.message}</FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={errors.level}>
@@ -194,8 +248,6 @@ export default function CreateQuestion() {
             placeholder="Level"
             {...register('level', {
               required: 'Bạn chưa nhập level',
-              min: 1,
-              max: 8,
             })}
           />
           <FormErrorMessage>{errors.level && errors.level.message}</FormErrorMessage>
@@ -206,10 +258,15 @@ export default function CreateQuestion() {
             *
           </span>
         </FormLabel>
-        <Checkbox onChange={() => handleOnCheck(0)}>Câu trả lời 1</Checkbox>
-        <Checkbox onChange={() => handleOnCheck(1)}>Câu trả lời 2</Checkbox>
-        <Checkbox onChange={() => handleOnCheck(2)}>Câu trả lời 3</Checkbox>
-        <Checkbox onChange={() => handleOnCheck(3)}>Câu trả lời 4</Checkbox>
+        {answers?.map((element, index) => (
+          <Checkbox
+            key={`answer` + index}
+            disabled={element.answer === '' ? true : false}
+            onChange={() => handleOnCheck(index)}
+          >
+            {element.answer || `Câu trả lời ${index + 1}`}
+          </Checkbox>
+        ))}
         <Button mt={4} colorScheme="teal" isLoading={isSubmit} type="submit" w={'100px'}>
           Thêm mới
         </Button>
