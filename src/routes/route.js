@@ -29,6 +29,8 @@ import ListPermission from '../pages/Permission/ListPermission/ListPermission';
 import CreatePermission from '../pages/Permission/CreatePermission/CreatePermission';
 import UpdatePermission from '../pages/Permission/UpdatePermission/UpdatePermission';
 import UpdateQuestion from '../pages/QuestionBank/UpdateQuestion/UpdateQuestion';
+import News from '../pages/News/News'
+import NewsDetail from '../pages/News/NewsDetail';
 
 const publicRoutes = [
   {
@@ -205,5 +207,17 @@ const publicRoutes = [
     layout: HomeLayout,
     guard: ProtectedAuth,
   },
+  {
+    path: '/news',
+    component: News,
+    layout: HomeLayout,
+    guard: ProtectedAuth
+  },
+  {
+    path: '/news-detail/:newsId',
+    component: NewsDetail,
+    layout: HomeLayout,
+    guard: ProtectedAuth
+  }
 ];
 export { publicRoutes };
