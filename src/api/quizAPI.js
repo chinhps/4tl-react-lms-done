@@ -1,11 +1,10 @@
-// import axiosClient from './axiosClient';
+import axiosClient from './axiosClient';
 
-// const BASE_URL = 'branch';
-// const quizAPI = {
-//     getBranch: (params) => {
-//         const url = `${BASE_URL}/`;
-//         return axiosClient.get(url, params);
-//     },
-// };
+const quizAPI = {
+  getAll: (slug_course,slug_quiz) => {
+    const url = '/api/course/quiz';
+    return axiosClient.get(url,{ params: { slug_course,slug_quiz } });
+  }
+};
 
-// export default quizAPI;
+export default quizAPI;

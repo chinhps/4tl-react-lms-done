@@ -25,6 +25,7 @@ import CreateQuestion from '../pages/QuestionBank/CreateQuestion/CreateQuestion'
 import ListRole from '../pages/Role/ListRole/ListRole';
 import CreateRole from '../pages/Role/CreateRole/CreateRole';
 import UpdateRole from '../pages/Role/UpdateRole/UpdateRole';
+import Quiz from '../pages/Course/Quiz/Quiz';
 
 const publicRoutes = [
   {
@@ -65,6 +66,12 @@ const publicRoutes = [
   {
     path: '/course/:slugCourse',
     component: Coures,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/course/:slugCourse/quiz/:slugQuiz',
+    component: Quiz,
     layout: HomeLayout,
     guard: ProtectedAuth,
   },
