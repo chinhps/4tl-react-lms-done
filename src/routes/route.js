@@ -31,6 +31,13 @@ import UpdatePermission from '../pages/Permission/UpdatePermission/UpdatePermiss
 import UpdateQuestion from '../pages/QuestionBank/UpdateQuestion/UpdateQuestion';
 import News from '../pages/News/News'
 import NewsDetail from '../pages/News/NewsDetail';
+import ListPermissionGroup from '../pages/PermissionGroup/ListPermissionGroup/ListPermissionGroup';
+import CreatePermissionGroup from '../pages/PermissionGroup/CreatePermissionGroup/CreatePermissionGroup';
+import UpdatePermissionGroup from '../pages/PermissionGroup/UpdatePermissionGroup/UpdatePermissionGroup';
+import ListClasses from '../pages/Class/ListClasses/ListClasses';
+import CreateClasses from '../pages/Class/CreateClasses/CreateClasses';
+import UpdateClasses from '../pages/Class/UpdateClasses/UpdateClasses';
+import CreateNews from '../pages/News/CreateNews';
 
 const publicRoutes = [
   {
@@ -216,6 +223,60 @@ const publicRoutes = [
   {
     path: '/news-detail/:newsId',
     component: NewsDetail,
+    layout: HomeLayout,
+    guard: ProtectedAuth
+  },
+  {
+    path: '/permission-group/list',
+    component: ListPermissionGroup,
+    layout: HomeLayout,
+    guard: ProtectedAuth
+  },
+  {
+    path: '/permission-group/new',
+    component: CreatePermissionGroup,
+    layout: HomeLayout,
+    guard: ProtectedAuth
+  },
+  {
+    path: '/permission-group/update/:id',
+    component: UpdatePermissionGroup,
+    layout: HomeLayout,
+    guard: ProtectedAuth
+  },
+  {
+    path: '/classes/list',
+    component: ListClasses,
+    layout: HomeLayout,
+    guard: ProtectedAuth
+  },
+  {
+    path: '/classes/new',
+    component: CreateClasses,
+    layout: HomeLayout,
+    guard: ProtectedAuth
+  },
+  {
+    path: '/classes/update/:id',
+    component: UpdateClasses,
+    layout: HomeLayout,
+    guard: ProtectedAuth
+  },
+  {
+    path: '/news/list',
+    component: ListClasses,
+    layout: HomeLayout,
+    guard: ProtectedAuth
+  },
+  {
+    path: '/news/new',
+    component: CreateNews,
+    layout: HomeLayout,
+    guard: ProtectedAuth
+  },
+  {
+    path: '/news/update/:id',
+    component: UpdateClasses,
     layout: HomeLayout,
     guard: ProtectedAuth
   }
