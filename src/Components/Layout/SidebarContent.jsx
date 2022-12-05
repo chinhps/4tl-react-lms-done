@@ -40,7 +40,7 @@ const LinkItems = [
       {
         to: '/',
         name: 'Danh sách',
-      }
+      },
     ],
   },
   {
@@ -54,7 +54,7 @@ const LinkItems = [
       {
         to: '/admin/courses/new',
         name: 'Thêm khóa học',
-      }
+      },
     ],
   },
   {
@@ -68,7 +68,7 @@ const LinkItems = [
       {
         to: '/subject/new',
         name: 'Thêm môn học',
-      }
+      },
     ],
   },
   {
@@ -82,7 +82,7 @@ const LinkItems = [
       {
         to: '/major/new',
         name: 'Thêm ngành học',
-      }
+      },
     ],
   },
   {
@@ -96,7 +96,7 @@ const LinkItems = [
       {
         to: '/user/new',
         name: 'Thêm tài khoản',
-      }
+      },
     ],
   },
   {
@@ -110,11 +110,25 @@ const LinkItems = [
       {
         to: '/question-bank/new',
         name: 'Thêm mới câu hỏi',
-      }
+      },
     ],
   },
   {
     name: 'Phân quyền',
+    icon: FiBriefcase,
+    children: [
+      {
+        to: '/permission/list',
+        name: 'Danh sách',
+      },
+      {
+        to: '/permission/new',
+        name: 'Thêm mới quyền',
+      },
+    ],
+  },
+  {
+    name: 'Vai trò',
     icon: FiBriefcase,
     children: [
       {
@@ -123,10 +137,10 @@ const LinkItems = [
       },
       {
         to: '/role/new',
-        name: 'Thêm mới quyền',
-      }
+        name: 'Thêm mới vai trò',
+      },
     ],
-  }
+  },
 ];
 
 function SidebarContent({ onClose, ...rest }) {

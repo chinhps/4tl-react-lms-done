@@ -51,27 +51,27 @@ export default function CreateRole() {
   return (
     <Box>
       <Text fontSize="6xl" fontWeight="bold">
-        Thêm quyền
+        Thêm vai trò
       </Text>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl isInvalid={errors.role_name} isRequired>
-          <FormLabel htmlFor="role_name">Tên quyền</FormLabel>
+          <FormLabel htmlFor="role_name">Tên vai trò</FormLabel>
           <Input
             id="role_name"
-            placeholder="Tên quyền"
+            placeholder="Tên vai trò"
             {...register('role_name', {
-              required: 'Tên quyền không được để trống',
+              required: 'Tên vai trò không được để trống',
             })}
           />
           <FormErrorMessage>{errors.role_name && errors.role_name.message}</FormErrorMessage>
         </FormControl>
         <FormControl isInvalid={errors.role_code} isRequired>
-          <FormLabel htmlFor="role_code">Mã quyền</FormLabel>
+          <FormLabel htmlFor="role_code">Mã vai trò</FormLabel>
           <Input
             id="role_code"
-            placeholder="Mã quyền"
+            placeholder="Mã vai trò"
             {...register('role_code', {
-              required: 'Mã quyền không được để trống',
+              required: 'Mã vai trò không được để trống',
             })}
           />
           <FormErrorMessage>{errors.role_code && errors.role_code.message}</FormErrorMessage>

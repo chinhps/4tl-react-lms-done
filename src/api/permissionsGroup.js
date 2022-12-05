@@ -1,21 +1,15 @@
 import axiosClient from './axiosClient';
 
-const BASE_URL = '/api/subjects';
-const subjectsAPI = {
+const BASE_URL = '/api/permission-group';
+const permissionGroupAPI = {
   get: () => {
     return axiosClient.get(`${BASE_URL}`);
-  },
-  getWithoutPaginate: () => {
-    return axiosClient.get(`${BASE_URL}/fulllist`);
   },
   new: (data) => {
     return axiosClient.post(`${BASE_URL}/new`, data);
   },
   put: (id, data) => {
     return axiosClient.put(`${BASE_URL}/${id}`, data);
-  },
-  getTeacher: () => {
-    return axiosClient.get(`${BASE_URL}/get-teacher`);
   },
   getById: (id) => {
     return axiosClient.get(`${BASE_URL}/${id}`);
@@ -25,4 +19,4 @@ const subjectsAPI = {
   },
 };
 
-export default subjectsAPI;
+export default permissionGroupAPI;

@@ -18,6 +18,7 @@ import {
   PopoverCloseButton,
   PopoverBody,
   useToast,
+  Spinner,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import subjectsAPI from '../../../api/subjectAPI';
@@ -149,7 +150,7 @@ export default function ListSubject() {
                 </Tr>
               ))
             ) : (
-              <></>
+              <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
             )}
           </Tbody>
         </Table>
