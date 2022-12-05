@@ -1,6 +1,31 @@
 import React from 'react';
 // Chakra imports
-import { Box, Flex, Grid, GridItem, Icon, Image, Stack, Text, useColorModeValue } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  FormControl,
+  FormLabel,
+  Grid,
+  GridItem,
+  Icon,
+  Image,
+  Input,
+  Stack,
+  Text,
+  useColorModeValue,
+  useDisclosure,
+} from '@chakra-ui/react';
+
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+} from '@chakra-ui/react'
 // Assets
 import { MdAccessTime, MdCallMissed, MdKeyboardReturn } from 'react-icons/md';
 import Card from '../../../Components/Core/Card/Card';
@@ -8,20 +33,51 @@ import moment from 'moment';
 import 'moment/locale/vi';
 import { Link } from 'react-router-dom';
 
-function CouseItem({ name, description, type, history, deadline, slug }, rest) {
+function CouseItem({ name, description, type, history, deadline, slug, password }, rest) {
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue('secondaryGray.900', 'white');
   const textColorSecondary = 'gray.400';
   const bg = useColorModeValue('white', 'navy.700');
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const rdBg = [
     'https://i.imgur.com/iZSJCDq.png',
     'https://i.imgur.com/hF9bSEF.png',
     'https://i.imgur.com/TVo32ES.png',
   ];
 
+  const initialRef = React.useRef(null)
+  const finalRef = React.useRef(null)
+
+  const handleChoose = () => {
+    onOpen();
+  };
+
   return (
-    <Card bg={bg} {...rest} p="20px">
-      <Link to={"./quiz/" + slug}>
+    <>
+      <Modal initialFocusRef={initialRef} finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Bài cần mật khẩu để truy cập</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody pb={6}>
+            <FormControl>
+              <FormLabel>Mật khẩu</FormLabel>
+              <Input textColor={textColorPrimary} ref={initialRef} type="password" placeholder="Mật khẩu" />
+            </FormControl>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3}>
+              Truy cập
+            </Button>
+            <Button onClick={onClose}>Đóng</Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+
+      <Card bg={bg} {...rest} p="20px" onClick={() => handleChoose()}>
         <Grid templateColumns={{ base: 'repeat(1, 1fr)', md: 'repeat(4, 1fr)' }} alignItems="center">
           <GridItem colSpan={2}>
             <Flex direction="row" alignItems="center">
@@ -73,8 +129,8 @@ function CouseItem({ name, description, type, history, deadline, slug }, rest) {
             </Box>
           </GridItem>
         </Grid>
-      </Link>
-    </Card>
+      </Card>
+    </>
   );
 }
 
