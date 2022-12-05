@@ -44,6 +44,7 @@ function Home() {
               <SimpleGrid columns={{ base: 1, md: 3 }} gap="20px">
                 {news.map((vl, index) => (
                   <BoxCollection
+                    key={index}
                     name={vl.title}
                     author={vl.user_id}
                     bidders={[]}

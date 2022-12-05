@@ -1,21 +1,22 @@
 import React from 'react';
-import { Grid } from '@chakra-ui/react';
+import { Flex, Grid } from '@chakra-ui/react';
 import CouseItem from './CouseItem';
 
 function Quizs({courses}) {
   return (
-    <>
+    <Flex gap={{ base: '20px', xl: '20px' }} flexDirection="column">
       {courses.quizs?.map((couse, index) => (
         <CouseItem
           key={index}
           name={'Bài ' + couse.name}
           deadline={couse.deadlines}
           type={0}
-          history={['https://i.imgur.com/hF9bSEF.png']}
+          slug={couse.slug}
+          history={couse.point_submit}
           description="Quiz"
         />
       ))}
-    </>
+    </Flex>
   );
 }
 
