@@ -25,6 +25,7 @@ import { MdKeyboardReturn } from 'react-icons/md';
 import Card from '../../../Components/Core/Card/Card';
 import { Link as ReachLink, useNavigate } from 'react-router-dom';
 import coursesAPI from '../../../api/coursesAPI';
+import { setTitle } from '../../../reducer/branchSlide';
 
 export default function Project({ data, image, link, title }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -55,6 +56,8 @@ export default function Project({ data, image, link, title }) {
   };
 
   const handelClickProject = (data) => {
+    console.log(data);
+    // dispatch(setTitle());
     // onOpen
     if (data.class_code) {
       onOpen();

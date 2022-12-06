@@ -10,9 +10,14 @@ const branchSlide = createSlice({
     name: 'branchSlide',
     initialState: {
         pending: false,
+        title: "Kho kiến thức",
         listBranches: [],
     },
-    reducers: {},
+    reducers: {
+        setTitle: (state,action) => {
+            state.title = action.payload;
+        }
+    },
     extraReducers: {
         [fetchBranches.pending]: (state, action) => {
             state.pending = true;
@@ -23,5 +28,8 @@ const branchSlide = createSlice({
         },
     },
 });
+
+export const { setTitle } = branchSlide.actions
+
 
 export default branchSlide;

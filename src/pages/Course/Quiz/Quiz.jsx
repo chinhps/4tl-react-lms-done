@@ -10,6 +10,7 @@ import {
   Text,
   useCheckboxGroup,
   useColorModeValue,
+  useToast,
   VStack,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
@@ -17,35 +18,52 @@ import Card from '../../../Components/Core/Card/Card';
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 import QuestionChoose from '../../../Components/Core/QuestionChoose';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import quizAPI from '../../../api/quizAPI';
 import { useEffect } from 'react';
 import moment from 'moment';
 import 'moment/locale/vi';
+import { useSelector } from 'react-redux';
 
 function Quiz() {
   const textColorPrimary = useColorModeValue('secondaryGray.900', 'white');
   const [tabIndex, setTabIndex] = useState(0);
-  const [questions, setQuestions] = useState(null);
+  const { quiz: questions } = useSelector((state) => state.quiz);
   const [listAnswers, setListAnswers] = useState([]);
-  const [timer, setTimer] = useState(120);
+  const [timer, setTimer] = useState();
   const { slugCourse, slugQuiz } = useParams();
 
   const { value, getCheckboxProps, setValue, onChange } = useCheckboxGroup();
+  const navigate = useNavigate();
+  const toast = useToast();
 
   useEffect(() => {
-    fetchQuiz();
+    if(questions === undefined || questions?.slug !== slugQuiz) {
+      navigate(`/course/${slugCourse}`);
+      toast({
+        title: 'Thông báo!',
+        description: "Không thể truy cập trực tiếp",
+        status: 'error',
+        position: 'bottom-right',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
+  },[]);
+
+  useEffect(() => {
+    setTimer(questions?.time_working);
     const interval = setInterval(() => {
       setTimer((prve_timer) => {
-        if(prve_timer <= 1) {
+        if (prve_timer <= 1) {
           clearInterval(interval);
         }
-        return prve_timer-1
-      })
-      
+        return prve_timer - 1;
+      });
+
       console.log('countdown');
     }, 1000);
-  
+
     return () => clearInterval(interval);
   }, []);
 
@@ -63,18 +81,13 @@ function Quiz() {
     console.log(123, listAnswers);
   }, [onChange]);
 
-  const fetchQuiz = async () => {
-    const data = await quizAPI.getAll(slugCourse, slugQuiz);
-    setQuestions(data);
-  };
-
   const handleChoose = (id) => {
     setTabIndex(id);
   };
 
   const handleNextPrev = (type) => {
     if (type === 'next') {
-      if (questions.length - 1 > tabIndex) {
+      if (questions?.questions.length - 1 > tabIndex) {
         setTabIndex(tabIndex + 1);
       }
     } else {
@@ -110,7 +123,7 @@ function Quiz() {
                 Câu hỏi
                 <Text color="red.500">{tabIndex + 1}</Text>
                 trên
-                <Text color="red.500">{questions?.length}</Text>
+                <Text color="red.500">{questions?.questions?.length}</Text>
               </Box>
               <Button borderRadius={'md'} onClick={() => handleNextPrev('next')} colorScheme="blue" gap={2}>
                 Tiếp <FiChevronRight strokeWidth="4px" />
@@ -118,8 +131,8 @@ function Quiz() {
             </Flex>
             <Tabs isLazy index={tabIndex} variant="unstyled">
               <TabPanels>
-                {questions
-                  ? questions?.map((question, index) => (
+                {questions?.questions
+                  ? questions?.questions?.map((question, index) => (
                       <TabPanel key={question.id}>
                         <Stack divider={<StackDivider />} spacing="4">
                           <Box>
@@ -176,8 +189,8 @@ function Quiz() {
               Bạn có thể xem câu trả lời đã làm
             </Text>
             <Flex gap={2} flexWrap="wrap" justifyContent="center">
-              {questions
-                ? questions.map((qs, index) => (
+              {questions?.questions
+                ? questions?.questions.map((qs, index) => (
                     <Button
                       key={index}
                       borderRadius={'md'}
@@ -185,7 +198,9 @@ function Quiz() {
                       colorScheme={
                         typeof listAnswers[index] === 'undefined'
                           ? 'teal'
-                          : listAnswers[index].length === 0 ? 'teal' : 'red'
+                          : listAnswers[index].length === 0
+                          ? 'teal'
+                          : 'red'
                       }
                       variant="solid"
                     >

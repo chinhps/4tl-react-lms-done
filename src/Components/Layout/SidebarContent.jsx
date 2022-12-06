@@ -11,22 +11,16 @@ import {
   AccordionItem,
   AccordionButton,
   AccordionPanel,
-  AccordionIcon,
 } from '@chakra-ui/react';
 import { Link as ReachLink } from 'react-router-dom';
 import {
   FiHome,
   FiTrendingUp,
   FiCompass,
-  FiStar,
-  FiSettings,
   FiUser,
-  FiUserPlus,
-  FiBookOpen,
   FiBook,
   FiBriefcase,
   FiBookmark,
-  FiPlus,
   FiChevronRight,
 } from 'react-icons/fi';
 
@@ -138,6 +132,34 @@ const LinkItems = [
       {
         to: '/role/new',
         name: 'Thêm mới vai trò',
+      },
+    ],
+  },
+  {
+    name: 'Loại phân quyền',
+    icon: FiBriefcase,
+    children: [
+      {
+        to: '/permission-group/list',
+        name: 'Danh sách',
+      },
+      {
+        to: '/permission-group/new',
+        name: 'Thêm mới loại phân quyền',
+      },
+    ],
+  },
+  {
+    name: 'Lớp',
+    icon: FiBriefcase,
+    children: [
+      {
+        to: '/classes/list',
+        name: 'Danh sách',
+      },
+      {
+        to: '/classes/new',
+        name: 'Thêm mới lớp',
       },
     ],
   },

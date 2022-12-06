@@ -9,10 +9,12 @@ import {
   useToast,
   Text,
   Spinner,
+  Select,
 } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import permissionsAPI from '../../../api/permissionsAPI';
+import permissionGroupAPI from '../../../api/permissionsGroup';
 
 export default function UpdatePermission() {
   const navigate = useNavigate();
@@ -20,10 +22,12 @@ export default function UpdatePermission() {
   const toast = useToast();
   const [isSubmit, setIsSubmit] = useState(false);
   const [permission, setPermission] = useState(null);
+  const [permissionGroup, setPermissionGroup] = useState(null);
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
+    setValue,
   } = useForm();
 
   function onSubmit(values) {
@@ -57,9 +61,19 @@ export default function UpdatePermission() {
       });
     });
   }
+  
+  useEffect(() => {
+    permissionGroupAPI.getWithoutPaginate().then((res) => {
+      setPermissionGroup(res);
+    });
+  }, []);
+
   useEffect(() => {
     permissionsAPI.getById(id).then((res) => {
       setPermission(res);
+      for (const [key, value] of Object.entries(res)) {
+       setValue(`${key}`, value);
+      }
     });
   }, [id]);
 
@@ -95,18 +109,35 @@ export default function UpdatePermission() {
               />
               <FormErrorMessage>{errors.ps_code && errors.ps_code.message}</FormErrorMessage>
             </FormControl>
-            <FormControl isInvalid={errors.ps_group} isRequired>
-              <FormLabel htmlFor="ps_group">Thể loại quyền</FormLabel>
-              <Input
-                id="ps_group"
-                defaultValue={permission.ps_group ? permission?.ps_group : ''}
-                placeholder="Thể loại quyền"
-                {...register('ps_group', {
-                  required: 'Thể loại quyền không được để trống',
-                })}
-              />
-              <FormErrorMessage>{errors.ps_group && errors.ps_group.message}</FormErrorMessage>
-            </FormControl>
+            {permission ? (
+              <FormControl isInvalid={errors.ps_group}>
+                <FormLabel htmlFor="ps_group">
+                  Ngành học
+                  <span role="presentation" aria-hidden="true" style={{ color: 'red', marginLeft: '2px' }}>
+                    *
+                  </span>
+                </FormLabel>
+                <Select
+                  id="ps_group"
+                  placeholder="Chọn ngành học"
+                  defaultValue={permission.ps_group}
+                  {...register('ps_group', {
+                    required: 'Vui lòng chọn ngành học',
+                  })}
+                >
+                  {permissionGroup ? (
+                    permissionGroup.map((item) => (
+                      <option value={item.id} key={item.id}>
+                        {item.name}
+                      </option>
+                    ))
+                  ) : (
+                    <></>
+                  )}
+                </Select>
+                <FormErrorMessage>{errors.ps_group && errors.ps_group.message}</FormErrorMessage>
+              </FormControl>
+            ) : null}
             <Button mt={4} colorScheme="teal" isLoading={isSubmitting} type="submit">
               Sửa
             </Button>
