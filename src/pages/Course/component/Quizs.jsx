@@ -7,12 +7,13 @@ function Quizs({courses}) {
     <Flex gap={{ base: '20px', xl: '20px' }} flexDirection="column">
       {courses.quizs?.map((couse, index) => (
         <CouseItem
+          password={couse.password}
           key={index}
           name={'Bài ' + couse.name}
           deadline={couse.deadlines}
           type={0}
           slug={couse.slug}
-          history={couse.point_submit}
+          history={couse.count_submit}
           description="Quiz"
         />
       ))}

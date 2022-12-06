@@ -20,17 +20,8 @@ function Coures() {
 
   useEffect(() => {
     coursesAPI.getDocQuizLab(params.slugCourse).then((data) => {
-      data.quizs?.sort(function (a, b) {
-        return a.id - b.id;
-      });
-      data.labs?.sort(function (a, b) {
-        return a.id - b.id;
-      });
-      data.documents?.sort(function (a, b) {
-        return a.id - b.id;
-      });
       console.log(123, data);
-      setCourse(data);
+      setCourse(data.data);
     });
   }, [params]);
 
@@ -81,18 +72,18 @@ function Coures() {
                   },
                   {
                     name: 'Bài tập',
-                    value: course.courses.quizs.length + course.courses.labs.length
+                    value: course.quizs.length + course.labs.length
                   },
                   {
                     name: 'Tài liệu',
-                    value: course.courses.documents.length
+                    value: course.documents.length
                   }
               ]}
             />
             ) : null}
             
             <MiniCalendar minW="100%" selectRange={false} />
-            <HistoryCourse />
+            <HistoryCourse limit={6} />
           </Flex>
         </GridItem>
       </Grid>

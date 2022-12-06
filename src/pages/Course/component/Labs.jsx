@@ -8,8 +8,9 @@ function Labs({ courses }) {
       {courses.labs?.map((document, index) => (
         <CouseItem
           key={index}
+          password={document.password}
           deadline={document.deadlines}
-          history={document.point_submit}
+          history={document.count_submit}
           name={document.name}
           slug={document.slug}
           type={1}

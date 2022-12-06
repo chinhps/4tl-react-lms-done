@@ -25,20 +25,20 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
 // Assets
-import { MdAccessTime, MdCallMissed, MdKeyboardReturn } from 'react-icons/md';
+import { MdAccessTime, MdCallMissed, MdKeyboardReturn, MdSecurity } from 'react-icons/md';
 import Card from '../../../Components/Core/Card/Card';
 import moment from 'moment';
 import 'moment/locale/vi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function CouseItem({ name, description, type, history, deadline, slug, password }, rest) {
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue('secondaryGray.900', 'white');
   const textColorSecondary = 'gray.400';
   const bg = useColorModeValue('white', 'navy.700');
-
+  const naviagte = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const rdBg = [
@@ -47,11 +47,15 @@ function CouseItem({ name, description, type, history, deadline, slug, password 
     'https://i.imgur.com/TVo32ES.png',
   ];
 
-  const initialRef = React.useRef(null)
-  const finalRef = React.useRef(null)
+  const initialRef = React.useRef(null);
+  const finalRef = React.useRef(null);
 
   const handleChoose = () => {
-    onOpen();
+    if(password) {
+      onOpen();
+    } else {
+      naviagte("./quiz/" + slug);
+    }
   };
 
   return (
@@ -84,7 +88,7 @@ function CouseItem({ name, description, type, history, deadline, slug, password 
               <Image h="100px" w="100px" src={rdBg[type]} objectFit="cover" borderRadius="8px" me="20px" />
               <Box mt={{ base: '10px', md: '0' }}>
                 <Text color={textColorPrimary} fontWeight="500" fontSize="xl" mb="4px">
-                  {name}
+                { password ? <MdSecurity /> : null } {name} 
                 </Text>
                 <Text fontWeight="500" color={textColorSecondary} fontSize="sm" me="4px">
                   {description}
@@ -93,23 +97,21 @@ function CouseItem({ name, description, type, history, deadline, slug, password 
             </Flex>
           </GridItem>
           <GridItem>
-            <Box>
-              {history ? (
-                <>
-                  <Text color={textColorPrimary}>Đã nộp:</Text>
-                  <Text fontWeight="500" color={textColorSecondary} fontSize="sm" me="4px">
-                    {history.length} bài đã nộp
-                  </Text>
-                </>
-              ) : null}
-            </Box>
+            {typeof history !== 'undefined' ? (
+              <Box>
+                <Text color={textColorPrimary}>Đã nộp:</Text>
+                <Text fontWeight="500" color={textColorSecondary} fontSize="sm" me="4px">
+                  {history ?? 0} bài đã nộp
+                </Text>
+              </Box>
+            ) : null}
           </GridItem>
           <GridItem>
             <Box>
               <Flex align="flex-end" direction="column">
                 <Icon as={MdKeyboardReturn} color="secondaryGray.500" h="18px" w="18px" />
                 <Flex alignItems="center" gap="10px">
-                  {deadline ? (
+                  {(deadline && deadline.time_end !== null && deadline.time_start !== null) ? (
                     <>
                       <MdAccessTime />
                       {moment(deadline.time_end).locale('vi').subtract(deadline.time_start).calendar()}
