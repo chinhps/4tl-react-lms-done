@@ -137,7 +137,11 @@ export default function ListPermission() {
                 </Tr>
               ))
             ) : (
-              <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+              <Tr>
+                <Td>
+                  <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+                </Td>
+              </Tr>
             )}
           </Tbody>
         </Table>

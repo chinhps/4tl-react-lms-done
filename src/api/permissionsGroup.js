@@ -1,9 +1,12 @@
 import axiosClient from './axiosClient';
 
-const BASE_URL = '/api/permission-group';
+const BASE_URL = '/api/permission-groups';
 const permissionGroupAPI = {
   get: () => {
     return axiosClient.get(`${BASE_URL}`);
+  },
+  getWithoutPaginate: () => {
+    return axiosClient.get(`${BASE_URL}/fulllist`);
   },
   new: (data) => {
     return axiosClient.post(`${BASE_URL}/new`, data);

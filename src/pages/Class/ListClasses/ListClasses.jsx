@@ -21,32 +21,32 @@ import {
   Spinner,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import rolesAPI from '../../../api/roleAPI';
 import { useNavigate } from 'react-router-dom';
 import { Pagination } from 'react-laravel-paginex';
 import axiosClient from '../../../api/axiosClient';
 import Card from '../../../Components/Core/Card/Card';
+import classesAPI from '../../../api/classesAPI';
 
-export default function ListRole() {
+export default function ListClasses() {
   const navigate = useNavigate();
   const [tableData, setTableData] = useState({});
   const toast = useToast();
   const [isSubmit, setIsSubmit] = useState(false);
 
   useEffect(() => {
-    rolesAPI.get().then((major) => {
+    classesAPI.get().then((major) => {
       setTableData(major);
     });
   }, [isSubmit]);
   const getData = async (data) => {
-    axiosClient.get('/api/role?page=' + data.page).then((response) => {
+    axiosClient.get('/api/classes?page=' + data.page).then((response) => {
       setTableData(response);
     });
   };
 
-  const deleteRole = (id) => {
+  const deletePermission = (id) => {
     setIsSubmit(!isSubmit);
-    rolesAPI
+    classesAPI
       .delete(id)
       .then((res) => {
         toast({
@@ -68,36 +68,36 @@ export default function ListRole() {
         });
       });
   };
+
   return (
     <Card p="20px">
       <TableContainer>
         <Flex px="25px" justify="space-between" mb="20px" align="center">
           <Text fontSize="22px" fontWeight="700" lineHeight="100%">
-            Danh sách vai trò
+            Danh sách quyền
           </Text>
         </Flex>
         <Table variant="simple">
           <Thead>
             <Tr>
               <Th>ID</Th>
-              <Th>Mã vai trò </Th>
-              <Th>Tên vai trò</Th>
-              <Th textAlign={'center'}>Thao tác</Th>
+              <Th>Tên lớp </Th>
+              <Th textAlign={'center'} w={300}>Thao tác</Th>
             </Tr>
           </Thead>
           <Tbody>
             {tableData.data ? (
-              tableData.data.map((role, index) => (
+              tableData.data.map((permission, index) => (
                 <Tr key={index}>
-                  <Td>{role.id}</Td>
-                  <Td>{role.role_code}</Td>
-                  <Td>{role.role_name}</Td>
-                  <Td display={'flex'} gap={'5px'}>
+                  <Td>{permission.id}</Td>
+                  <Td>{permission.class_name}</Td>
+
+                  <Td display={'flex'} gap={'5px'} maxWidth={300}>
                     <Button
                       flex={1}
                       colorScheme="teal"
                       onClick={() => {
-                        navigate(`/role/update/${role.id}`);
+                        navigate(`/classes/update/${permission.id}`);
                       }}
                     >
                       Sửa
@@ -117,7 +117,7 @@ export default function ListRole() {
                             flex={1}
                             colorScheme="red"
                             onClick={() => {
-                              deleteRole(role.id);
+                              deletePermission(permission.id);
                             }}
                           >
                             Đồng ý

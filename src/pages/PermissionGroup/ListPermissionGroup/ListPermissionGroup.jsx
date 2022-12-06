@@ -25,7 +25,7 @@ import { useNavigate } from 'react-router-dom';
 import { Pagination } from 'react-laravel-paginex';
 import axiosClient from '../../../api/axiosClient';
 import Card from '../../../Components/Core/Card/Card';
-import permissionsAPI from '../../../api/permissionsAPI';
+import permissionGroupAPI from '../../../api/permissionsGroup';
 
 export default function ListPermissionGroup() {
   const navigate = useNavigate();
@@ -34,19 +34,19 @@ export default function ListPermissionGroup() {
   const [isSubmit, setIsSubmit] = useState(false);
 
   useEffect(() => {
-    permissionsAPI.get().then((major) => {
-      setTableData(major);
+    permissionGroupAPI.get().then((res) => {
+      setTableData(res);
     });
   }, [isSubmit]);
   const getData = async (data) => {
-    axiosClient.get('/api/permission?page=' + data.page).then((response) => {
+    axiosClient.get('/api/permission-groups?page=' + data.page).then((response) => {
       setTableData(response);
     });
   };
 
-  const deletePermission = (id) => {
+  const deletePermissionGroup = (id) => {
     setIsSubmit(!isSubmit);
-    permissionsAPI
+    permissionGroupAPI
       .delete(id)
       .then((res) => {
         toast({
@@ -81,28 +81,24 @@ export default function ListPermissionGroup() {
           <Thead>
             <Tr>
               <Th>ID</Th>
-              <Th>Mã Quyền </Th>
-              <Th>Tên Quyền</Th>
-              <Th>Thể loại </Th>
+              <Th>Tên loại phân quyền</Th>
 
               <Th textAlign={'center'}>Thao tác</Th>
             </Tr>
           </Thead>
           <Tbody>
             {tableData.data ? (
-              tableData.data.map((permission, index) => (
+              tableData.data.map((permissionGroup, index) => (
                 <Tr key={index}>
-                  <Td>{permission.id}</Td>
-                  <Td>{permission.ps_code}</Td>
-                  <Td>{permission.ps_name}</Td>
-                  <Td>{permission.ps_group}</Td>
+                  <Td>{permissionGroup.id}</Td>
+                  <Td>{permissionGroup.name}</Td>
 
                   <Td display={'flex'} gap={'5px'}>
                     <Button
                       flex={1}
                       colorScheme="teal"
                       onClick={() => {
-                        navigate(`/permission/update/${permission.id}`);
+                        navigate(`/permission-group/update/${permissionGroup.id}`);
                       }}
                     >
                       Sửa
@@ -122,7 +118,7 @@ export default function ListPermissionGroup() {
                             flex={1}
                             colorScheme="red"
                             onClick={() => {
-                              deletePermission(permission.id);
+                              deletePermissionGroup(permissionGroup.id);
                             }}
                           >
                             Đồng ý
@@ -137,7 +133,11 @@ export default function ListPermissionGroup() {
                 </Tr>
               ))
             ) : (
-              <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+              <Tr>
+                <Td colSpan="4">
+                  <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+                </Td>
+              </Tr>
             )}
           </Tbody>
         </Table>

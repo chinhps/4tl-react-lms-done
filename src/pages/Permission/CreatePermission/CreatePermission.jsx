@@ -1,13 +1,26 @@
 import { useForm } from 'react-hook-form';
-import { FormErrorMessage, FormLabel, FormControl, Input, Button, Switch, Box, useToast, Text } from '@chakra-ui/react';
-import { useState } from 'react';
+import {
+  FormErrorMessage,
+  FormLabel,
+  FormControl,
+  Input,
+  Button,
+  Switch,
+  Box,
+  useToast,
+  Text,
+  Select,
+} from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import permissionsAPI from '../../../api/permissionsAPI';
+import permissionGroupAPI from '../../../api/permissionsGroup';
 
 export default function CreatePermission() {
   const navigate = useNavigate();
   const [isSubmit, setIsSubmit] = useState(false);
   const toast = useToast();
+  const [permissionGroup, setPermissionGroup] = useState(null);
   const {
     handleSubmit,
     register,
@@ -49,6 +62,12 @@ export default function CreatePermission() {
     });
   }
 
+  useEffect(() => {
+    permissionGroupAPI.getWithoutPaginate().then((res) => {
+      setPermissionGroup(res);
+    });
+  }, []);
+
   return (
     <Box>
       <Text fontSize="6xl" fontWeight="bold">
@@ -78,15 +97,31 @@ export default function CreatePermission() {
           <FormErrorMessage>{errors.ps_code && errors.ps_code.message}</FormErrorMessage>
         </FormControl>
 
-        <FormControl isInvalid={errors.ps_group} isRequired>
-          <FormLabel htmlFor="ps_group">Thể loại quyền</FormLabel>
-          <Input
+        <FormControl isInvalid={errors.ps_group}>
+          <FormLabel htmlFor="ps_group">
+            Ngành học
+            <span role="presentation" aria-hidden="true" style={{ color: 'red', marginLeft: '2px' }}>
+              *
+            </span>
+          </FormLabel>
+          <Select
             id="ps_group"
-            placeholder="Thể loại quyền"
+            placeholder="Chọn ngành học"
+            defaultValue={''}
             {...register('ps_group', {
-              required: 'Thể loại quyền không được để trống',
+              required: 'Vui lòng chọn ngành học',
             })}
-          />
+          >
+            {permissionGroup ? (
+              permissionGroup.map((item) => (
+                <option value={item.id} key={item.id}>
+                  {item.name}
+                </option>
+              ))
+            ) : (
+              <></>
+            )}
+          </Select>
           <FormErrorMessage>{errors.ps_group && errors.ps_group.message}</FormErrorMessage>
         </FormControl>
         <Button mt={4} colorScheme="teal" isLoading={isSubmitting} type="submit">

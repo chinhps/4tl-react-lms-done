@@ -135,6 +135,7 @@ export default function CreateQuestion() {
       setSubject(res);
     });
   }, []);
+  console.log();
   return (
     <>
       <Text fontSize="6xl" fontWeight="bold">
@@ -155,7 +156,7 @@ export default function CreateQuestion() {
               required: 'Bạn chưa chọn môn học',
             })}
           >
-            {subjects.data?.map((item) => (
+            {subjects?.map((item) => (
               <option key={item.name} value={item.id}>
                 {item.name}
               </option>
