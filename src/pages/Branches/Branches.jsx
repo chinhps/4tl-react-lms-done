@@ -9,7 +9,7 @@ import Projects from './component/Projects';
 const Classes = () => {
   const dispatch = useDispatch();
   const params = useParams();
-  const { pending: pendingBranch,listBranches } = useSelector((state) => state.branches);
+  const { pending: pendingBranch,listBranches,title: titleBranch } = useSelector((state) => state.branches);
 
   useEffect(() => {
     dispatch(
@@ -27,7 +27,7 @@ const Classes = () => {
         display={{ base: 'block', xl: 'grid' }}
       >
         <GridItem gridArea={{ xl: '1 / 1 / 3 / 3', '2xl': '1 / 1 / 2 / 2' }}>
-          <Projects data={listBranches} pendingBranch={pendingBranch} />
+          <Projects title={titleBranch} data={listBranches} pendingBranch={pendingBranch} />
         </GridItem>
         <GridItem>
           <HistoryCourse limit={5} />

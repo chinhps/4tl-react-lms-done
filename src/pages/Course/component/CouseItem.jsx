@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 // Chakra imports
 import {
   Box,
   Button,
   Flex,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Grid,
   GridItem,
@@ -15,6 +16,7 @@ import {
   Text,
   useColorModeValue,
   useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
 
 import {
@@ -25,13 +27,18 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
+import { useDispatch, useSelector } from 'react-redux';
 // Assets
 import { MdAccessTime, MdCallMissed, MdKeyboardReturn } from 'react-icons/md';
 import Card from '../../../Components/Core/Card/Card';
 import moment from 'moment';
 import 'moment/locale/vi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useRef } from 'react';
+import { useForm } from 'react-hook-form';
+import { fetchQuiz } from '../../../reducer/quizSlice';
+import { useEffect } from 'react';
 
 function CouseItem({ name, description, type, history, deadline, slug, password }, rest) {
   // Chakra Color Mode
@@ -47,33 +54,68 @@ function CouseItem({ name, description, type, history, deadline, slug, password 
     'https://i.imgur.com/TVo32ES.png',
   ];
 
-  const initialRef = React.useRef(null)
-  const finalRef = React.useRef(null)
+  const initialRef = useRef(null);
+  const finalRef = useRef(null);
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting },
+  } = useForm();
+  const quizz = useSelector(state => state.quiz)
+
 
   const handleChoose = () => {
     onOpen();
   };
 
+  const { slugCourse } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const onSubmit = async (data) => {
+    dispatch(
+      fetchQuiz({
+        slugCourse: slugCourse,
+        slug,
+        password: data.password,
+      }),
+    ).then(data => {
+      if(data.payload) {
+        navigate('./quiz/'+slug);
+      } 
+    })
+  };
   return (
     <>
       <Modal initialFocusRef={initialRef} finalFocusRef={finalRef} isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
+        <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px) hue-rotate(10deg)" />
         <ModalContent>
-          <ModalHeader>Bài cần mật khẩu để truy cập</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody pb={6}>
-            <FormControl>
-              <FormLabel>Mật khẩu</FormLabel>
-              <Input textColor={textColorPrimary} ref={initialRef} type="password" placeholder="Mật khẩu" />
-            </FormControl>
-          </ModalBody>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <ModalHeader>Bài cần mật khẩu để truy cập</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody pb={6}>
+              <FormControl isInvalid={errors.password} isRequired>
+                <FormLabel>Mật khẩu</FormLabel>
+                <Input
+                  textColor={textColorPrimary}
+                  ref={initialRef}
+                  type="password"
+                  {...register('password', {
+                    required: 'Mật khẩu không được để trống',
+                  })}
+                  placeholder="Mật khẩu"
+                />
+                <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
+              </FormControl>
+            </ModalBody>
 
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3}>
-              Truy cập
-            </Button>
-            <Button onClick={onClose}>Đóng</Button>
-          </ModalFooter>
+            <ModalFooter>
+              <Button colorScheme="blue" mr={3} isLoading={quizz.pending} type="submit">
+                Truy cập
+              </Button>
+              <Button onClick={onClose}>Đóng</Button>
+            </ModalFooter>
+          </form>
         </ModalContent>
       </Modal>
 

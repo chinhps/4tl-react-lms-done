@@ -7,7 +7,7 @@ export const fetchUser = createAsyncThunk('user/getUser', async () => {
 });
 
 export const fetchLogin = createAsyncThunk('user/login', async (params) => {
-  const dataLogin = await await userAPI.login({
+  const dataLogin = await userAPI.login({
     email: params.email,
     password: params.password,
   });
