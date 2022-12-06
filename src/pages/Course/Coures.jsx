@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Grid, GridItem, Flex, Text } from '@chakra-ui/react';
+import { Tabs, TabList, TabPanels, Tab, TabPanel, Grid, GridItem, Flex, Text, Spinner, Box } from '@chakra-ui/react';
 import Overviews from './component/Overviews';
 import Card from '../../Components/Core/Card/Card';
 import HistoryCourse from '../../Components/Core/Table/HistoryCourse';
@@ -15,12 +15,11 @@ import InfoProfile from '../../Components/Core/InfoProfile';
 
 function Coures() {
   const { slugCourse } = useParams();
-  const [course, setCourse] = useState([]);
+  const [course, setCourse] = useState(null);
   const params = useParams();
 
   useEffect(() => {
     coursesAPI.getDocQuizLab(params.slugCourse).then((data) => {
-      console.log(123, data);
       setCourse(data.data);
     });
   }, [params]);
@@ -55,33 +54,41 @@ function Coures() {
                   <Quizs courses={course} />
                 </TabPanel>
               </TabPanels>
-            ) : null}
+            ) : (
+              <Box p={5}>
+                <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+              </Box>
+            )}
           </Tabs>
         </GridItem>
         <GridItem>
           <Flex flexDirection="column" gap="20px">
-            {course.courses ? (
+            {course?.courses ? (
               <InfoProfile
                 gridArea="1 / 1 / 2 / 2"
-                banner={"https://i.imgur.com/Btvvz1B.png"}
-                name={ course.courses.class_code + ' - ' +course.courses.name}
+                banner={'https://i.imgur.com/Btvvz1B.png'}
+                name={course.courses.class_code + ' - ' + course.courses.name}
                 countInfo={[
                   {
                     name: 'Sinh viên',
-                    value: course.student_joined.length
+                    value: course.student_joined.length,
                   },
                   {
                     name: 'Bài tập',
-                    value: course.quizs.length + course.labs.length
+                    value: course.quizs.length + course.labs.length,
                   },
                   {
                     name: 'Tài liệu',
-                    value: course.documents.length
-                  }
-              ]}
-            />
-            ) : null}
-            
+                    value: course.documents.length,
+                  },
+                ]}
+              />
+            ) : (
+              <Box p={5}>
+                <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+              </Box>
+            )}
+
             <MiniCalendar minW="100%" selectRange={false} />
             <HistoryCourse limit={6} />
           </Flex>

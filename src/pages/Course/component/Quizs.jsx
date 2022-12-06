@@ -5,15 +5,18 @@ import CouseItem from './CouseItem';
 function Quizs({courses}) {
   return (
     <Flex gap={{ base: '20px', xl: '20px' }} flexDirection="column">
-      {courses.quizs?.map((couse, index) => (
+      {courses.quizs?.map((data, index) => (
         <CouseItem
-          password={couse.password}
+          max_working={data.max_working}
+          password={data.password}
+          config={data.config}
+          level={data.level}
           key={index}
-          name={'Bài ' + couse.name}
-          deadline={couse.deadlines}
+          name={'Bài ' + data.name}
+          deadline={data.deadlines}
           type={0}
-          slug={couse.slug}
-          history={couse.count_submit}
+          slug={data.slug}
+          history={data.count_submit}
           description="Quiz"
         />
       ))}

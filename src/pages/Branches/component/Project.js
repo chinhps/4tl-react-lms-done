@@ -26,6 +26,7 @@ import Card from '../../../Components/Core/Card/Card';
 import { Link as ReachLink, useNavigate } from 'react-router-dom';
 import coursesAPI from '../../../api/coursesAPI';
 import { setTitle } from '../../../reducer/branchSlide';
+import { useDispatch } from 'react-redux';
 
 export default function Project({ data, image, link, title }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -39,9 +40,7 @@ export default function Project({ data, image, link, title }) {
 
   const handelJoinCourse = async (id) => {
     const data = await coursesAPI.joinCourse(id);
-
     onClose();
-    
     if (data.status == 200) {
       toast({
         title: `Thông báo!`,
@@ -51,13 +50,13 @@ export default function Project({ data, image, link, title }) {
         isClosable: true,
       });
     }
-
     navigate('/course/'+data.slug);
   };
 
+  const dispatch = useDispatch();
+
   const handelClickProject = (data) => {
-    console.log(data);
-    // dispatch(setTitle());
+    dispatch(setTitle(data.name));
     // onOpen
     if (data.class_code) {
       onOpen();

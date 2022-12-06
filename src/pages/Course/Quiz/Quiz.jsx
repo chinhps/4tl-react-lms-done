@@ -38,18 +38,18 @@ function Quiz() {
   const toast = useToast();
 
   useEffect(() => {
-    if(questions === undefined || questions?.slug !== slugQuiz) {
+    if (questions === undefined || questions?.slug !== slugQuiz) {
       navigate(`/course/${slugCourse}`);
       toast({
         title: 'Thông báo!',
-        description: "Không thể truy cập trực tiếp",
+        description: 'Không thể truy cập trực tiếp',
         status: 'error',
         position: 'bottom-right',
         duration: 5000,
         isClosable: true,
       });
     }
-  },[]);
+  }, []);
 
   useEffect(() => {
     setTimer(questions?.time_working);
@@ -60,8 +60,6 @@ function Quiz() {
         }
         return prve_timer - 1;
       });
-
-      console.log('countdown');
     }, 1000);
 
     return () => clearInterval(interval);
@@ -78,7 +76,6 @@ function Quiz() {
   useEffect(() => {
     let foo = Object.assign([], [...listAnswers], { [tabIndex]: value });
     setListAnswers(foo);
-    console.log(123, listAnswers);
   }, [onChange]);
 
   const handleChoose = (id) => {
@@ -95,7 +92,6 @@ function Quiz() {
         setTabIndex(tabIndex - 1);
       }
     }
-    console.log('tabindex', tabIndex);
   };
 
   return (
@@ -107,6 +103,9 @@ function Quiz() {
       >
         <GridItem>
           <Card mb={{ base: '0px', '2xl': '20px' }}>
+            <Text color={textColorPrimary} fontWeight="bold" fontSize="2xl" mt="10px" mb="4px">
+              {questions?.name ?? 'Đang tải...'}
+            </Text>
             <Flex justifyContent="space-between" my={5} mx={3}>
               <Button borderRadius={'md'} onClick={() => handleNextPrev('prev')} colorScheme="blue" gap={2}>
                 <FiChevronLeft strokeWidth="4px" /> Lùi
@@ -183,6 +182,11 @@ function Quiz() {
                 </Text>
               </Flex>
             </Box>
+          </Card>
+          <Card mb={{ base: '0px', '2xl': '20px' }}>
+            <Button borderRadius={'md'} h="16" w="100%" colorScheme="red">
+              NỘP BÀI
+            </Button>
           </Card>
           <Card mb={{ base: '0px', '2xl': '20px' }}>
             <Text color={textColorPrimary} fontWeight="bold" fontSize="lg" mb="10px" textAlign="center">
