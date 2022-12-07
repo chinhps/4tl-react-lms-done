@@ -29,8 +29,9 @@ import ListPermission from '../pages/Permission/ListPermission/ListPermission';
 import CreatePermission from '../pages/Permission/CreatePermission/CreatePermission';
 import UpdatePermission from '../pages/Permission/UpdatePermission/UpdatePermission';
 import UpdateQuestion from '../pages/QuestionBank/UpdateQuestion/UpdateQuestion';
-import News from '../pages/News/News'
+import News from '../pages/News/News';
 import NewsDetail from '../pages/News/NewsDetail';
+import ChatBox from '../pages/Chat/ChatBox';
 import ListPermissionGroup from '../pages/PermissionGroup/ListPermissionGroup/ListPermissionGroup';
 import CreatePermissionGroup from '../pages/PermissionGroup/CreatePermissionGroup/CreatePermissionGroup';
 import UpdatePermissionGroup from '../pages/PermissionGroup/UpdatePermissionGroup/UpdatePermissionGroup';
@@ -111,7 +112,6 @@ const publicRoutes = [
     guard: ProtectedAuth,
     component: CoursesU,
     layout: HomeLayout,
-    guard: ProtectedAuth,
   },
   {
     path: '/user/list',
@@ -222,70 +222,89 @@ const publicRoutes = [
     guard: ProtectedAuth,
   },
   {
+    path: '/chat',
+    component: ChatBox,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/chat/:id',
+    component: ChatBox,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
     path: '/news',
     component: News,
     layout: HomeLayout,
-    guard: ProtectedAuth
+    guard: ProtectedAuth,
   },
+  // {
+  //   path: '/news-list/:listId',
+  //   component: NewsList,
+  //   layout: HomeLayout,
+  //   guard: ProtectedAuth,
+  // },
   {
-    path: '/news-detail/:newsId',
+    path: '/news-detail/:detailId',
     component: NewsDetail,
     layout: HomeLayout,
-    guard: ProtectedAuth
+    guard: ProtectedAuth,
   },
+
   {
     path: '/permission-group/list',
     component: ListPermissionGroup,
     layout: HomeLayout,
-    guard: ProtectedAuth
+    guard: ProtectedAuth,
   },
   {
     path: '/permission-group/new',
     component: CreatePermissionGroup,
     layout: HomeLayout,
-    guard: ProtectedAuth
+    guard: ProtectedAuth,
   },
   {
     path: '/permission-group/update/:id',
     component: UpdatePermissionGroup,
     layout: HomeLayout,
-    guard: ProtectedAuth
+    guard: ProtectedAuth,
   },
   {
     path: '/classes/list',
     component: ListClasses,
     layout: HomeLayout,
-    guard: ProtectedAuth
+    guard: ProtectedAuth,
   },
   {
     path: '/classes/new',
     component: CreateClasses,
     layout: HomeLayout,
-    guard: ProtectedAuth
+    guard: ProtectedAuth,
   },
   {
     path: '/classes/update/:id',
     component: UpdateClasses,
     layout: HomeLayout,
-    guard: ProtectedAuth
+    guard: ProtectedAuth,
   },
-  {
-    path: '/news/list',
-    component: ListClasses,
-    layout: HomeLayout,
-    guard: ProtectedAuth
-  },
-  {
-    path: '/news/new',
-    component: CreateNews,
-    layout: HomeLayout,
-    guard: ProtectedAuth
-  },
-  {
-    path: '/news/update/:id',
-    component: UpdateClasses,
-    layout: HomeLayout,
-    guard: ProtectedAuth
-  }
+  // {
+  //   path: '/news/list',
+  //   component: ListClasses,
+  //   layout: HomeLayout,
+  //   guard: ProtectedAuth,
+  // },
+  // {
+  //   path: '/news/new',
+  //   component: CreateNews,
+  //   layout: HomeLayout,
+  //   guard: ProtectedAuth,
+  // },
+  // {
+  //   path: '/news/update/:id',
+  //   component: UpdateClasses,
+  //   layout: HomeLayout,
+  //   guard: ProtectedAuth,
+  // },
 ];
 export { publicRoutes };

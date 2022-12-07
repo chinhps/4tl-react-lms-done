@@ -112,9 +112,9 @@ export default function CreateQuestion() {
           });
         })
         .then(() => {
-          setTimeout(() => {
-            navigate('/question-bank/list');
-          }, 2000);
+          // setTimeout(() => {
+          //   navigate('/question-bank/list');
+          // }, 2000);
         })
 
         .catch((err) => {
