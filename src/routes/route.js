@@ -1,4 +1,3 @@
-import FileUpload from '../pages/Upload/FileUpload';
 import { AuthLayout, HomeLayout } from '../Layout';
 import Branches from '../pages/Branches/Branches';
 import Home from '../pages/Home/Home';
@@ -25,6 +24,7 @@ import CreateQuestion from '../pages/QuestionBank/CreateQuestion/CreateQuestion'
 import ListRole from '../pages/Role/ListRole/ListRole';
 import CreateRole from '../pages/Role/CreateRole/CreateRole';
 import UpdateRole from '../pages/Role/UpdateRole/UpdateRole';
+import Quiz from '../pages/Course/Quiz/Quiz';
 import ListPermission from '../pages/Permission/ListPermission/ListPermission';
 import CreatePermission from '../pages/Permission/CreatePermission/CreatePermission';
 import UpdatePermission from '../pages/Permission/UpdatePermission/UpdatePermission';
@@ -32,6 +32,15 @@ import UpdateQuestion from '../pages/QuestionBank/UpdateQuestion/UpdateQuestion'
 import News from '../pages/News/News';
 import NewsDetail from '../pages/News/NewsDetail';
 import ChatBox from '../pages/Chat/ChatBox';
+import ListPermissionGroup from '../pages/PermissionGroup/ListPermissionGroup/ListPermissionGroup';
+import CreatePermissionGroup from '../pages/PermissionGroup/CreatePermissionGroup/CreatePermissionGroup';
+import UpdatePermissionGroup from '../pages/PermissionGroup/UpdatePermissionGroup/UpdatePermissionGroup';
+import ListClasses from '../pages/Class/ListClasses/ListClasses';
+import CreateClasses from '../pages/Class/CreateClasses/CreateClasses';
+import UpdateClasses from '../pages/Class/UpdateClasses/UpdateClasses';
+import CreateNews from '../pages/News/CreateNews';
+import Lab from '../pages/Course/Lab/Lab';
+
 const publicRoutes = [
   {
     path: '/',
@@ -58,12 +67,6 @@ const publicRoutes = [
     guard: ProtectedAuth,
   },
   {
-    path: '/upload',
-    component: FileUpload,
-    layout: HomeLayout,
-    guard: ProtectedAuth,
-  },
-  {
     path: '/login',
     component: Login,
     layout: AuthLayout,
@@ -71,6 +74,18 @@ const publicRoutes = [
   {
     path: '/course/:slugCourse',
     component: Coures,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/course/:slugCourse/quiz/:slugQuiz',
+    component: Quiz,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/course/:slugCourse/lab/:slugLab',
+    component: Lab,
     layout: HomeLayout,
     guard: ProtectedAuth,
   },
@@ -213,6 +228,12 @@ const publicRoutes = [
     guard: ProtectedAuth,
   },
   {
+    path: '/chat/:id',
+    component: ChatBox,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
     path: '/news',
     component: News,
     layout: HomeLayout,
@@ -230,5 +251,60 @@ const publicRoutes = [
     layout: HomeLayout,
     guard: ProtectedAuth,
   },
+
+  {
+    path: '/permission-group/list',
+    component: ListPermissionGroup,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/permission-group/new',
+    component: CreatePermissionGroup,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/permission-group/update/:id',
+    component: UpdatePermissionGroup,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/classes/list',
+    component: ListClasses,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/classes/new',
+    component: CreateClasses,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/classes/update/:id',
+    component: UpdateClasses,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  // {
+  //   path: '/news/list',
+  //   component: ListClasses,
+  //   layout: HomeLayout,
+  //   guard: ProtectedAuth,
+  // },
+  // {
+  //   path: '/news/new',
+  //   component: CreateNews,
+  //   layout: HomeLayout,
+  //   guard: ProtectedAuth,
+  // },
+  // {
+  //   path: '/news/update/:id',
+  //   component: UpdateClasses,
+  //   layout: HomeLayout,
+  //   guard: ProtectedAuth,
+  // },
 ];
 export { publicRoutes };

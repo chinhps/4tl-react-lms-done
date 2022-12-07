@@ -12,10 +12,9 @@ import {
 } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import permissionsAPI from '../../../api/permissionsAPI';
-import permissionGroupAPI from '../../../api/permissionsGroup';
+import classesAPI from '../../../api/classesAPI';
 
-export default function UpdatePermissionGroup() {
+export default function UpdateClasses() {
   const navigate = useNavigate();
   const { id } = useParams();
   const toast = useToast();
@@ -31,9 +30,9 @@ export default function UpdatePermissionGroup() {
   function onSubmit(values) {
     return new Promise((resolve) => {
       const putData = {
-        name: values.name,
+        class_name: values.class_name,
       };
-      permissionGroupAPI.put(id, putData).then((res) => {
+      classesAPI.put(id, putData).then((res) => {
         setIsSubmit(!isSubmit);
         toast({
           title: 'Thông báo',
@@ -43,7 +42,7 @@ export default function UpdatePermissionGroup() {
           isClosable: true,
         });
         setTimeout(() => {
-          navigate('/permission-group/list');
+          navigate('/classes/list');
         }, 2000);
       });
     }).catch((err) => {
@@ -58,7 +57,7 @@ export default function UpdatePermissionGroup() {
     });
   }
   useEffect(() => {
-    permissionGroupAPI.getById(id).then((res) => {
+    classesAPI.getById(id).then((res) => {
       setPermission(res);
       reset(res);
     });
@@ -67,22 +66,22 @@ export default function UpdatePermissionGroup() {
   return (
     <Box>
       <Text fontSize="6xl" fontWeight="bold">
-        Sửa quyền
+        Sửa lớp
       </Text>
       <form onSubmit={handleSubmit(onSubmit)}>
         {permission ? (
           <>
-            <FormControl isInvalid={errors.name} isRequired>
-              <FormLabel htmlFor="name">Tên quyền</FormLabel>
+            <FormControl isInvalid={errors.class_name} isRequired>
+              <FormLabel htmlFor="class_name">Tên lớp</FormLabel>
               <Input
-                id="name"
-                defaultValue={permission.name ? permission?.name : ''}
-                placeholder="Tên quyền"
-                {...register('name', {
-                  required: 'Tên quyền không được để trống',
+                id="class_name"
+                defaultValue={permission.class_name ? permission?.class_name : ''}
+                placeholder="Tên lớp"
+                {...register('class_name', {
+                  required: 'Tên lớp không được để trống',
                 })}
               />
-              <FormErrorMessage>{errors.name && errors.name.message}</FormErrorMessage>
+              <FormErrorMessage>{errors.class_name && errors.class_name.message}</FormErrorMessage>
             </FormControl>
             <Button mt={4} colorScheme="teal" isLoading={isSubmitting} type="submit">
               Cập nhật

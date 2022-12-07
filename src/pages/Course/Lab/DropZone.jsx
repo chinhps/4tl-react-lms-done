@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import { Box, Image, Input, Stack, Text, Button } from '@chakra-ui/react'
-import uploadImg from '../../assets/images/upload/cloud-upload-regular-240.png'
+import uploadImg from '../../../assets/images/upload/cloud-upload-regular-240.png'
 import { AiFillCloseCircle } from 'react-icons/ai'
-import { imgConfig } from '../../utils/constants'
+import { imgConfig } from '../../../utils/constants'
 
 const DropZone = props => {
     const [fileList, setFileList] = useState([])

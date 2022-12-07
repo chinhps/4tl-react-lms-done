@@ -13,13 +13,17 @@ import {
   MenuDivider,
   MenuItem,
   MenuList,
+  useColorMode,
+  Button,
 } from '@chakra-ui/react';
 import { FiMenu, FiBell, FiChevronDown } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
 import { logOut } from '../../utils/auth';
+import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 
 function MobileNav({ onOpen, ...rest }) {
   const { user: userRd } = useSelector((state) => state.user);
+  const { colorMode, toggleColorMode } = useColorMode();
 
   return (
     <Flex
@@ -45,8 +49,10 @@ function MobileNav({ onOpen, ...rest }) {
         LMS 4TL
       </Text>
 
-      <HStack spacing={{ base: '0', md: '6' }}>
+      <HStack spacing={{ base: '1', md: '6' }}>
         <IconButton size="lg" variant="ghost" aria-label="open menu" icon={<FiBell />} />
+        <Button onClick={toggleColorMode}>{colorMode === 'light' ? <MoonIcon /> : <SunIcon />}</Button>
+
         <Flex alignItems={'center'}>
           <Menu>
             <MenuButton py={2} transition="all 0.3s" _focus={{ boxShadow: 'none' }}>

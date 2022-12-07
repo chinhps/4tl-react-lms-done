@@ -16,11 +16,15 @@ import {
 // import { AiFillCheckCircle } from 'react-icons/ai';
 
 import React from 'react';
-import { useRef } from 'react';
+
 import { useForm } from 'react-hook-form';
 import { AiOutlineSend } from 'react-icons/ai';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const Chat = () => {
+  const navigate = useNavigate();
+  const { id } = useParams();
+  console.log(id);
   const {
     handleSubmit,
     register,
@@ -44,6 +48,46 @@ const Chat = () => {
       <Grid templateColumns="30% 1fr" gap={4}>
         <GridItem w="100%" h="800px" bg="white" rounded="md" padding={3} gap={5} boxShadow="base">
           <Flex
+            onClick={() => {
+              navigate(`/chat/${3}`);
+            }}
+            rounded="md"
+            p={2}
+            _hover={{ bg: '#e0e3ea' }}
+            transition="all 0.3s ease-in-out"
+            position={'relative'}
+            justifyContent={['center', 'center', 'center', 'center', 'start']}
+          >
+            <Avatar src="https://bit.ly/sage-adebayo " size="lg">
+              <AvatarBadge boxSize="0.8em" border="0.15em solid" bg="green.500" />
+            </Avatar>
+            <Box ml="4" display={['none', 'none', 'none', 'none', 'block']}>
+              <Text fontWeight="bold"> Chấm Ly</Text>
+              <Flex>
+                <Text fontSize="sm" color={'grey'} noOfLines={1} w={'40%'}>
+                  Bạn: ê mai cà phê sdghạhdcdsb
+                </Text>
+                <Text fontSize="sm" color={'grey'} noOfLines={1} w={150}>
+                  36 phút
+                </Text>
+              </Flex>
+              <AvatarGroup size="xs" max={3} position="absolute" right={2} w={{ 375: 0 }}>
+                <Avatar name="Ryan Florence" src="https://bit.ly/ryan-florence" />
+                <Avatar name="Segun Adebayo" src="https://bit.ly/sage-adebayo" />
+                <Avatar name="Kent Dodds" src="https://bit.ly/kent-c-dodds" />
+                <Avatar name="Prosper Otemuyiwa" src="https://bit.ly/prosper-baba" />
+                <Avatar name="Christian Nwamba" src="https://bit.ly/code-beast" />
+              </AvatarGroup>
+
+              {/* <AvatarGroup size="xs" max={3} position="absolute" right={2} w={{ 375: 0 }}>
+                <AiFillCheckCircle style={{ width: '1.3em', color: 'grey' }} />
+              </AvatarGroup> */}
+            </Box>
+          </Flex>
+          <Flex
+            onClick={() => {
+              navigate(`/chat/${4}`);
+            }}
             rounded="md"
             p={2}
             _hover={{ bg: '#e0e3ea' }}

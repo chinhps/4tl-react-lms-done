@@ -135,6 +135,7 @@ export default function CreateQuestion() {
       setSubject(res);
     });
   }, []);
+  console.log();
   return (
     <>
       <Text fontSize="6xl" fontWeight="bold">
