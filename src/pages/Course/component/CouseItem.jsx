@@ -30,7 +30,7 @@ import {
 } from '@chakra-ui/react';
 import { useDispatch, useSelector } from 'react-redux';
 // Assets
-import { MdAccessTime, MdCallMissed, MdKeyboardReturn } from 'react-icons/md';
+import { MdAccessTime, MdCallMissed, MdKeyboardReturn, MdSecurity } from 'react-icons/md';
 import Card from '../../../Components/Core/Card/Card';
 import moment from 'moment';
 import 'moment/locale/vi';
@@ -40,12 +40,12 @@ import { useForm } from 'react-hook-form';
 import { fetchQuiz } from '../../../reducer/quizSlice';
 import { useEffect } from 'react';
 
-function CouseItem({ name, description, type, history, deadline, slug, password }, rest) {
+function CouseItem({ name, description, type, history, deadline, slug, password, config, level, max_working }, rest) {
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue('secondaryGray.900', 'white');
   const textColorSecondary = 'gray.400';
   const bg = useColorModeValue('white', 'navy.700');
-
+  const naviagte = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const rdBg = [
@@ -61,11 +61,24 @@ function CouseItem({ name, description, type, history, deadline, slug, password 
     register,
     formState: { errors, isSubmitting },
   } = useForm();
-  const quizz = useSelector(state => state.quiz)
-
+  const quizz = useSelector((state) => state.quiz);
 
   const handleChoose = () => {
-    onOpen();
+    if (password) {
+      onOpen();
+    } else {
+      dispatch(
+        fetchQuiz({
+          slugCourse: slugCourse,
+          slug,
+          password: null,
+        }),
+      ).then((data) => {
+        if (data.payload) {
+          naviagte('./quiz/' + slug);
+        }
+      });
+    }
   };
 
   const { slugCourse } = useParams();
@@ -79,11 +92,11 @@ function CouseItem({ name, description, type, history, deadline, slug, password 
         slug,
         password: data.password,
       }),
-    ).then(data => {
-      if(data.payload) {
-        navigate('./quiz/'+slug);
-      } 
-    })
+    ).then((data) => {
+      if (data.payload) {
+        navigate('./quiz/' + slug);
+      }
+    });
   };
   return (
     <>
@@ -126,43 +139,53 @@ function CouseItem({ name, description, type, history, deadline, slug, password 
               <Image h="100px" w="100px" src={rdBg[type]} objectFit="cover" borderRadius="8px" me="20px" />
               <Box mt={{ base: '10px', md: '0' }}>
                 <Text color={textColorPrimary} fontWeight="500" fontSize="xl" mb="4px">
-                  {name}
+                  {password ? <MdSecurity /> : null} {name}
                 </Text>
                 <Text fontWeight="500" color={textColorSecondary} fontSize="sm" me="4px">
-                  {description}
+                  {description} {level ? `Level: ${level}` : null }
                 </Text>
               </Box>
             </Flex>
           </GridItem>
           <GridItem>
-            <Box>
-              {history ? (
-                <>
-                  <Text color={textColorPrimary}>Đã nộp:</Text>
-                  <Text fontWeight="500" color={textColorSecondary} fontSize="sm" me="4px">
-                    {history.length} bài đã nộp
-                  </Text>
-                </>
-              ) : null}
-            </Box>
+            {typeof history !== 'undefined' ? (
+              <Box>
+                <Text color={textColorPrimary}>Đã nộp:</Text>
+                <Text fontWeight="500" color={textColorSecondary} fontSize="sm" me="4px">
+                  {history ?? 0} bài đã nộp
+                </Text>
+                <Text fontWeight="500" color={textColorSecondary} fontSize="sm" me="4px">
+                  Có {max_working ?? 0} lần làm bài
+                </Text>
+              </Box>
+            ) : null}
           </GridItem>
           <GridItem>
             <Box>
               <Flex align="flex-end" direction="column">
                 <Icon as={MdKeyboardReturn} color="secondaryGray.500" h="18px" w="18px" />
                 <Flex alignItems="center" gap="10px">
-                  {deadline ? (
+                  {deadline && deadline.time_end !== null && deadline.time_start !== null ? (
                     <>
                       <MdAccessTime />
                       {moment(deadline.time_end).locale('vi').subtract(deadline.time_start).calendar()}
                     </>
-                  ) : (
+                  ) : config ? (
                     <Stack spacing={3}>
                       <Text>
                         <MdCallMissed style={{ display: 'inline-block' }} /> Truy cập ngay
                       </Text>
                       <Text fontSize="xs" color={textColorSecondary}>
                         Không có hạn
+                      </Text>
+                    </Stack>
+                  ) : (
+                    <Stack spacing={3}>
+                      <Text>
+                        <MdCallMissed style={{ display: 'inline-block' }} /> Không thể truy cập
+                      </Text>
+                      <Text fontSize="xs" color={textColorSecondary}>
+                        Chưa cấu hình
                       </Text>
                     </Stack>
                   )}

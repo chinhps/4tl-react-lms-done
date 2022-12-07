@@ -1,4 +1,4 @@
-import { Button, Flex, Spinner, Text, useColorModeValue } from '@chakra-ui/react';
+import { Box, Button, Flex, Spinner, Text, useColorModeValue } from '@chakra-ui/react';
 import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -41,7 +41,9 @@ function HistoryCourse({ limit = 3 }) {
           ))
         ) : (
           <Flex justifyContent="center" alignItems="center">
-            <Spinner size="xl" />
+            <Box p={5}>
+                <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
+              </Box>
           </Flex>
         )}
       </Card>

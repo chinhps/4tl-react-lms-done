@@ -31,5 +31,4 @@ const branchSlide = createSlice({
 
 export const { setTitle } = branchSlide.actions
 
-
 export default branchSlide;
