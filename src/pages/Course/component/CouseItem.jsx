@@ -39,13 +39,14 @@ import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { fetchQuiz } from '../../../reducer/quizSlice';
 import { useEffect } from 'react';
+import { fetchLab } from '../../../reducer/labSlice';
 
 function CouseItem({ name, description, type, history, deadline, slug, password, config, level, max_working }, rest) {
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue('secondaryGray.900', 'white');
   const textColorSecondary = 'gray.400';
   const bg = useColorModeValue('white', 'navy.700');
-  const naviagte = useNavigate();
+  const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const rdBg = [
@@ -61,21 +62,26 @@ function CouseItem({ name, description, type, history, deadline, slug, password,
     register,
     formState: { errors, isSubmitting },
   } = useForm();
+
+  // type: 1 = Lab, 0 = Quiz
+  // lấy data đúng theo tùy chọn
+  const fetchData = (type === 1) ? fetchLab : fetchQuiz;
   const quizz = useSelector((state) => state.quiz);
+  const labb = useSelector((state) => state.lab);
 
   const handleChoose = () => {
     if (password) {
       onOpen();
     } else {
       dispatch(
-        fetchQuiz({
+        fetchData({
           slugCourse: slugCourse,
           slug,
           password: null,
         }),
       ).then((data) => {
         if (data.payload) {
-          naviagte('./quiz/' + slug);
+          type === 1 ? navigate('./lab/' + slug) : navigate('./quiz/' + slug);
         }
       });
     }
@@ -83,18 +89,17 @@ function CouseItem({ name, description, type, history, deadline, slug, password,
 
   const { slugCourse } = useParams();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     dispatch(
-      fetchQuiz({
+      fetchData({
         slugCourse: slugCourse,
         slug,
         password: data.password,
       }),
     ).then((data) => {
       if (data.payload) {
-        navigate('./quiz/' + slug);
+        type === 1 ? navigate('./lab/' + slug) : navigate('./quiz/' + slug);
       }
     });
   };
@@ -142,7 +147,7 @@ function CouseItem({ name, description, type, history, deadline, slug, password,
                   {password ? <MdSecurity /> : null} {name}
                 </Text>
                 <Text fontWeight="500" color={textColorSecondary} fontSize="sm" me="4px">
-                  {description} {level ? `Level: ${level}` : null }
+                  {description} {level ? `Level: ${level}` : null}
                 </Text>
               </Box>
             </Flex>

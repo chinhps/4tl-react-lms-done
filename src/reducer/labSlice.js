@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import labAPI from '../api/labAPI';
 
-export const fetchLab = createAsyncThunk('quiz/getQuiz', async (data) => {
+export const fetchLab = createAsyncThunk('lab/getLab', async (data) => {
   const res = await labAPI.getAll(data.slugCourse, data.slug, data.password);
   return res;
 });
