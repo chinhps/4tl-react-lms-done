@@ -31,7 +31,7 @@ import UpdatePermission from '../pages/Permission/UpdatePermission/UpdatePermiss
 import UpdateQuestion from '../pages/QuestionBank/UpdateQuestion/UpdateQuestion';
 import News from '../pages/News/News';
 import NewsDetail from '../pages/News/NewsDetail';
-
+import ChatBox from '../pages/Chat/ChatBox';
 const publicRoutes = [
   {
     path: '/',
@@ -206,12 +206,12 @@ const publicRoutes = [
     layout: HomeLayout,
     guard: ProtectedAuth,
   },
-  // {
-  //   path: '/chat',
-  //   component: ChatBox,
-  //   layout: HomeLayout,
-  //   guard: ProtectedAuth,
-  // },
+  {
+    path: '/chat',
+    component: ChatBox,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
   {
     path: '/news',
     component: News,

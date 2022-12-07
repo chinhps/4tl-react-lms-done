@@ -112,9 +112,9 @@ export default function CreateQuestion() {
           });
         })
         .then(() => {
-          setTimeout(() => {
-            navigate('/question-bank/list');
-          }, 2000);
+          // setTimeout(() => {
+          //   navigate('/question-bank/list');
+          // }, 2000);
         })
 
         .catch((err) => {
@@ -155,7 +155,7 @@ export default function CreateQuestion() {
               required: 'Bạn chưa chọn môn học',
             })}
           >
-            {subjects.data?.map((item) => (
+            {subjects?.map((item) => (
               <option key={item.name} value={item.id}>
                 {item.name}
               </option>
