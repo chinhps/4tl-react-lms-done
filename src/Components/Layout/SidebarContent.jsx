@@ -163,6 +163,11 @@ const LinkItems = [
       },
     ],
   },
+  {
+    name: 'Điểm',
+    icon: FiBriefcase,
+    to: '/point-submit/list',
+  },
 ];
 
 function SidebarContent({ onClose, ...rest }) {

@@ -21,35 +21,35 @@ import {
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import userAPI from '../../../api/userAPI';
 import { Pagination } from 'react-laravel-paginex';
-import axiosClient from '../../../api/axiosClient';
-import Card from '../../../Components/Core/Card/Card';
+import axiosClient from '../../api/axiosClient';
+import Card from '../../Components/Core/Card/Card';
+import pointSubmitAPI from '../../api/pointSubmit';
 
-export default function ListUser() {
+export default function ListPointSubmit() {
   const navigate = useNavigate();
   const [tableData, setTableData] = useState({});
   const toast = useToast();
   const [isSubmit, setIsSubmit] = useState(false);
 
   useEffect(() => {
-    fetchUsers();
+    fetchPoint();
   }, [isSubmit]);
 
-  const fetchUsers = async () => {
-    const data = await userAPI.get();
+  const fetchPoint = async () => {
+    const data = await pointSubmitAPI.get();
     setTableData(data);
   };
 
   const getData = async (data) => {
-    axiosClient.get('/api/users?page=' + data.page).then((response) => {
+    axiosClient.get('/api/point-submit?page=' + data.page).then((response) => {
       setTableData(response);
     });
   };
 
   const deleteUser = (id) => {
-    setIsSubmit(false);
-    userAPI
+    setIsSubmit(!isSubmit);
+    pointSubmitAPI
       .delete(id)
       .then((res) => {
         toast({
@@ -61,7 +61,7 @@ export default function ListUser() {
         });
       })
       .catch((err) => {
-        setIsSubmit(false);
+        setIsSubmit(!isSubmit);
         toast({
           title: 'Lỗi',
           description: err.errorInfo,
@@ -83,33 +83,25 @@ export default function ListUser() {
           <Thead>
             <Tr>
               <Th>ID</Th>
-              <Th>Mã số</Th>
-              <Th>Họ và tên</Th>
-              <Th>Email</Th>
-              <Th>Số điện thoại</Th>
-              <Th>Trạng thái</Th>
-              <Th>Vai trò</Th>
-              <Th>Lớp</Th>
+              <Th>Sinh viên</Th>
+              <Th>Khóa học</Th>
+              <Th>Nội dung</Th>
+              <Th>Điểm</Th>
+              <Th>Loại</Th>
               <Th textAlign={'center'}>Thao tác</Th>
             </Tr>
           </Thead>
           <Tbody>
             {tableData.data ? (
-              tableData.data.map((user, index) => (
+              tableData.data.map((pointSubmit, index) => (
                 <Tr key={index}>
-                  <Td>{user.id}</Td>
-                  <Td>{user.user_code}</Td>
-                  <Td>{user.name}</Td>
-                  <Td>{user.email}</Td>
-                  <Td>{user.phone_number}</Td>
-                  <Td>{user.status === 1 ? 'Không bị khóa' : 'Bị khóa'}</Td>
-                  <Td>{user.role_name}</Td>
-                  <Td>{user.class_name}</Td>
-
+                  <Td>{pointSubmit.id}</Td>
+                  <Td>{pointSubmit.user_name}</Td>
+                  <Td>{`${pointSubmit.class_code} - ${pointSubmit.course_name}`}</Td>
+                  <Td>{pointSubmit.pointSubmitable_type !== 'quizs' ? pointSubmit.content : ''}</Td>
+                  <Td>{pointSubmit.point}</Td>
+                  <Td>{pointSubmit.pointSubmitable_type}</Td>
                   <Td display={'flex'} gap={'5px'}>
-                    <Button flex={1} colorScheme="teal" onClick={() => navigate(`/user/update/${user.id}`)}>
-                      Sửa
-                    </Button>
                     <Popover isLazy placement="bottom-end">
                       <PopoverTrigger>
                         <Button flex={1} colorScheme="red">
@@ -125,7 +117,7 @@ export default function ListUser() {
                             flex={1}
                             colorScheme="red"
                             onClick={() => {
-                              deleteUser(user.id);
+                              deleteUser(pointSubmit.id);
                             }}
                           >
                             Đồng ý

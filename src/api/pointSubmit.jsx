@@ -1,11 +1,10 @@
 import axiosClient from './axiosClient';
 
-const BASE_URL = '/api/roles';
-const rolesAPI = {
+const BASE_URL = '/api/point-submit';
+const pointSubmitAPI = {
   get: () => {
     return axiosClient.get(`${BASE_URL}`);
   },
-  
   getWithoutPaginate: () => {
     return axiosClient.get(`${BASE_URL}/fulllist`);
   },
@@ -15,6 +14,9 @@ const rolesAPI = {
   put: (id, data) => {
     return axiosClient.put(`${BASE_URL}/${id}`, data);
   },
+  getTeacher: () => {
+    return axiosClient.get(`${BASE_URL}/get-teacher`);
+  },
   getById: (id) => {
     return axiosClient.get(`${BASE_URL}/${id}`);
   },
@@ -23,4 +25,4 @@ const rolesAPI = {
   },
 };
 
-export default rolesAPI;
+export default pointSubmitAPI;

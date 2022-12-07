@@ -119,7 +119,6 @@ export default function UpdateQuestion() {
         level: values.level,
         user_id: user ? user.id : 0,
       };
-      console.log(postData);
       questionsBankAPI
         .put(id, postData)
         .then((res) => {
@@ -178,8 +177,8 @@ export default function UpdateQuestion() {
                 required: 'Bạn chưa chọn môn học',
               })}
             >
-              {subjects?.map((item) => (
-                <option key={item.id} value={item.id}>
+              {subjects?.map((item,index) => (
+                <option key={`subject-${index}`} value={item.id}>
                   {item.name}
                 </option>
               ))}

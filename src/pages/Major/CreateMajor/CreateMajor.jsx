@@ -19,7 +19,6 @@ export default function CreateMajor() {
     return new Promise((resolve) => {
       if (status) values.status = 1;
       else values.status = 0;
-      console.log(values);
       const postData = {
         name: values.name,
         branchable_type: 'courses',

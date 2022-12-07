@@ -10,7 +10,7 @@ const newsAPI = {
     return axiosClient.get(`${BASE_URL}`);
   },
   new: (data) => {
-    return axiosClient.post(`${BASE_URL}/new`, data);
+    return axiosClient.post(`${BASE_URL}/new`, data, );
   },
   put: (id, data) => {
     return axiosClient.put(`${BASE_URL}/${id}`, data);

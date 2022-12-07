@@ -14,7 +14,6 @@ function App() {
 
   const csrf = async () => {
     const csrf = await axiosClient.get('/sanctum/csrf-cookie');
-    console.log('csrf = ', csrf);
   };
 
   return (

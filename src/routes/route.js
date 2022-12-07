@@ -39,6 +39,7 @@ import CreateClasses from '../pages/Class/CreateClasses/CreateClasses';
 import UpdateClasses from '../pages/Class/UpdateClasses/UpdateClasses';
 import CreateNews from '../pages/News/CreateNews';
 import Lab from '../pages/Course/Lab/Lab';
+import ListPointSubmit from '../pages/PointSubmit/ListPointSubmit';
 
 const publicRoutes = [
   {
@@ -284,6 +285,12 @@ const publicRoutes = [
   {
     path: '/news/update/:id',
     component: UpdateClasses,
+    layout: HomeLayout,
+    guard: ProtectedAuth
+  },
+  {
+    path: '/point-submit/list',
+    component: ListPointSubmit,
     layout: HomeLayout,
     guard: ProtectedAuth
   }
