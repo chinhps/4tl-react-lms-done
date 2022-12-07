@@ -5,11 +5,19 @@ import {
   Grid,
   GridItem,
   HStack,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Stack,
   StackDivider,
   Text,
   useCheckboxGroup,
   useColorModeValue,
+  useDisclosure,
   useToast,
   VStack,
 } from '@chakra-ui/react';
@@ -44,7 +52,6 @@ function Quiz() {
         title: 'Thông báo!',
         description: 'Không thể truy cập trực tiếp',
         status: 'error',
-        position: 'bottom-right',
         duration: 5000,
         isClosable: true,
       });
@@ -82,6 +89,39 @@ function Quiz() {
     setTabIndex(id);
   };
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [msg, setMsg] = useState('');
+
+  const handleSubmitQuiz = () => {
+    quizAPI
+      .submitQuiz(questions.id_point, listAnswers)
+      .then((data) => {
+        // bật thông báo
+        setMsg(`${data.msg}, Số điểm của bạn là ${data.point}`);
+        onOpen();
+      })
+      .catch((e) => {
+        navigate(`/course/${slugCourse}`);
+      });
+  };
+
+  useEffect(() => {
+    if (timer <= 0) {
+      handleSubmitQuiz();
+    }
+  }, [timer]);
+
+  const handleClose = () => {
+    onClose();
+    toast({
+      title: 'Thông báo!',
+      description: 'Nộp bài thành công!',
+      status: 'success',
+      duration: 5000,
+      isClosable: true,
+    });
+    navigate(`/course/${slugCourse}`);
+  };
   const handleNextPrev = (type) => {
     if (type === 'next') {
       if (questions?.questions.length - 1 > tabIndex) {
@@ -96,8 +136,22 @@ function Quiz() {
 
   return (
     <>
+      <Modal isOpen={isOpen} onClose={handleClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Thông báo</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>{msg}</ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="blue" mr={3} onClick={handleClose}>
+              Đóng
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       <Grid
-        gridTemplateColumns={{ xl: 'repeat(3, 1fr)', '2xl': '1fr 0.46fr' }}
+        gridTemplateColumns={{ base: 'repeat(3, 1fr)', sm: '1fr 0.46fr' }}
         gap={{ base: '20px', xl: '20px' }}
         display={{ base: 'block', xl: 'grid' }}
       >
@@ -160,7 +214,7 @@ function Quiz() {
           </Card>
         </GridItem>
         <GridItem>
-          <Card mb={{ base: '0px', '2xl': '20px' }} alignItems="center">
+          <Card mb={{ base: '20px', '2xl': '20px' }} alignItems="center">
             <Text color={textColorPrimary} fontWeight="bold" fontSize="larger" mb="10px" textAlign="center">
               Thời gian làm bài
             </Text>
@@ -183,12 +237,12 @@ function Quiz() {
               </Flex>
             </Box>
           </Card>
-          <Card mb={{ base: '0px', '2xl': '20px' }}>
-            <Button borderRadius={'md'} h="16" w="100%" colorScheme="red">
+          <Card mb={{ base: '20px', '2xl': '20px' }}>
+            <Button borderRadius={'md'} h="16" w="100%" colorScheme="red" onClick={() => handleSubmitQuiz()}>
               NỘP BÀI
             </Button>
           </Card>
-          <Card mb={{ base: '0px', '2xl': '20px' }}>
+          <Card mb={{ base: '20px', '2xl': '20px' }}>
             <Text color={textColorPrimary} fontWeight="bold" fontSize="lg" mb="10px" textAlign="center">
               Bạn có thể xem câu trả lời đã làm
             </Text>

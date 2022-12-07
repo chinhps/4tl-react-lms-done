@@ -1,4 +1,3 @@
-import FileUpload from '../pages/Upload/FileUpload';
 import { AuthLayout, HomeLayout } from '../Layout';
 import Branches from '../pages/Branches/Branches';
 import Home from '../pages/Home/Home';
@@ -39,6 +38,7 @@ import ListClasses from '../pages/Class/ListClasses/ListClasses';
 import CreateClasses from '../pages/Class/CreateClasses/CreateClasses';
 import UpdateClasses from '../pages/Class/UpdateClasses/UpdateClasses';
 import CreateNews from '../pages/News/CreateNews';
+import Lab from '../pages/Course/Lab/Lab';
 
 const publicRoutes = [
   {
@@ -66,12 +66,6 @@ const publicRoutes = [
     guard: ProtectedAuth,
   },
   {
-    path: '/upload',
-    component: FileUpload,
-    layout: HomeLayout,
-    guard: ProtectedAuth,
-  },
-  {
     path: '/login',
     component: Login,
     layout: AuthLayout,
@@ -85,6 +79,12 @@ const publicRoutes = [
   {
     path: '/course/:slugCourse/quiz/:slugQuiz',
     component: Quiz,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/course/:slugCourse/lab/:slugLab',
+    component: Lab,
     layout: HomeLayout,
     guard: ProtectedAuth,
   },

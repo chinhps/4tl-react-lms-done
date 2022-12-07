@@ -28,14 +28,14 @@ function HomeLayout({ children }) {
         <MobileNav onOpen={onOpen} />
         <Box ml={{ base: 0, md: 60 }} p="4">
           <Box mb="10px" color="gray">
-            <Breadcrumb spacing="8px" separator={<MdKeyboardArrowRight />}>
+            {/* <Breadcrumb spacing="8px" separator={<MdKeyboardArrowRight />}>
               <BreadcrumbItem>
                 <BreadcrumbLink href="/">Trang chủ</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbItem>
                 <BreadcrumbLink href="#">Thông tin</BreadcrumbLink>
               </BreadcrumbItem>
-            </Breadcrumb>
+            </Breadcrumb> */}
           </Box>
           {children}
         </Box>
