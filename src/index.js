@@ -7,18 +7,18 @@ import { ChakraProvider } from '@chakra-ui/react';
 import theme from './theme/theme';
 import App from './App';
 import './sass/index.scss';
-import { ThemeEditorProvider, HyperThemeEditor } from '@hypertheme-editor/chakra-ui';
+// import { ThemeEditorProvider, HyperThemeEditor } from '@hypertheme-editor/chakra-ui';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <ChakraProvider theme={theme}>
     <Provider store={store}>
-      <ThemeEditorProvider>
+      {/* <ThemeEditorProvider> */}
         <BrowserRouter>
           {/* <HyperThemeEditor pos="fixed" bottom={4} right={2} /> */}
           <App />
         </BrowserRouter>
-      </ThemeEditorProvider>
+      {/* </ThemeEditorProvider> */}
     </Provider>
   </ChakraProvider>,
 );

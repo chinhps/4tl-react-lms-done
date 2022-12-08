@@ -23,22 +23,25 @@ import {
   FiBookmark,
   FiChevronRight,
 } from 'react-icons/fi';
+import { useSelector } from 'react-redux';
 
 const LinkItems = [
-  { name: 'Trang chủ', icon: FiHome, to: '/' },
-  { name: 'Kho kiến thức', icon: FiTrendingUp, to: '/branches' },
+  { name: 'Trang chủ', role: ['STUDENT', 'LECTURER','ADMIN'], icon: FiHome, to: '/' },
+  { name: 'Kho kiến thức', role: ['STUDENT', 'LECTURER'], icon: FiTrendingUp, to: '/branches' },
   {
     name: 'Tin nhắn',
+    role: ['STUDENT', 'LECTURER'],
     icon: FiCompass,
     children: [
       {
-        to: '/',
+        to: '/chat',
         name: 'Danh sách',
       },
     ],
   },
   {
     name: 'Khóa học',
+    role: ['ADMIN'],
     icon: FiBookmark,
     children: [
       {
@@ -53,6 +56,7 @@ const LinkItems = [
   },
   {
     name: 'Môn học',
+    role: ['ADMIN'],
     icon: FiBook,
     children: [
       {
@@ -67,6 +71,7 @@ const LinkItems = [
   },
   {
     name: 'Ngành học',
+    role: ['ADMIN'],
     icon: FiBriefcase,
     children: [
       {
@@ -81,6 +86,7 @@ const LinkItems = [
   },
   {
     name: 'Người dùng',
+    role: ['ADMIN'],
     icon: FiUser,
     children: [
       {
@@ -95,6 +101,7 @@ const LinkItems = [
   },
   {
     name: 'Ngân hàng câu hỏi',
+    role: ['ADMIN'],
     icon: FiBriefcase,
     children: [
       {
@@ -109,6 +116,7 @@ const LinkItems = [
   },
   {
     name: 'Phân quyền',
+    role: ['ADMIN'],
     icon: FiBriefcase,
     children: [
       {
@@ -123,6 +131,7 @@ const LinkItems = [
   },
   {
     name: 'Vai trò',
+    role: ['ADMIN'],
     icon: FiBriefcase,
     children: [
       {
@@ -137,6 +146,7 @@ const LinkItems = [
   },
   {
     name: 'Loại phân quyền',
+    role: ['ADMIN'],
     icon: FiBriefcase,
     children: [
       {
@@ -151,6 +161,7 @@ const LinkItems = [
   },
   {
     name: 'Lớp',
+    role: ['ADMIN'],
     icon: FiBriefcase,
     children: [
       {
@@ -166,6 +177,8 @@ const LinkItems = [
 ];
 
 function SidebarContent({ onClose, ...rest }) {
+  const { user } = useSelector((state) => state.user);
+
   return (
     <>
       <Box
@@ -185,24 +198,30 @@ function SidebarContent({ onClose, ...rest }) {
           <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
         </Flex>
         <Accordion allowMultiple>
-          {LinkItems.map((link) => (
-            <AccordionItem border="0" key={link.name}>
-              <AccordionButton padding="0" w="100%">
-                <NavItem icon={link.icon} link={link.to}>
-                  {link.name}
-                </NavItem>
-              </AccordionButton>
-              {link.children
-                ? link.children.map((child, index) => (
-                    <AccordionPanel py="0" key={index}>
-                      <NavItem icon={FiChevronRight} link={child.to}>
-                        {child.name}
-                      </NavItem>
-                    </AccordionPanel>
-                  ))
-                : null}
-            </AccordionItem>
-          ))}
+          {LinkItems.map((link) => {
+            if (link.role.findIndex((vl) => vl === user.role.role_code) === -1) {
+              return null;
+            } else {
+              return (
+                <AccordionItem border="0" key={link.name}>
+                  <AccordionButton padding="0" w="100%">
+                    <NavItem icon={link.icon} link={link.to}>
+                      {link.name}
+                    </NavItem>
+                  </AccordionButton>
+                  {link.children
+                    ? link.children.map((child, index) => (
+                        <AccordionPanel py="0" key={index}>
+                          <NavItem icon={FiChevronRight} link={child.to}>
+                            {child.name}
+                          </NavItem>
+                        </AccordionPanel>
+                      ))
+                    : null}
+                </AccordionItem>
+              );
+            }
+          })}
         </Accordion>
       </Box>
     </>
