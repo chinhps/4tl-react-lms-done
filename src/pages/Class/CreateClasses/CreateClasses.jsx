@@ -27,7 +27,6 @@ export default function CreateClasses() {
 
   function onSubmit(values) {
     return new Promise((resolve) => {
-      console.log(values);
       const postData = {
         class_name: values.class_name,
       };

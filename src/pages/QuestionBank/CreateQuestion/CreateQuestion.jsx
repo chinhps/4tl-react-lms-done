@@ -98,7 +98,6 @@ export default function CreateQuestion() {
         level: values.level,
         user_id: user ? user.id : 0,
       };
-      console.log(postData);
       questionsBankAPI
         .new(postData)
         .then((res) => {
@@ -135,11 +134,10 @@ export default function CreateQuestion() {
       setSubject(res);
     });
   }, []);
-  console.log();
   return (
     <>
       <Text fontSize="6xl" fontWeight="bold">
-        {params.id ? 'Sửa người dùng' : 'Thêm mới người dùng'}
+        {params.id ? 'Sửa câu hỏi' : 'Thêm mới câu hỏi'}
       </Text>
       <form onSubmit={handleSubmit(onSubmit)} style={{ gap: '20px', display: 'flex', flexDirection: 'column' }}>
         <FormControl isInvalid={errors.subject_id}>
@@ -156,8 +154,8 @@ export default function CreateQuestion() {
               required: 'Bạn chưa chọn môn học',
             })}
           >
-            {subjects?.map((item) => (
-              <option key={item.name} value={item.id}>
+            {subjects?.map((item, index) => (
+              <option key={`subject-${index}`} value={item.id}>
                 {item.name}
               </option>
             ))}

@@ -5,6 +5,9 @@ const classesAPI = {
   get: () => {
     return axiosClient.get(`${BASE_URL}`);
   },
+  getWithoutPaginate: () => {
+    return axiosClient.get(`${BASE_URL}/fulllist`);
+  },
   new: (data) => {
     return axiosClient.post(`${BASE_URL}/new`, data);
   },

@@ -1,13 +1,22 @@
 import axiosClient from './axiosClient';
 
 const labAPI = {
-  getAll: (slug_course, slug_quiz, password) => {
-    const url = '/api/course/quiz';
-    return axiosClient.post(url, { slug_course, slug_quiz, password });
+  getAll: (slug_course, slug_lab, password) => {
+    const url = '/api/course/lab';
+    return axiosClient.post(url, { slug_course, slug_lab, password });
   },
-  submitQuiz: (id_point, listAnswers) => {
-    const url = '/api/course/quiz/done';
-    return axiosClient.post(url, { id_point, listAnswers });
+  submitLab: (body) => {
+    const url = '/api/course/lab/done';
+
+    return axiosClient.post(
+      url,
+      body,
+      {
+        headers: {
+          'content-type': 'multipart/form-data',
+        },
+      },
+    );
   },
 };
 

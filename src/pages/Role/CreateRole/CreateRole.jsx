@@ -16,7 +16,6 @@ export default function CreateRole() {
 
   function onSubmit(values) {
     return new Promise((resolve) => {
-      console.log(values);
       const postData = {
         role_code: values.role_code,
         role_name: values.role_name,
