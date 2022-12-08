@@ -21,17 +21,17 @@ const News = () => {
       {/* <Grid templateColumns={{ sm: 'repeat(2, 1fr)', md: 'repeat(4, 1fr)' }} gap={4}>
         {news ? news.map((news) => <NewsItem news={news} key={news.id} />) : <></>}
       </Grid> */}
-      <SimpleGrid columns={{ base: 1, md: 3 }} gap="20px">
+      <SimpleGrid columns={{ base: 1, md: 4 }} gap="20px">
         {news ? (
           news.map((vl, index) => (
-            <div
+            <Box
               key={index}
               onClick={() => {
                 navigate(`/news-detail/${vl.id}`);
               }}
             >
               <BoxCollection name={vl.title} author={vl.user_id} bidders={[]} image={vl.thumb} />
-            </div>
+            </Box>
           ))
         ) : (
           <></>

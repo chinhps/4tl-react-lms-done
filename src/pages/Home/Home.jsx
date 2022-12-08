@@ -1,4 +1,4 @@
-import { Box, Flex, Grid, Link, SimpleGrid, Text, useColorModeValue } from '@chakra-ui/react';
+import { Box, Flex, Grid, Link, LinkBox, SimpleGrid, Text, useColorModeValue } from '@chakra-ui/react';
 import { useState } from 'react';
 import newsAPI from '../../api/newsAPI';
 import React, { useEffect } from 'react';
@@ -6,6 +6,7 @@ import Banner from '../../Components/Core/Banner';
 import BoxCollection from '../../Components/Core/Card/BoxCollection';
 import MiniCalendar from '../../Components/Core/MiniCalendar/MiniCalendar';
 import HistoryCourse from '../../Components/Core/Table/HistoryCourse';
+import { Link as ReachLink } from "react-router-dom"
 
 function Home() {
   const textColor = useColorModeValue('secondaryGray.900', 'white');
@@ -40,11 +41,13 @@ function Home() {
                 <Text color={textColor} fontSize="2xl" ms="24px" fontWeight="700">
                   Tin tức 4TL
                 </Text>
+                <Link as={ReachLink} to="/news">Xem tất cả</Link>
               </Flex>
               <SimpleGrid columns={{ base: 1, md: 3 }} gap="20px">
                 {news.map((vl, index) => (
                   <BoxCollection
                     key={index}
+                    id={vl.id}
                     name={vl.title}
                     author={vl.user_id}
                     bidders={[]}

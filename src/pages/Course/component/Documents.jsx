@@ -10,6 +10,7 @@ function Documents({ courses }) {
           key={index}
           name={lab.name}
           slug={lab.slug}
+          linkDoc={lab.link}
           type={2}
           description="Tài liệu"
         />

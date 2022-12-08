@@ -40,8 +40,13 @@ import { useForm } from 'react-hook-form';
 import { fetchQuiz } from '../../../reducer/quizSlice';
 import { useEffect } from 'react';
 import { fetchLab } from '../../../reducer/labSlice';
+import fileAPI from '../../../api/fileAPI';
+import fileDownload from 'js-file-download';
 
-function CouseItem({ name, description, type, history, deadline, slug, password, config, level, max_working }, rest) {
+function CouseItem(
+  { name, description, type, history, deadline, slug, password, config, level, max_working, linkDoc },
+  rest,
+) {
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue('secondaryGray.900', 'white');
   const textColorSecondary = 'gray.400';
@@ -65,25 +70,29 @@ function CouseItem({ name, description, type, history, deadline, slug, password,
 
   // type: 1 = Lab, 0 = Quiz
   // lấy data đúng theo tùy chọn
-  const fetchData = (type === 1) ? fetchLab : fetchQuiz;
+  const fetchData = type === 1 ? fetchLab : fetchQuiz;
   const quizz = useSelector((state) => state.quiz);
   const labb = useSelector((state) => state.lab);
 
-  const handleChoose = () => {
+  const handleChoose = async () => {
     if (password) {
       onOpen();
     } else {
-      dispatch(
-        fetchData({
-          slugCourse: slugCourse,
-          slug,
-          password: null,
-        }),
-      ).then((data) => {
-        if (data.payload) {
-          type === 1 ? navigate('./lab/' + slug) : navigate('./quiz/' + slug);
-        }
-      });
+      if (type === 2) {
+        window.open(linkDoc,'_blank');
+      } else {
+        dispatch(
+          fetchData({
+            slugCourse: slugCourse,
+            slug,
+            password: null,
+          }),
+        ).then((data) => {
+          if (data.payload) {
+            type === 1 ? navigate('./lab/' + slug) : navigate('./quiz/' + slug);
+          }
+        });
+      }
     }
   };
 
@@ -157,7 +166,7 @@ function CouseItem({ name, description, type, history, deadline, slug, password,
               <Box>
                 <Text color={textColorPrimary}>Đã nộp:</Text>
                 <Text fontWeight="500" color={textColorSecondary} fontSize="sm" me="4px">
-                  {history ?? 0} bài đã nộp
+                  {Array.isArray(history) ? history.reduce((partialSum, a) => partialSum + a, 0) : history} bài đã nộp
                 </Text>
                 <Text fontWeight="500" color={textColorSecondary} fontSize="sm" me="4px">
                   Có {max_working ?? 0} lần làm bài
