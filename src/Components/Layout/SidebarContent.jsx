@@ -30,12 +30,13 @@ const LinkItems = [
   {
     name: 'Tin nhắn',
     icon: FiCompass,
-    children: [
-      {
-        to: '/',
-        name: 'Danh sách',
-      },
-    ],
+    to: '/chat',
+    // children: [
+    //   {
+    //     to: '/chat',
+    //     name: 'Danh sách',
+    //   },
+    // ],
   },
   {
     name: 'Khóa học',
