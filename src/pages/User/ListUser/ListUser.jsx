@@ -80,7 +80,7 @@ export default function ListUser() {
             Danh sách tài khoản
           </Text>
         </Flex>
-        <Table variant="simple">
+        <Table variant="simple" overflowX={'scroll'}>
           <Thead>
             <Tr>
               <Th>ID</Th>

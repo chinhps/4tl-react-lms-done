@@ -222,7 +222,7 @@ export default function CreateUser() {
               message: 'Bạn chưa chọn lớp',
             })}
           >
-            {classes.map((item) => (
+            {classes?.map((item) => (
               <option key={item.id} value={item.id}>
                 {item.class_name}
               </option>

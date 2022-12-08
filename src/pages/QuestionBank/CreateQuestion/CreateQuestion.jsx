@@ -139,7 +139,7 @@ export default function CreateQuestion() {
   return (
     <>
       <Text fontSize="6xl" fontWeight="bold">
-        {params.id ? 'Sửa người dùng' : 'Thêm mới người dùng'}
+        {params.id ? 'Sửa câu hỏi' : 'Thêm mới câu hỏi'}
       </Text>
       <form onSubmit={handleSubmit(onSubmit)} style={{ gap: '20px', display: 'flex', flexDirection: 'column' }}>
         <FormControl isInvalid={errors.subject_id}>
