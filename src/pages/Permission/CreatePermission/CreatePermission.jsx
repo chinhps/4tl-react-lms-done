@@ -29,7 +29,6 @@ export default function CreatePermission() {
 
   function onSubmit(values) {
     return new Promise((resolve) => {
-      console.log(values);
       const postData = {
         ps_code: values.ps_code,
         ps_name: values.ps_name,

@@ -5,6 +5,10 @@ const userAPI = {
     const url = `/api/user/get-me`;
     return axiosClient.get(url);
   },
+  changePassword: (password_old, password) => {
+    const url = `/api/user/change-password`;
+    return axiosClient.put(url, { password_old, password });
+  },
   login: (data) => {
     const url = `/api/auth/login`;
     return axiosClient.post(url, data);

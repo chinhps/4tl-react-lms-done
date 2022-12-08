@@ -3,14 +3,23 @@ import React, { useState } from 'react';
 import { AvatarGroup, Box, Button, Flex, Icon, Image, Link, Text, useColorModeValue } from '@chakra-ui/react';
 // Custom components
 import Card from './Card';
+import { useNavigate } from 'react-router-dom';
 
 function BoxCollection(props) {
-  const { image, name, download } = props;
+  const { image, name, id } = props;
   const [like, setLike] = useState(false);
   const textColor = useColorModeValue('navy.700', 'white');
   const textColorBid = useColorModeValue('brand.500', 'white');
+  const navigate = useNavigate();
+
   return (
-    <Card p="20px" style={{ cursor: 'pointer' }}>
+    <Card
+      p="20px"
+      style={{ cursor: 'pointer' }}
+      onClick={() => {
+        navigate(`/news-detail/${id}`);
+      }}
+    >
       <Flex direction={{ base: 'column' }} justify="center">
         <Box mb={{ base: '20px', '2xl': '20px' }} position="relative">
           <Image src={image} w={{ base: '100%', '3xl': '100%' }} h={'200px'} objectFit="cover" borderRadius="20px" />
@@ -99,19 +108,17 @@ function BoxCollection(props) {
             }}
             mt="25px"
           >
-            <Link href={download}>
-              <Button
-                variant="darkBrand"
-                color="white"
-                fontSize="sm"
-                fontWeight="500"
-                borderRadius="70px"
-                px="24px"
-                py="5px"
-              >
-                Chi tiết
-              </Button>
-            </Link>
+            <Button
+              variant="darkBrand"
+              color="white"
+              fontSize="sm"
+              fontWeight="500"
+              borderRadius="70px"
+              px="24px"
+              py="5px"
+            >
+              Chi tiết
+            </Button>
           </Flex>
         </Flex>
       </Flex>

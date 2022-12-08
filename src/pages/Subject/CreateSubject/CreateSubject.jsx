@@ -36,7 +36,6 @@ export default function CreateSubject() {
       } else {
         values.status = 0;
       }
-      console.log(values);
       const postData = {
         major_id: Number(values.major_id),
         code: values.code,
@@ -71,7 +70,6 @@ export default function CreateSubject() {
             isClosable: true,
           });
         });
-      console.log(postData);
     });
   }
   useEffect(() => {

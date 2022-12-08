@@ -11,6 +11,7 @@ import {
   AccordionItem,
   AccordionButton,
   AccordionPanel,
+  Image,
 } from '@chakra-ui/react';
 import { Link as ReachLink } from 'react-router-dom';
 import {
@@ -26,18 +27,13 @@ import {
 import { useSelector } from 'react-redux';
 
 const LinkItems = [
-  { name: 'Trang chủ', role: ['STUDENT', 'LECTURER','ADMIN'], icon: FiHome, to: '/' },
+  { name: 'Trang chủ', icon: FiHome, to: '/' },
   { name: 'Kho kiến thức', role: ['STUDENT', 'LECTURER'], icon: FiTrendingUp, to: '/branches' },
   {
     name: 'Tin nhắn',
     role: ['STUDENT', 'LECTURER'],
     icon: FiCompass,
-    children: [
-      {
-        to: '/chat',
-        name: 'Danh sách',
-      },
-    ],
+    to: '/chat',
   },
   {
     name: 'Khóa học',
@@ -174,6 +170,12 @@ const LinkItems = [
       },
     ],
   },
+  {
+    name: 'Bảng điểm',
+    role: ['ADMIN'],
+    icon: FiBriefcase,
+    to: '/point-submit/list',
+  },
 ];
 
 function SidebarContent({ onClose, ...rest }) {
@@ -189,17 +191,19 @@ function SidebarContent({ onClose, ...rest }) {
         w={{ base: 'full', md: 60 }}
         pos="fixed"
         h="full"
+        // overflowY={'scroll'}
         {...rest}
       >
-        <Flex h="20" alignItems="center" mx="8" justifyContent="center">
-          <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
+        <Flex alignItems="center" mx="8" justifyContent="center">
+          {/* <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
             4TL LMS
-          </Text>
+          </Text> */}
+          <Image name="4TL LMS" src={'/logo.png'} py={5} />
           <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
         </Flex>
         <Accordion allowMultiple>
           {LinkItems.map((link) => {
-            if (link.role.findIndex((vl) => vl === user.role.role_code) === -1) {
+            if (link.role?.findIndex((vl) => vl === user.role.role_code) === -1) {
               return null;
             } else {
               return (

@@ -38,7 +38,6 @@ export default function UpdateUser() {
     return new Promise((resolve) => {
       if (status) values.status = 1;
       else values.status = 0;
-      console.log(values);
       const putData = {
         user_code: values.user_code,
         password: values.password,
@@ -78,12 +77,12 @@ export default function UpdateUser() {
 
   useEffect(() => {
     classesAPI
-      .get()
+      .getWithoutPaginate()
       .then((res) => {
         setClasses(res);
       })
       .then(() => {
-        roleAPI.get().then((res2) => {
+        roleAPI.getWithoutPaginate().then((res2) => {
           setRole(res2);
         });
       });
@@ -212,7 +211,7 @@ export default function UpdateUser() {
                 required: 'Bạn chưa chọn vai trò',
               })}
             >
-              {role.data?.map((item) => (
+              {role?.map((item) => (
                 <option key={item.id} value={item.id}>
                   {item.role_name}
                 </option>

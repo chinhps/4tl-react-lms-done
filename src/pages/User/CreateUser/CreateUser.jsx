@@ -36,7 +36,6 @@ export default function CreateUser() {
     return new Promise((resolve) => {
       if (status) values.status = 1;
       else values.status = 0;
-      console.log(values);
       const postData = {
         user_code: values.code,
         password: values.password,
@@ -76,12 +75,12 @@ export default function CreateUser() {
 
   useEffect(() => {
     classesAPI
-      .get()
+      .getWithoutPaginate()
       .then((res) => {
         setClasses(res);
       })
       .then(() => {
-        roleAPI.get().then((res2) => {
+        roleAPI.getWithoutPaginate().then((res2) => {
           setRole(res2);
         });
       });
@@ -222,7 +221,7 @@ export default function CreateUser() {
               message: 'Bạn chưa chọn lớp',
             })}
           >
-            {classes.map((item) => (
+            {classes?.map((item) => (
               <option key={item.id} value={item.id}>
                 {item.class_name}
               </option>
