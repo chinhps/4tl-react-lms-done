@@ -94,7 +94,7 @@ const CoursesC = () => {
 
   useEffect(() => {
     subjectsAPI
-      .get()
+      .getWithoutPaginate()
       .then((res) => {
         setSubject(res);
       })
@@ -103,13 +103,12 @@ const CoursesC = () => {
 
   useEffect(() => {
     classesAPI
-      .get()
+      .getWithoutPaginate()
       .then((res) => {
         setClasses(res);
       })
       .catch((err) => console.log(err));
   }, []);
-  console.log('subject', subject);
   return (
     <>
       <Text fontSize="6xl" fontWeight="bold">
@@ -130,7 +129,7 @@ const CoursesC = () => {
               required: 'Vui lòng chọn môn học',
             })}
           >
-            {subject.data?.map((item) => (
+            {subject?.map((item) => (
               <option key={item.id} value={item.id}>
                 {item.name}
               </option>
@@ -140,20 +139,26 @@ const CoursesC = () => {
         </FormControl>
         <FormControl isInvalid={errors.class_code}>
           <FormLabel htmlFor="class_code">
-            Mã lớp
+            Lớp
             <span role="presentation" aria-hidden="true" style={{ color: 'red', marginLeft: '2px' }}>
               *
             </span>
           </FormLabel>
-          <Input
+          <Select
             id="class_code"
+            placeholder="Lớp"
             {...register('class_code', {
-              required: 'Vui lòng nhập mã lớp',
+              required: 'Bạn chưa chọn lớp',
             })}
-          />
+          >
+            {classes?.map((item) => (
+              <option key={item.id} value={item.class_name}>
+                {item.class_name}
+              </option>
+            ))}
+          </Select>
           <FormErrorMessage>{errors.class_code && errors.class_code.message}</FormErrorMessage>
         </FormControl>
-
         <FormControl isInvalid={errors.name}>
           <FormLabel htmlFor="name">
             Tên giáo viên

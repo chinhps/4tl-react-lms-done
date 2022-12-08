@@ -37,7 +37,7 @@ export default function CreateNews() {
   function onSubmit(values) {
     return new Promise((resolve) => {
       const postData = {
-        thumb: values.thumb,
+        thumb: values.thumb[0],
         user_id: user.id,
         title: values.title,
         content: values.content

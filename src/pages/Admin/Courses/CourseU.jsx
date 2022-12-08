@@ -25,7 +25,8 @@ const CoursesU = () => {
   const [course, setCouse] = useState(null);
   const [defaultSubject, setDefaultSubject] = useState(null);
   const [subject, setSubject] = useState([]);
-
+  const [classes, setClasses] = useState([]);
+ 
   const toast = useToast();
   const {
     handleSubmit,
@@ -87,16 +88,26 @@ const CoursesU = () => {
       setDefaultSwitchValue(res.status === 1 ? true : false);
 
       const res2 = await coursesAPI.getTeacher();
-      const res3 = await subjectsAPI.get();
+      const res3 = await subjectsAPI.getWithoutPaginate();
 
       setListTeacher(res2);
       setSubject(res3);
+      console.log(res);
       for (const [key, value] of Object.entries(res)) {
+        setValue(`${key}`, value);
+      }
+      for (const [key, value] of Object.entries(res2)) {
         setValue(`${key}`, value);
       }
       setDefaultSubject(res.subject_id);
     };
     fetchData().catch((err) => console.log(err));
+    classesAPI
+      .getWithoutPaginate()
+      .then((res) => {
+        setClasses(res);
+      })
+      .catch((err) => console.log(err));
   }, []);
   return (
     <>
@@ -120,7 +131,7 @@ const CoursesU = () => {
                 required: 'Vui lòng chọn khóa học',
               })}
             >
-              {subject?.data.map((item) => (
+              {subject?.map((item) => (
                 <option key={item.id} value={item.id}>
                   {item.name}
                 </option>
@@ -129,21 +140,27 @@ const CoursesU = () => {
             <FormErrorMessage>{errors.subject_id && errors.subject_id.message}</FormErrorMessage>
           </FormControl>
           <FormControl isInvalid={errors.class_code}>
-            <FormLabel htmlFor="class_code">
-              Mã lớp
-              <span role="presentation" aria-hidden="true" style={{ color: 'red', marginLeft: '2px' }}>
-                *
-              </span>
-            </FormLabel>
-            <Input
-              id="class_code"
-              defaultValue={course ? course.class_code : ''}
-              {...register('class_code', {
-                required: 'Vui lòng nhập mã lớp',
-              })}
-            />
-            <FormErrorMessage>{errors.class_code && errors.class_code.message}</FormErrorMessage>
-          </FormControl>
+          <FormLabel htmlFor="class_code">
+            Lớp
+            <span role="presentation" aria-hidden="true" style={{ color: 'red', marginLeft: '2px' }}>
+              *
+            </span>
+          </FormLabel>
+          <Select
+            id="class_code"
+            placeholder="Lớp"
+            {...register('class_code', {
+              required: 'Bạn chưa chọn lớp',
+            })}
+          >
+            {classes?.map((item) => (
+              <option key={item.id} value={item.class_name}>
+                {item.class_name}
+              </option>
+            ))}
+          </Select>
+          <FormErrorMessage>{errors.class_code && errors.class_code.message}</FormErrorMessage>
+        </FormControl>
           <FormControl isInvalid={errors.name}>
             <FormLabel htmlFor="name">
               Tên giáo viên
@@ -154,12 +171,11 @@ const CoursesU = () => {
             <Select
               placeholder="Chọn giáo viên"
               id="name"
-              value={defaultName}
               {...register('name', {
                 required: 'Vui lòng nhập tên giáo viên',
               })}
             >
-              {listTeacher.data?.map((item) => (
+              {listTeacher?.map((item) => (
                 <option key={item.id} value={item.name}>
                   {item.name}
                 </option>
