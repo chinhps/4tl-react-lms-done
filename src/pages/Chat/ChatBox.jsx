@@ -12,6 +12,7 @@ import {
   InputGroup,
   InputRightAddon,
   Text,
+  useColorModeValue,
 } from '@chakra-ui/react';
 // import { AiFillCheckCircle } from 'react-icons/ai';
 
@@ -22,6 +23,14 @@ import { AiOutlineSend } from 'react-icons/ai';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const Chat = () => {
+  const bg = useColorModeValue('white', 'navy.700');
+  const bgSecond = useColorModeValue('blue.100', 'white.200');
+
+  const textColorPrimary = useColorModeValue('secondaryGray.900', 'white');
+  const textColorSecondary = 'gray.400';
+  const textColorTree = useColorModeValue('gray.200', '#3E4042');
+  const textColorFour = useColorModeValue('#2D88FF', '#2D88FF');
+
   const navigate = useNavigate();
   const { id } = useParams();
   console.log(id);
@@ -46,14 +55,14 @@ const Chat = () => {
   return (
     <>
       <Grid templateColumns="30% 1fr" gap={4}>
-        <GridItem w="100%" h="800px" bg="white" rounded="md" padding={3} gap={5} boxShadow="base">
+        <GridItem w="100%" h="800px" bg={bg} borderRadius="md" padding={3} gap={5} boxShadow="base">
           <Flex
             onClick={() => {
               navigate(`/chat/${3}`);
             }}
-            rounded="md"
+            borderRadius="md"
             p={2}
-            _hover={{ bg: '#e0e3ea' }}
+            _hover={{ bg: bgSecond }}
             transition="all 0.3s ease-in-out"
             position={'relative'}
             justifyContent={['center', 'center', 'center', 'center', 'start']}
@@ -64,10 +73,10 @@ const Chat = () => {
             <Box ml="4" display={['none', 'none', 'none', 'none', 'block']}>
               <Text fontWeight="bold"> Chấm Ly</Text>
               <Flex>
-                <Text fontSize="sm" color={'grey'} noOfLines={1} w={'40%'}>
+                <Text fontSize="sm" color={textColorSecondary} noOfLines={1} w={'40%'}>
                   Bạn: ê mai cà phê sdghạhdcdsb
                 </Text>
-                <Text fontSize="sm" color={'grey'} noOfLines={1} w={150}>
+                <Text fontSize="sm" color={textColorSecondary} noOfLines={1} w={150}>
                   36 phút
                 </Text>
               </Flex>
@@ -88,9 +97,9 @@ const Chat = () => {
             onClick={() => {
               navigate(`/chat/${4}`);
             }}
-            rounded="md"
+            borderRadius="md"
             p={2}
-            _hover={{ bg: '#e0e3ea' }}
+            _hover={{ bg: bgSecond }}
             transition="all 0.3s ease-in-out"
             position={'relative'}
             justifyContent={['center', 'center', 'center', 'center', 'start']}
@@ -122,8 +131,8 @@ const Chat = () => {
             </Box>
           </Flex>
         </GridItem>
-        <GridItem gap={1} display={'grid'}>
-          <Flex boxShadow="base" bg="white" rounded="md" w={'100%'} p={2}>
+        <GridItem gap={1} display={'grid'} bg={bg}>
+          <Flex boxShadow="base" bg={!bg} borderRadius="md" w={'100%'} p={2}>
             <Avatar src="https://bit.ly/sage-adebayo " size="md">
               <AvatarBadge boxSize="0.8em" border="0.15em solid" bg="green.500" />
             </Avatar>
@@ -134,7 +143,7 @@ const Chat = () => {
             </Box>
           </Flex>
           <Grid gap={2}>
-            <GridItem w="100%" h="670px" rounded="md" boxShadow="base" overflowY={'auto'}>
+            <GridItem w="100%" h="670px" color={textColorPrimary} borderRadius="md" boxShadow="base" overflowY={'auto'}>
               <Flex flexDirection={'column'}>
                 {/* They Chat */}
                 <Flex gap={3} p={3} alignItems={'center'} maxW={'50%'}>
@@ -145,7 +154,7 @@ const Chat = () => {
                     <Text color={'grey'} fontSize={'sm'} fontWeight={300}>
                       Lâm
                     </Text>
-                    <Text borderRadius={27} bg={'gray.200'} px={3} py={1} wordBreak={'break-all'}>
+                    <Text borderRadius={27} bg={textColorTree} px={3} py={1} wordBreak={'break-all'}>
                       loremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremloremlorem
                       321312 321312 321312 321312 321312 321312 321312 321312 321312 321312 321312 321312 321312 321312
                     </Text>
@@ -154,7 +163,7 @@ const Chat = () => {
                 {/* Me Chat */}
                 <Flex gap={3} p={3} alignItems={'center'} justifyContent="flex-end" maxW={'50%'} ml={'auto'}>
                   <Flex flexDirection={'column'}>
-                    <Text borderRadius={27} bg={'gray.200'} px={3} py={1}>
+                    <Text borderRadius={27} bg={textColorFour} px={3} py={1}>
                       321312 321312 321312 321312 321312 321312 321312 321312 321312 321312 321312 321312 321312 321312
                     </Text>
                   </Flex>
@@ -236,11 +245,12 @@ const Chat = () => {
                 </Flex>
               </Flex>
             </GridItem>
-            <GridItem h={'55px'} bg="white" rounded="md" boxShadow="base">
+            <GridItem h={'55px'} borderRadius="md" boxShadow="base" bg={bg}>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <FormControl>
                   <InputGroup size="lg">
                     <Input
+                      color={textColorPrimary}
                       name="message"
                       focusBorderColor="none"
                       h={'55px'}
@@ -251,7 +261,7 @@ const Chat = () => {
                     <InputRightAddon
                       h={'55px'}
                       children={
-                        <Button type="submit">
+                        <Button type="submit" bg={'none'} _hover={{ bg: 'none' }}>
                           <AiOutlineSend />
                         </Button>
                       }
