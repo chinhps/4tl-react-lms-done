@@ -1,4 +1,3 @@
-import FileUpload from '../pages/Upload/FileUpload';
 import { AuthLayout, HomeLayout } from '../Layout';
 import Branches from '../pages/Branches/Branches';
 import Home from '../pages/Home/Home';
@@ -30,8 +29,9 @@ import ListPermission from '../pages/Permission/ListPermission/ListPermission';
 import CreatePermission from '../pages/Permission/CreatePermission/CreatePermission';
 import UpdatePermission from '../pages/Permission/UpdatePermission/UpdatePermission';
 import UpdateQuestion from '../pages/QuestionBank/UpdateQuestion/UpdateQuestion';
-import News from '../pages/News/News'
+import News from '../pages/News/News';
 import NewsDetail from '../pages/News/NewsDetail';
+import ChatBox from '../pages/Chat/ChatBox';
 import ListPermissionGroup from '../pages/PermissionGroup/ListPermissionGroup/ListPermissionGroup';
 import CreatePermissionGroup from '../pages/PermissionGroup/CreatePermissionGroup/CreatePermissionGroup';
 import UpdatePermissionGroup from '../pages/PermissionGroup/UpdatePermissionGroup/UpdatePermissionGroup';
@@ -39,6 +39,8 @@ import ListClasses from '../pages/Class/ListClasses/ListClasses';
 import CreateClasses from '../pages/Class/CreateClasses/CreateClasses';
 import UpdateClasses from '../pages/Class/UpdateClasses/UpdateClasses';
 import CreateNews from '../pages/News/CreateNews';
+import Lab from '../pages/Course/Lab/Lab';
+import ListPointSubmit from '../pages/PointSubmit/ListPointSubmit';
 
 const publicRoutes = [
   {
@@ -66,12 +68,6 @@ const publicRoutes = [
     guard: ProtectedAuth,
   },
   {
-    path: '/upload',
-    component: FileUpload,
-    layout: HomeLayout,
-    guard: ProtectedAuth,
-  },
-  {
     path: '/login',
     component: Login,
     layout: AuthLayout,
@@ -85,6 +81,12 @@ const publicRoutes = [
   {
     path: '/course/:slugCourse/quiz/:slugQuiz',
     component: Quiz,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/course/:slugCourse/lab/:slugLab',
+    component: Lab,
     layout: HomeLayout,
     guard: ProtectedAuth,
   },
@@ -111,7 +113,6 @@ const publicRoutes = [
     guard: ProtectedAuth,
     component: CoursesU,
     layout: HomeLayout,
-    guard: ProtectedAuth,
   },
   {
     path: '/user/list',
@@ -222,52 +223,71 @@ const publicRoutes = [
     guard: ProtectedAuth,
   },
   {
+    path: '/chat',
+    component: ChatBox,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/chat/:id',
+    component: ChatBox,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
     path: '/news',
     component: News,
     layout: HomeLayout,
-    guard: ProtectedAuth
+    guard: ProtectedAuth,
   },
+  // {
+  //   path: '/news-list/:listId',
+  //   component: NewsList,
+  //   layout: HomeLayout,
+  //   guard: ProtectedAuth,
+  // },
   {
-    path: '/news-detail/:newsId',
+    path: '/news-detail/:detailId',
     component: NewsDetail,
     layout: HomeLayout,
-    guard: ProtectedAuth
+    guard: ProtectedAuth,
   },
+
   {
     path: '/permission-group/list',
     component: ListPermissionGroup,
     layout: HomeLayout,
-    guard: ProtectedAuth
+    guard: ProtectedAuth,
   },
   {
     path: '/permission-group/new',
     component: CreatePermissionGroup,
     layout: HomeLayout,
-    guard: ProtectedAuth
+    guard: ProtectedAuth,
   },
   {
     path: '/permission-group/update/:id',
     component: UpdatePermissionGroup,
     layout: HomeLayout,
-    guard: ProtectedAuth
+    guard: ProtectedAuth,
   },
   {
     path: '/classes/list',
     component: ListClasses,
     layout: HomeLayout,
-    guard: ProtectedAuth
+    guard: ProtectedAuth,
   },
   {
     path: '/classes/new',
     component: CreateClasses,
     layout: HomeLayout,
-    guard: ProtectedAuth
+    guard: ProtectedAuth,
   },
   {
     path: '/classes/update/:id',
     component: UpdateClasses,
     layout: HomeLayout,
-    guard: ProtectedAuth
+    guard: ProtectedAuth,
   },
   {
     path: '/news/list',
@@ -284,6 +304,12 @@ const publicRoutes = [
   {
     path: '/news/update/:id',
     component: UpdateClasses,
+    layout: HomeLayout,
+    guard: ProtectedAuth
+  },
+  {
+    path: '/point-submit/list',
+    component: ListPointSubmit,
     layout: HomeLayout,
     guard: ProtectedAuth
   }
