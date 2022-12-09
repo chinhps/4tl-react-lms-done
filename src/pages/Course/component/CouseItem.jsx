@@ -42,6 +42,7 @@ import { useEffect } from 'react';
 import { fetchLab } from '../../../reducer/labSlice';
 import fileAPI from '../../../api/fileAPI';
 import fileDownload from 'js-file-download';
+import { FiSettings } from 'react-icons/fi';
 
 function CouseItem(
   { name, description, type, history, deadline, slug, password, config, level, max_working, linkDoc },
@@ -53,6 +54,7 @@ function CouseItem(
   const bg = useColorModeValue('white', 'navy.700');
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { user } = useSelector((state) => state.user);
 
   const rdBg = [
     'https://i.imgur.com/iZSJCDq.png',
@@ -79,7 +81,7 @@ function CouseItem(
       onOpen();
     } else {
       if (type === 2) {
-        window.open(linkDoc,'_blank');
+        window.open(linkDoc, '_blank');
       } else {
         dispatch(
           fetchData({
@@ -158,11 +160,31 @@ function CouseItem(
                 <Text fontWeight="500" color={textColorSecondary} fontSize="sm" me="4px">
                   {description} {level ? `Level: ${level}` : null}
                 </Text>
+                {user?.role.role_code === 'LECTURER' ? (
+                  <Flex alignItems="center" gap={2} mt={2}>
+                    <FiSettings />
+                    <Text fontWeight="500" color={textColorSecondary} fontSize="sm" me="4px">
+                      Chọn để cấu hình bài
+                    </Text>
+                  </Flex>
+                ) : null}
               </Box>
             </Flex>
           </GridItem>
           <GridItem>
-            {typeof history !== 'undefined' ? (
+            {user?.role.role_code === 'LECTURER' ? (
+              <>
+                <Box>
+                  <Text color={textColorPrimary}>Thông tin:</Text>
+                  <Text fontWeight="500" color={textColorSecondary} fontSize="sm" me="4px">
+                    Có <Text color="#34cf28" as="b">10</Text> câu hỏi
+                  </Text>
+                  <Text fontWeight="500" color={textColorSecondary} fontSize="sm" me="4px">
+                    Có <Text color="#34cf28" as="b">8/10</Text> sinh viên đã làm bài
+                  </Text>
+                </Box>
+              </>
+            ) : typeof history !== 'undefined' ? (
               <Box>
                 <Text color={textColorPrimary}>Đã nộp:</Text>
                 <Text fontWeight="500" color={textColorSecondary} fontSize="sm" me="4px">

@@ -1,5 +1,18 @@
 import React from 'react';
-import { Tabs, TabList, TabPanels, Tab, TabPanel, Grid, GridItem, Flex, Text, Spinner, Box } from '@chakra-ui/react';
+import {
+  Tabs,
+  TabList,
+  TabPanels,
+  Tab,
+  TabPanel,
+  Grid,
+  GridItem,
+  Flex,
+  Text,
+  Spinner,
+  Box,
+  Button,
+} from '@chakra-ui/react';
 import Overviews from './component/Overviews';
 import Card from '../../Components/Core/Card/Card';
 import HistoryCourse from '../../Components/Core/Table/HistoryCourse';
@@ -12,9 +25,13 @@ import Documents from './component/Documents';
 import Labs from './component/Labs';
 import Quizs from './component/Quizs';
 import InfoProfile from '../../Components/Core/InfoProfile';
+import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
+import { FiChevronDown } from 'react-icons/fi';
+import { useSelector } from 'react-redux';
 
 function Coures() {
   const { slugCourse } = useParams();
+  const { user } = useSelector((state) => state.user);
   const [course, setCourse] = useState(null);
   const params = useParams();
 
@@ -33,11 +50,32 @@ function Coures() {
       >
         <GridItem gridArea={{ xl: '1 / 1 / 3 / 3', '2xl': '1 / 1 / 2 / 2' }}>
           <Tabs variant="soft-rounded" colorScheme="green">
-            <TabList>
-              <Tab>Tổng quan</Tab>
-              <Tab>Tài liệu</Tab>
-              <Tab>Bài Lab</Tab>
-              <Tab>Bài Quiz</Tab>
+            <TabList justifyContent="space-between">
+              <Flex>
+                <Tab>Tổng quan</Tab>
+                <Tab>Tài liệu</Tab>
+                <Tab>Bài Lab</Tab>
+                <Tab>Bài Quiz</Tab>
+                {user.role.role_code === 'LECTURER' ? (
+                  <>
+                    <Tab color="#34cf28">Sinh viên</Tab>
+                    <Tab color="#34cf28">Bảng điểm</Tab>
+                  </> 
+                ) : null}
+              </Flex>
+
+              {user.role.role_code === 'LECTURER' ? (
+                <Menu>
+                  <MenuButton as={Button} rounded="lg" rightIcon={<FiChevronDown />}>
+                    Thao tác
+                  </MenuButton>
+                  <MenuList>
+                    <MenuItem>Thêm tài liệu</MenuItem>
+                    <MenuItem>Thêm bài Lab</MenuItem>
+                    <MenuItem>Thêm Quiz</MenuItem>
+                  </MenuList>
+                </Menu>
+              ) : null}
             </TabList>
             {course ? (
               <TabPanels>
