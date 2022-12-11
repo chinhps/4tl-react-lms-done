@@ -12,11 +12,12 @@ function Quizs({courses}) {
           config={data.config}
           level={data.level}
           key={index}
-          name={'Bài ' + data.name}
+          name={data.name}
           deadline={data.deadlines}
           type={0}
           slug={data.slug}
           history={data.count_submit}
+          data={data}
           description="Quiz"
         />
       ))}

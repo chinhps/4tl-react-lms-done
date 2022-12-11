@@ -72,6 +72,8 @@ const publicRoutes = [
     component: Login,
     layout: AuthLayout,
   },
+
+
   {
     path: '/course/:slugCourse',
     component: Coures,
@@ -85,11 +87,25 @@ const publicRoutes = [
     guard: ProtectedAuth,
   },
   {
+    path: '/course/:slugCourse/quiz/:slugQuiz/settings',
+    component: Quiz,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+  {
     path: '/course/:slugCourse/lab/:slugLab',
     component: Lab,
     layout: HomeLayout,
     guard: ProtectedAuth,
   },
+  {
+    path: '/course/:slugCourse/lab/:slugLab/settings',
+    component: Lab,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
+
+  
   {
     path: '/doing-quiz',
     component: DoingQuiz,
