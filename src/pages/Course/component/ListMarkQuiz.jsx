@@ -11,49 +11,142 @@ import {
   useColorModeValue,
   Text,
   Badge,
+  Button,
+  Flex,
+  Box,
+  IconButton,
+  useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
+import { FiChevronRight, FiEdit3, FiTrash2 } from 'react-icons/fi';
 import { useParams } from 'react-router-dom';
 import coursesAPI from '../../../api/coursesAPI';
+import pointSubmitAPI from '../../../api/pointSubmit';
 import Card from '../../../Components/Core/Card/Card';
+import ModelConfirm from '../../../Components/Core/ModelConfirm';
+import ModelMark from '../model/ModelMark';
 
 function ListMarkQuiz() {
   const textColorPrimary = useColorModeValue('secondaryGray.900', 'white');
-  const [listStudent, setListStudent] = useState([]);
+  const textColorSecondary = 'gray.400';
+  const [list, setList] = useState([]);
+  const [dataMark, setDataMark] = useState([]);
+  const [idDelete, setIdDelete] = useState(null);
+  const toast = useToast();
+
   const { slugCourse } = useParams();
+  const { isOpen: isOpenDelete, onOpen: onOpenDelete, onClose: onCloseDelete } = useDisclosure();
+  const { isOpen: isOpenMark, onOpen: onOpenMark, onClose: onCloseMark } = useDisclosure();
+
+  const [loadingForm, setLoadingForm] = useState(false);
 
   useEffect(() => {
-    coursesAPI.getStudents(slugCourse).then((data) => {
-      setListStudent(data);
+    coursesAPI.getMarkQuiz(slugCourse).then((data) => {
+      setList(data);
     });
   }, []);
+
+  const handleDelete = (id) => {
+    setLoadingForm(true);
+    pointSubmitAPI
+      .delete(id)
+      .then((data) => {
+        toast({
+          title: 'Thông báo!',
+          description: data.msg,
+          status: 'success',
+          duration: 5000,
+          isClosable: true,
+        });
+      })
+      .catch((err) => {
+        toast({
+          title: 'Thông báo!',
+          description: err.response.data.msg,
+          status: 'error',
+          duration: 5000,
+          isClosable: true,
+        });
+      });
+    onCloseDelete();
+    setLoadingForm(false);
+  };
+
+  const handleMark = async (id) => {
+    const data = await pointSubmitAPI.getOnePointSubmit(id);
+    setDataMark(data);
+    onOpenMark();
+  };
+
   return (
     <>
+      <ModelConfirm
+        id={idDelete}
+        isOpen={isOpenDelete}
+        onClose={onCloseDelete}
+        handleConfirm={handleDelete}
+        isLoading={loadingForm}
+        description="Bạn có chắc muốn hủy kết quả làm bài?"
+      />
+      <ModelMark
+        title="Chấm điểm"
+        id={dataMark?.id}
+        default={dataMark}
+        slugCourse={slugCourse}
+        isOpen={isOpenMark}
+        onClose={onCloseMark}
+      />
       <Card mb={{ base: '0px', '2xl': '20px' }}>
-        <Text color={textColorPrimary} fontWeight="bold" fontSize="2xl" mt="10px" mb="15px">
-          Danh sách điểm Quiz
-        </Text>
+        <Flex justifyContent="space-between">
+          <Box>
+            <Text color={textColorPrimary} fontWeight="bold" fontSize="2xl" mt="10px" mb="15px">
+              Danh sách làm bài Quiz
+            </Text>
+            <Text color={textColorSecondary} fontSize="md" me="26px" mb="40px">
+              Tải về để có đầy đủ thông tin!
+            </Text>
+          </Box>
+
+          <Button rightIcon={<FiChevronRight />} rounded="md" colorScheme="teal" variant="outline">
+            Tải bảng điểm
+          </Button>
+        </Flex>
+
         <TableContainer>
           <Table variant="simple">
             <TableCaption>Danh sách sinh viên đã làm bài</TableCaption>
             <Thead>
               <Tr>
-                <Th>#</Th>
                 <Th>Mã sinh viên</Th>
                 <Th>Họ và tên</Th>
-                <Th>Email</Th>
-                <Th>Chức vụ</Th>
+                <Th>Tên bài</Th>
+                <Th>Nộp bài</Th>
+                <Th>Điểm</Th>
+                <Th>Tình trạng</Th>
+                <Th>Thao tác</Th>
               </Tr>
             </Thead>
             <Tbody>
-              {listStudent.map((student, index) => (
-                <Tr key={student.id}>
-                  <Td>{student.id}</Td>
-                  <Td>{student.user_code}</Td>
-                  <Td>{student.name}</Td>
-                  <Td>{student.email}</Td>
+              {list.map((vl) => (
+                <Tr key={vl.id}>
+                  <Td>{vl.user_code}</Td>
+                  <Td>{vl.name}</Td>
+                  <Td>{vl.name_submit}</Td>
+                  <Td>{vl.count_submit}</Td>
+                  <Td>{vl.point}</Td>
+
                   <Td>
-                    <Badge colorScheme={student.role_code === 'STUDENT' ? 'green' : 'red'}>{student.role_name}</Badge>
+                    <Badge colorScheme={vl.note === 'Failed' ? 'red' : 'green'}>{vl.note}</Badge>
+                  </Td>
+                  <Td>
+                    <IconButton
+                      icon={<FiTrash2 />}
+                      onClick={() => {
+                        setIdDelete(vl.id);
+                        onOpenDelete();
+                      }}
+                    />
                   </Td>
                 </Tr>
               ))}

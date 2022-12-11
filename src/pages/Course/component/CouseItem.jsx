@@ -63,6 +63,7 @@ import ModelNewQuiz from '../model/ModelNewQuiz';
 import ModelNewLab from '../model/ModelNewLab';
 import ModelConfigDeadline from '../model/ModelConfigDeadline';
 import deadlineConfigAPI from '../../../api/deadlineConfigAPI';
+import ModelConfirm from '../../../Components/Core/ModelConfirm';
 
 function CouseItem(
   { name, description, type, history, deadline, slug, password, config, level, max_working, linkDoc, data },
@@ -232,22 +233,13 @@ function CouseItem(
           </ModalContent>
         </Modal>
       ) : isOpenDelete ? (
-        <AlertDialog isOpen={isOpenDelete} leastDestructiveRef={cancelRef} onClose={onCloseDelete}>
-          <AlertDialogOverlay />
-          <AlertDialogContent>
-            <AlertDialogHeader>Bạn Có chắc muốn xóa?</AlertDialogHeader>
-            <AlertDialogCloseButton />
-            <AlertDialogBody>Nếu bạn xóa thì không thể hoàn tác lại thao tác! Bạn vẫn chắc muốn xóa?</AlertDialogBody>
-            <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onCloseDelete}>
-                Hủy
-              </Button>
-              <Button colorScheme="red" ml={3} onClick={() => handleDelete()} isLoading={loadingForm}>
-                Xóa
-              </Button>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+        <ModelConfirm
+          isOpen={isOpenDelete}
+          onClose={onCloseDelete}
+          handleConfirm={handleDelete}
+          isLoading={loadingForm}
+          description="Nếu bạn xóa thì không thể hoàn tác lại thao tác! Bạn vẫn chắc muốn xóa?"
+        />
       ) : isOpenConfig ? (
         <ModelConfigDeadline
           title="Cấu hình bài"
