@@ -23,6 +23,7 @@ import {
   FiBriefcase,
   FiBookmark,
   FiChevronRight,
+  FiSlack,
 } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
 
@@ -34,6 +35,12 @@ const LinkItems = [
     role: ['STUDENT', 'LECTURER'],
     icon: FiCompass,
     to: '/chat',
+  },
+  {
+    name: 'Thống kê',
+    role: ['ADMIN'],
+    icon: FiSlack,
+    to: '/dashboard',
   },
   {
     name: 'Khóa học',
