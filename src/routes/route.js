@@ -41,6 +41,7 @@ import UpdateClasses from '../pages/Class/UpdateClasses/UpdateClasses';
 import CreateNews from '../pages/News/CreateNews';
 import Lab from '../pages/Course/Lab/Lab';
 import ListPointSubmit from '../pages/PointSubmit/ListPointSubmit';
+import Dashboard from '../pages/Dashboard/index';
 
 const publicRoutes = [
   {
@@ -263,7 +264,7 @@ const publicRoutes = [
   //   guard: ProtectedAuth,
   // },
   {
-    path: '/news-detail/:detailId',
+    path: '/news-detail/:id',
     component: NewsDetail,
     layout: HomeLayout,
     guard: ProtectedAuth,
@@ -309,25 +310,31 @@ const publicRoutes = [
     path: '/news/list',
     component: ListClasses,
     layout: HomeLayout,
-    guard: ProtectedAuth
+    guard: ProtectedAuth,
   },
   {
     path: '/news/new',
     component: CreateNews,
     layout: HomeLayout,
-    guard: ProtectedAuth
+    guard: ProtectedAuth,
   },
   {
     path: '/news/update/:id',
     component: UpdateClasses,
     layout: HomeLayout,
-    guard: ProtectedAuth
+    guard: ProtectedAuth,
   },
   {
     path: '/point-submit/list',
     component: ListPointSubmit,
     layout: HomeLayout,
-    guard: ProtectedAuth
-  }
+    guard: ProtectedAuth,
+  },
+  {
+    path: '/dashboard',
+    component: Dashboard,
+    layout: HomeLayout,
+    guard: ProtectedAuth,
+  },
 ];
 export { publicRoutes };
