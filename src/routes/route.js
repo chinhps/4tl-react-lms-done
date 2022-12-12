@@ -246,7 +246,7 @@ const publicRoutes = [
     guard: ProtectedAuth,
   },
   {
-    path: '/chat/:id',
+    path: '/chat/:slug',
     component: ChatBox,
     layout: HomeLayout,
     guard: ProtectedAuth,

@@ -7,7 +7,7 @@ const MeChat = ({ mess }) => {
   return (
     <Flex gap={3} p={3} alignItems={'center'} justifyContent="flex-end" maxW={'50%'} ml={'auto'}>
       <Flex flexDirection={'column'}>
-        <Text borderRadius={7} bg={textColorFour} px={3} py={1}>
+        <Text borderRadius={7} textColor="white" bg={textColorFour} px={3} py={2}>
           {mess}
         </Text>
       </Flex>

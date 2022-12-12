@@ -73,11 +73,11 @@ function ListMarkQuiz() {
     setLoadingForm(false);
   };
 
-  const handleMark = async (id) => {
-    const data = await pointSubmitAPI.getOnePointSubmit(id);
-    setDataMark(data);
-    onOpenMark();
-  };
+  const handleExport = () => {
+    pointSubmitAPI.export('quiz').then(data => {
+      console.log(data);
+    })
+  }
 
   return (
     <>
@@ -89,14 +89,7 @@ function ListMarkQuiz() {
         isLoading={loadingForm}
         description="Bạn có chắc muốn hủy kết quả làm bài?"
       />
-      <ModelMark
-        title="Chấm điểm"
-        id={dataMark?.id}
-        default={dataMark}
-        slugCourse={slugCourse}
-        isOpen={isOpenMark}
-        onClose={onCloseMark}
-      />
+    
       <Card mb={{ base: '0px', '2xl': '20px' }}>
         <Flex justifyContent="space-between">
           <Box>
@@ -108,7 +101,7 @@ function ListMarkQuiz() {
             </Text>
           </Box>
 
-          <Button rightIcon={<FiChevronRight />} rounded="md" colorScheme="teal" variant="outline">
+          <Button rightIcon={<FiChevronRight />} rounded="md" colorScheme="teal" variant="outline" onClick={() => handleExport()}>
             Tải bảng điểm
           </Button>
         </Flex>

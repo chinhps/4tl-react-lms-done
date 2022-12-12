@@ -87,7 +87,7 @@ function ListMarkLab() {
         onClose={onCloseDelete}
         handleConfirm={handleDelete}
         isLoading={loadingForm}
-        description="Nếu bạn xóa thì không thể hoàn tác lại thao tác! Bạn vẫn chắc muốn xóa?"
+        description="Hủy kết quả làm bài thì không thể hoàn tác lại thao tác! Bạn vẫn chắc muốn thực hiện?"
       />
       <ModelMark
         title="Chấm điểm"

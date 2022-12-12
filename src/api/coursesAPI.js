@@ -7,11 +7,11 @@ const coursesAPI = {
     return axiosClient.get(url);
   },
   getMarkQuiz: (slug) => {
-    const url = '/api/course/point-submits/quizs/' + slug;
+    const url = '/api/course/point-submits/list/quizs/' + slug;
     return axiosClient.get(url);
   },
   getMarkLab: (slug) => {
-    const url = '/api/course/point-submits/labs/' + slug;
+    const url = '/api/course/point-submits/list/labs/' + slug;
     return axiosClient.get(url);
   },
   getDocQuizLab: (slugCourse) => {
