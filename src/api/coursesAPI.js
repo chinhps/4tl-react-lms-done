@@ -6,8 +6,20 @@ const coursesAPI = {
     const url = '/api/course/joined?limit=' + limit;
     return axiosClient.get(url);
   },
+  getMarkQuiz: (slug) => {
+    const url = '/api/course/point-submits/list/quizs/' + slug;
+    return axiosClient.get(url);
+  },
+  getMarkLab: (slug) => {
+    const url = '/api/course/point-submits/list/labs/' + slug;
+    return axiosClient.get(url);
+  },
   getDocQuizLab: (slugCourse) => {
     const url = '/api/course/' + slugCourse;
+    return axiosClient.get(url);
+  },
+  getStudents: (slugCourse) => {
+    const url = '/api/course/students/' + slugCourse;
     return axiosClient.get(url);
   },
   joinCourse: (idCourse) => {

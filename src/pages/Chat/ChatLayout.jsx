@@ -17,16 +17,70 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { AiOutlineSend } from 'react-icons/ai';
 import { useNavigate, useParams } from 'react-router-dom';
+import chatAPI from '../../api/chatAPI';
 import Card from '../../Components/Core/Card/Card';
 import MeChat from './MeChat';
 import TheyChat from './TheyChat';
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
+import { useEffect } from 'react';
+import axiosClient from '../../api/axiosClient';
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
 
 const ChatLayout = (props) => {
   const bg = useColorModeValue('white', 'navy.700');
   const textColorPrimary = useColorModeValue('secondaryGray.900', 'white');
 
-  const navigate = useNavigate();
-  const { id } = useParams();
+  const { user } = useSelector((state) => state.user);
+  const { slug } = useParams();
+  const [messages, setMessage] = useState([]);
+  console.log('messages', messages);
+
+ 
+  useEffect(() => {
+    setMessage(props.messages);
+
+    window.Pusher = Pusher;
+    window.Pusher.logToConsole = true;
+
+    window.Echo = new Echo({
+      broadcaster: 'pusher',
+      key: process.env.REACT_APP_PUSHER_APP_KEY,
+      cluster: process.env.REACT_APP_PUSHER_APP_CLUSTER,
+      encrypted: true,
+      forceTLS: true,
+      authorizer: (channel, options) => {
+        return {
+          authorize: (socketId, callback) => {
+            axiosClient
+              .post(process.env.REACT_APP_API + '/api/broadcasting/auth', {
+                socket_id: socketId,
+                channel_name: channel.name,
+              })
+              .then((response) => {
+                callback(false, response);
+              })
+              .catch((error) => {
+                callback(true, error);
+              });
+          },
+        };
+      },
+    });
+
+    window.Echo.private(`room.${slug}`)
+      .listen('.private-room', (e) => {
+        setMessage((old) => [...old, e]);
+        console.log(e);
+      })
+      .error((err) => {
+        console.log(err);
+      });
+    return () => {
+      window.Echo.leave(`room.${slug}`);
+    };
+  }, [slug]);
 
   const {
     handleSubmit,
@@ -35,46 +89,30 @@ const ChatLayout = (props) => {
     reset,
   } = useForm();
 
-  function onSubmit(values) {
-    return new Promise((resolve) => {
-      if (values === '') {
-        console.log('rỗng');
-      } else {
-        console.log(values);
-        reset({ message: '' });
-      }
-    });
-  }
+  const onSubmit = async (data) => {
+    const fetchChat = await chatAPI.sendMessage(slug, data.message);
+    console.log(fetchChat);
+  };
 
   return (
-    <Card gap={1} display={'grid'} bg={bg} boxShadow="base">
+    <Card gap={1} display={'grid'} bg={bg} boxShadow="base" minHeight="80vh">
       <Flex bg={!bg} w={'100%'} p={2}>
-        <Avatar
-          src={
-            // props.groupInfo.avatar ||
-            'https://i.discogs.com/dSU2G1tvSJQdN95edaLNV5HNMqLMEJWPthLQXOchHY0/rs:fit/g:sm/q:90/h:490/w:408/czM6Ly9kaXNjb2dz/LWRhdGFiYXNlLWlt/YWdlcy9BLTE4NzE1/MC0xMjMwNjcyNTEx/LmpwZWc.jpeg'
-          }
-          size="md"
-        >
-          <AvatarBadge boxSize="0.8em" border="0.15em solid" bg="green.500" />
-        </Avatar>
-
+        <Avatar size={'md'} name={props.groupInfo.name} src="" />
         <Box ml="2">
           <Text fontWeight="bold">{props.groupInfo.name}</Text>
-          <Text fontSize="sm">Đang hoạt động</Text>
+          <Text fontSize="sm">{props.groupInfo.members} thành viên</Text>
         </Box>
       </Flex>
       <Grid gap={2}>
-        <GridItem w="100%" h="600px" color={textColorPrimary} overflowY={'auto'}>
+        <GridItem w="100%" color={textColorPrimary} h="95%" overflowY={'scroll'}>
           <Flex flexDirection={'column'}>
-            {props.messages.map((item, index) => {
-              console.log(index);
+            {messages?.map((item, index) => {
               return (
                 <div key={index}>
-                  {item.type === 'me' ? (
-                    <MeChat mess={item?.mess} />
+                  {user.id === item.user_id ? (
+                    <MeChat mess={item?.message} />
                   ) : (
-                    <TheyChat mess={item?.mess} name={item?.name} thumb={item?.avatar} />
+                    <TheyChat mess={item?.message} name={item?.name} thumb={item?.avatar} />
                   )}
                 </div>
               );

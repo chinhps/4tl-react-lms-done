@@ -17,6 +17,7 @@ function Labs({ courses }) {
           name={data.name}
           slug={data.slug}
           type={1}
+          data={data}
           description="Bài tập"
         />
       ))}

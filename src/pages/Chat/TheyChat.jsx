@@ -13,7 +13,7 @@ const TheyChat = ({ thumb, mess, name }) => {
         <Text color={'grey'} fontSize={'sm'} fontWeight={300}>
           {name}
         </Text>
-        <Text borderRadius={7} bg={textColorTree} px={3} py={1} wordBreak={'break-all'}>
+        <Text borderRadius={7} bg={textColorTree} px={3} py={2} wordBreak={'break-all'}>
           {mess}
         </Text>
       </Flex>

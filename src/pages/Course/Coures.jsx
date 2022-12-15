@@ -12,6 +12,7 @@ import {
   Spinner,
   Box,
   Button,
+  useDisclosure,
 } from '@chakra-ui/react';
 import Overviews from './component/Overviews';
 import Card from '../../Components/Core/Card/Card';
@@ -28,12 +29,21 @@ import InfoProfile from '../../Components/Core/InfoProfile';
 import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 import { FiChevronDown } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
+import ModelNewDocument from './model/ModelNewDocument';
+import ModelNewLab from './model/ModelNewLab';
+import ModelNewQuiz from './model/ModelNewQuiz';
+import Student from './component/Student';
+import ListMarkQuiz from './component/ListMarkQuiz';
+import ListMarkLab from './component/ListMarkLab';
 
 function Coures() {
   const { slugCourse } = useParams();
   const { user } = useSelector((state) => state.user);
   const [course, setCourse] = useState(null);
   const params = useParams();
+  const { isOpen: isOpenDocument, onOpen: onOpenDocument, onClose: onCloseDocument } = useDisclosure();
+  const { isOpen: isOpenQuiz, onOpen: onOpenQuiz, onClose: onCloseQuiz } = useDisclosure();
+  const { isOpen: isOpenLab, onOpen: onOpenLab, onClose: onCloseLab } = useDisclosure();
 
   useEffect(() => {
     coursesAPI.getDocQuizLab(params.slugCourse).then((data) => {
@@ -43,14 +53,27 @@ function Coures() {
 
   return (
     <>
+      {isOpenDocument ? (
+        <ModelNewDocument
+          title="Thêm mới tài liệu"
+          slugCourse={params.slugCourse}
+          isOpen={isOpenDocument}
+          onClose={onCloseDocument}
+        />
+      ) : isOpenQuiz ? (
+        <ModelNewQuiz title="Thêm mới Quiz" slugCourse={params.slugCourse} isOpen={isOpenQuiz} onClose={onCloseQuiz} />
+      ) : isOpenLab ? (
+        <ModelNewLab title="Thêm mới Lab" slugCourse={params.slugCourse} isOpen={isOpenLab} onClose={onCloseLab} />
+      ) : null}
+
       <Grid
         gridTemplateColumns={{ xl: 'repeat(3, 1fr)', '2xl': '1fr 0.46fr' }}
-        gap={{ base: '20px', xl: '20px' }}
+        // gap={{ base: '20px', xl: '20px' }}
         display={{ base: 'block', xl: 'grid' }}
       >
         <GridItem gridArea={{ xl: '1 / 1 / 3 / 3', '2xl': '1 / 1 / 2 / 2' }}>
-          <Tabs variant="soft-rounded" colorScheme="green">
-            <TabList justifyContent="space-between">
+          <Tabs isLazy variant="soft-rounded" colorScheme="green">
+            <TabList justifyContent="space-between" px={4}>
               <Flex>
                 <Tab>Tổng quan</Tab>
                 <Tab>Tài liệu</Tab>
@@ -59,8 +82,9 @@ function Coures() {
                 {user.role.role_code === 'LECTURER' ? (
                   <>
                     <Tab color="#34cf28">Sinh viên</Tab>
-                    <Tab color="#34cf28">Bảng điểm</Tab>
-                  </> 
+                    <Tab color="#34cf28">Bảng điểm Quiz</Tab>
+                    <Tab color="#34cf28">Bảng điểm Lab</Tab>
+                  </>
                 ) : null}
               </Flex>
 
@@ -70,9 +94,9 @@ function Coures() {
                     Thao tác
                   </MenuButton>
                   <MenuList>
-                    <MenuItem>Thêm tài liệu</MenuItem>
-                    <MenuItem>Thêm bài Lab</MenuItem>
-                    <MenuItem>Thêm Quiz</MenuItem>
+                    <MenuItem onClick={onOpenDocument}>Thêm tài liệu</MenuItem>
+                    <MenuItem onClick={onOpenLab}>Thêm bài Lab</MenuItem>
+                    <MenuItem onClick={onOpenQuiz}>Thêm Quiz</MenuItem>
                   </MenuList>
                 </Menu>
               ) : null}
@@ -90,6 +114,15 @@ function Coures() {
                 </TabPanel>
                 <TabPanel>
                   <Quizs courses={course} />
+                </TabPanel>
+                <TabPanel>
+                  <Student />
+                </TabPanel>
+                <TabPanel>
+                  <ListMarkQuiz />
+                </TabPanel>
+                <TabPanel>
+                  <ListMarkLab />
                 </TabPanel>
               </TabPanels>
             ) : (
