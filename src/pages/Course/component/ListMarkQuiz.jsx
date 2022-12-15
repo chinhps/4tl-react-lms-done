@@ -18,6 +18,7 @@ import {
   useDisclosure,
   useToast,
 } from '@chakra-ui/react';
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { FiChevronRight, FiEdit3, FiTrash2 } from 'react-icons/fi';
 import { useParams } from 'react-router-dom';
@@ -73,11 +74,14 @@ function ListMarkQuiz() {
     setLoadingForm(false);
   };
 
-  const handleExport = () => {
-    pointSubmitAPI.export('quiz').then(data => {
-      console.log(data);
-    })
-  }
+  const handleExport = async () => {
+    const fetchData = await pointSubmitAPI.export('quiz',slugCourse);
+    // var blob = new Blob([fetchData]);
+    // const link = document.createElement('a');
+    // link.href = window.URL.createObjectURL(blob);
+    // link.download = `Quiz_${slugCourse}_${new Date().getTime()}.xlsx`;
+    // link.click();
+  };
 
   return (
     <>
@@ -89,7 +93,7 @@ function ListMarkQuiz() {
         isLoading={loadingForm}
         description="Bạn có chắc muốn hủy kết quả làm bài?"
       />
-    
+
       <Card mb={{ base: '0px', '2xl': '20px' }}>
         <Flex justifyContent="space-between">
           <Box>
@@ -101,7 +105,13 @@ function ListMarkQuiz() {
             </Text>
           </Box>
 
-          <Button rightIcon={<FiChevronRight />} rounded="md" colorScheme="teal" variant="outline" onClick={() => handleExport()}>
+          <Button
+            rightIcon={<FiChevronRight />}
+            rounded="md"
+            colorScheme="teal"
+            variant="outline"
+            onClick={() => handleExport()}
+          >
             Tải bảng điểm
           </Button>
         </Flex>

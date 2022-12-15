@@ -132,9 +132,11 @@ function CouseItem(
             }),
           ).then((data) => {
             if (data.payload) {
-              navigate(
-                `./${type === 1 ? 'lab' : 'quiz'}/` + slug + (user?.role.role_code === 'LECTURER') ? '/settings' : null,
-              );
+              const link = `./${type === 1 ? 'lab' : 'quiz'}/` + slug;
+              if (user?.role.role_code === 'LECTURER') {
+                link += '/settings';
+              }
+              navigate(link);
             }
             setLoading(false);
           });

@@ -2,9 +2,9 @@ import axiosClient from './axiosClient';
 
 const BASE_URL = '/api/point-submit';
 const pointSubmitAPI = {
-  export: (type) => {
-    const url = '/api/course/point-submits/export/' + type;
-    return axiosClient.get(url, { headers: { responseType: 'blob' } });
+  export: (type,slugCourse) => {
+    const url = `/api/course/point-submits/export/${type}/${slugCourse}`;
+    return axiosClient.get(url, { responseType: 'blob' });
   },
   setPointSubmit: (body) => {
     const url = '/api/course/point-submits/mark';
