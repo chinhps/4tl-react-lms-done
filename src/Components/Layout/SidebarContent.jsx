@@ -25,6 +25,8 @@ import {
   FiChevronRight,
 } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
+import logoDark from '../../assets/images/logo_dark.png';
+import logoLight from '../../assets/images/logo_light.png';
 
 const LinkItems = [
   { name: 'Trang chủ', icon: FiHome, to: '/' },
@@ -180,7 +182,8 @@ const LinkItems = [
 
 function SidebarContent({ onClose, ...rest }) {
   const { user } = useSelector((state) => state.user);
-
+  const logo = useColorModeValue(logoLight, logoDark);
+ 
   return (
     <>
       <Box
@@ -195,10 +198,7 @@ function SidebarContent({ onClose, ...rest }) {
         {...rest}
       >
         <Flex alignItems="center" mx="8" justifyContent="center">
-          {/* <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-            4TL LMS
-          </Text> */}
-          <Image name="4TL LMS" src={'/logo.png'} py={5} />
+          <Image name="4TL LMS" src={logo} py={5} />
           <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
         </Flex>
         <Accordion allowMultiple>
