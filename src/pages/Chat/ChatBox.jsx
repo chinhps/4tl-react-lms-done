@@ -44,14 +44,16 @@ const Chat = () => {
   }, []);
 
   useEffect(() => {
-    chatAPI.listMessageCourse(slug).then((messages) => {
-      setListMessages(messages);
-    });
+    if (slug) {
+      chatAPI.listMessageCourse(slug).then((messages) => {
+        setListMessages(messages);
+      });
+    }
   }, [slug]);
   console.log('listMessages', listMessages);
   return (
     <>
-      <Grid templateColumns="30% 1fr" h="55vh" gap={4}>
+      <Grid templateColumns="30% 1fr" h="80vh" maxH="100%" gap={4}>
         <Card w="100%" bg={bg} padding={3} gap={5} boxShadow="base" overflowY="scroll">
           {myRoom.map((value, index) => (
             <ChatInfo
@@ -69,6 +71,8 @@ const Chat = () => {
             groupInfo={{ name: listMessages.name_course, members: listMessages.members }}
             messages={listMessages.messages}
           />
+        ) : !slug ? (
+          <Text>Chọn lớp học để xem!</Text>
         ) : (
           <Spinner />
         )}

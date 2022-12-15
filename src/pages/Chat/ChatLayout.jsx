@@ -95,7 +95,7 @@ const ChatLayout = (props) => {
   };
 
   return (
-    <Card gap={1} display={'grid'} bg={bg} boxShadow="base" minHeight="80vh">
+    <Card gap={1} display={'grid'} bg={bg} boxShadow="base" h="100%">
       <Flex bg={!bg} w={'100%'} p={2}>
         <Avatar size={'md'} name={props.groupInfo.name} src="" />
         <Box ml="2">

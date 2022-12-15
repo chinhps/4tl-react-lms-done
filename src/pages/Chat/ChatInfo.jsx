@@ -25,19 +25,16 @@ const ChatInfo = ({ slug, lastMess, timeAgo, member, name }) => {
       position={'relative'}
       justifyContent={['center', 'center', 'center', 'center', 'start']}
     >
-      {/* <Avatar src={avatar} size="lg">
-        <AvatarBadge boxSize="0.8em" border="0.15em solid" bg="green.500" />
-      </Avatar> */}
       <Avatar size={'lg'} name={name} src="" />
       <Box ml="4" display={['none', 'none', 'none', 'none', 'flex']} justifyContent="center" flexDirection="column">
         <Text fontWeight="bold"> {name}</Text>
         <Flex flexDirection="column">
           {lastMess ? (
             <>
-              <Text fontSize="sm" color={textColorSecondary} noOfLines={1} w={'80%'}>
-                {lastMess}
+              <Text fontSize="sm" color={textColorSecondary} noOfLines={1}>
+                Tin nhắn cũ: {lastMess}
               </Text>
-              <Text fontSize="sm" color={textColorSecondary} w={['0px', '0px', '0px', '0px', '100px']}>
+              <Text fontSize="sm" color={textColorSecondary}>
                 {moment(timeAgo).locale('vi').calendar()}
               </Text>
             </>
@@ -47,9 +44,6 @@ const ChatInfo = ({ slug, lastMess, timeAgo, member, name }) => {
             </Text>
           )}
         </Flex>
-        <AvatarGroup size="xs" max={3} position="absolute" right={2} w={{ 375: 0 }}>
-          {member ? member.map((item, index) => <Avatar key={index} name={item.name} src={item.avatar} />) : <></>}
-        </AvatarGroup>
       </Box>
     </Flex>
   );
