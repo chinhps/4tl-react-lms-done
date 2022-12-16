@@ -76,11 +76,11 @@ function ListMarkQuiz() {
 
   const handleExport = async () => {
     const fetchData = await pointSubmitAPI.export('quiz',slugCourse);
-    // var blob = new Blob([fetchData]);
-    // const link = document.createElement('a');
-    // link.href = window.URL.createObjectURL(blob);
-    // link.download = `Quiz_${slugCourse}_${new Date().getTime()}.xlsx`;
-    // link.click();
+    var blob = new Blob([fetchData]);
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = `Quiz_${slugCourse}_${new Date().getTime()}.xlsx`;
+    link.click();
   };
 
   return (
