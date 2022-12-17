@@ -17,6 +17,7 @@ import subjectsAPI from '../../../api/subjectAPI';
 import questionsBankAPI from '../../../api/questionBankAPI';
 import { userSelector } from '../../../selectors';
 import { useSelector } from 'react-redux';
+import Card from '../../../Components/Core/Card/Card';
 
 export default function CreateQuestion() {
   const user = useSelector(userSelector);
@@ -135,7 +136,7 @@ export default function CreateQuestion() {
     });
   }, []);
   return (
-    <>
+    <Card>
       <Text fontSize="6xl" fontWeight="bold">
         {params.id ? 'Sửa câu hỏi' : 'Thêm mới câu hỏi'}
       </Text>
@@ -270,6 +271,6 @@ export default function CreateQuestion() {
           Thêm mới
         </Button>
       </form>
-    </>
+    </Card>
   );
 }

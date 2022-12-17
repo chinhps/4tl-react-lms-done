@@ -4,8 +4,13 @@ import {
   Button,
   Flex,
   Icon,
+  IconButton,
   Image,
   Link,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -26,7 +31,10 @@ import Card from '../../../Components/Core/Card/Card';
 import { Link as ReachLink, useNavigate } from 'react-router-dom';
 import coursesAPI from '../../../api/coursesAPI';
 import { setTitle } from '../../../reducer/branchSlide';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { FiMoreHorizontal } from 'react-icons/fi';
+import { userSelector } from '../../../selectors';
+import ModelNewBranch from '../../Course/model/ModelNewBranch';
 
 export default function Project({ data, image, link, title }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -37,6 +45,8 @@ export default function Project({ data, image, link, title }) {
   const cardShadow = useColorModeValue('0px 18px 40px rgba(112, 144, 176, 0.12)', 'unset');
   const bg = useColorModeValue('white', 'navy.700');
   const toast = useToast();
+  const user = useSelector(userSelector);
+  const { isOpen: isOpenModal, onOpen: onOpenModal, onClose: onCloseModal } = useDisclosure();
 
   const handelJoinCourse = async (id) => {
     const data = await coursesAPI.joinCourse(id);
@@ -50,7 +60,7 @@ export default function Project({ data, image, link, title }) {
         isClosable: true,
       });
     }
-    navigate('/course/'+data.slug);
+    navigate('/course/' + data.slug);
   };
 
   const dispatch = useDispatch();
@@ -107,6 +117,23 @@ export default function Project({ data, image, link, title }) {
           <Link onClick={() => handelClickProject(data)} variant="no-hover" me="16px" ms="auto" p="0px !important">
             <Icon as={MdKeyboardReturn} color="secondaryGray.500" h="18px" w="18px" />
           </Link>
+          {user.role.role_code === 'ADMIN' ? (
+            <Menu>
+              <MenuButton as={IconButton} aria-label="Options" icon={<FiMoreHorizontal />} variant="outline" />
+              <MenuList>
+                <MenuItem onClick={onOpenModal}>Chỉnh sửa</MenuItem>
+              </MenuList>
+            </Menu>
+          ) : null}
+          {isOpenModal ? (
+            <ModelNewBranch
+              title="Sửa nhánh"
+              id={data.id}
+              default={data}
+              isOpen={isOpenModal}
+              onClose={onCloseModal}
+            />
+          ) : null}
         </Flex>
       </Card>
     </>

@@ -31,7 +31,7 @@ import logoLight from '../../assets/images/logo_light.png';
 
 const LinkItems = [
   { name: 'Trang chủ', icon: FiHome, to: '/' },
-  { name: 'Kho kiến thức', role: ['STUDENT', 'LECTURER'], icon: FiTrendingUp, to: '/branches' },
+  { name: 'Kho kiến thức', role: ['STUDENT', 'LECTURER', 'ADMIN'], icon: FiTrendingUp, to: '/branches' },
   {
     name: 'Tin nhắn',
     role: ['STUDENT', 'LECTURER'],

@@ -13,6 +13,7 @@ import {
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import classesAPI from '../../../api/classesAPI';
+import Card from '../../../Components/Core/Card/Card';
 
 export default function UpdateClasses() {
   const navigate = useNavigate();
@@ -64,7 +65,7 @@ export default function UpdateClasses() {
   }, [id]);
 
   return (
-    <Box>
+    <Card>
       <Text fontSize="6xl" fontWeight="bold">
         Sửa lớp
       </Text>
@@ -91,6 +92,6 @@ export default function UpdateClasses() {
           <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
         )}
       </form>
-    </Box>
+    </Card>
   );
 }

@@ -6,7 +6,6 @@ import {
   Input,
   Button,
   Switch,
-  Box,
   useToast,
   Text,
   Spinner,
@@ -14,6 +13,7 @@ import {
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import majorsAPI from '../../../api/majorAPI';
+import Card from '../../../Components/Core/Card/Card';
 
 export default function UpdateMajor() {
   const navigate = useNavigate();
@@ -73,7 +73,7 @@ export default function UpdateMajor() {
   }, [id]);
 
   return (
-    <Box>
+    <Card>
       <Text fontSize="6xl" fontWeight="bold">
         Sửa ngành học
       </Text>
@@ -124,6 +124,6 @@ export default function UpdateMajor() {
           Sửa
         </Button>
       </form>
-    </Box>
+    </Card>
   );
 }

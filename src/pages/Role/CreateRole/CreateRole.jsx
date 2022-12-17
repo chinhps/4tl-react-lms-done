@@ -3,6 +3,7 @@ import { FormErrorMessage, FormLabel, FormControl, Input, Button, Switch, Box, u
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import rolesAPI from '../../../api/roleAPI';
+import Card from '../../../Components/Core/Card/Card';
 
 export default function CreateRole() {
   const navigate = useNavigate();
@@ -48,7 +49,7 @@ export default function CreateRole() {
   }
 
   return (
-    <Box>
+    <Card>
       <Text fontSize="6xl" fontWeight="bold">
         Thêm vai trò
       </Text>
@@ -79,6 +80,6 @@ export default function CreateRole() {
           Thêm mới
         </Button>
       </form>
-    </Box>
+    </Card>
   );
 }

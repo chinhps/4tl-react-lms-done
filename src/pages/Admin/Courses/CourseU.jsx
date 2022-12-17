@@ -19,6 +19,7 @@ import coursesAPI from '../../../api/coursesAPI';
 import { useState } from 'react';
 import subjectsAPI from '../../../api/subjectAPI';
 import classesAPI from '../../../api/classesAPI';
+import Card from '../../../Components/Core/Card/Card';
 
 const CoursesU = () => {
   const [listTeacher, setListTeacher] = useState([]);
@@ -110,7 +111,7 @@ const CoursesU = () => {
       .catch((err) => console.log(err));
   }, []);
   return (
-    <>
+    <Card>
       <Text fontSize="6xl" fontWeight="bold">
         {params.id ? 'Sửa khóa học' : 'Thêm mới khóa học'}
       </Text>
@@ -200,7 +201,7 @@ const CoursesU = () => {
       ) : (
         <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
       )}
-    </>
+    </Card>
   );
 };
 

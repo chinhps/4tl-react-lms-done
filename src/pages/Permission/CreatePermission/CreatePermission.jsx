@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import permissionsAPI from '../../../api/permissionsAPI';
 import permissionGroupAPI from '../../../api/permissionsGroup';
+import Card from '../../../Components/Core/Card/Card';
 
 export default function CreatePermission() {
   const navigate = useNavigate();
@@ -68,7 +69,7 @@ export default function CreatePermission() {
   }, []);
 
   return (
-    <Box>
+    <Card>
       <Text fontSize="6xl" fontWeight="bold">
         Thêm quyền
       </Text>
@@ -127,6 +128,6 @@ export default function CreatePermission() {
           Thêm mới
         </Button>
       </form>
-    </Box>
+    </Card>
   );
 }

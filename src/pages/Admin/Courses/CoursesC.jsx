@@ -18,6 +18,7 @@ import coursesAPI from '../../../api/coursesAPI';
 import { useState } from 'react';
 import subjectsAPI from '../../../api/subjectAPI';
 import classesAPI from '../../../api/classesAPI';
+import Card from '../../../Components/Core/Card/Card';
 
 const CoursesC = () => {
   const [listTeacher, setListTeacher] = useState([]);
@@ -110,7 +111,7 @@ const CoursesC = () => {
       .catch((err) => console.log(err));
   }, []);
   return (
-    <>
+    <Card>
       <Text fontSize="6xl" fontWeight="bold">
         {params.id ? 'Sửa khóa học' : 'Thêm mới khóa học'}
       </Text>
@@ -192,7 +193,7 @@ const CoursesC = () => {
           Lưu
         </Button>
       </form>
-    </>
+    </Card>
   );
 };
 

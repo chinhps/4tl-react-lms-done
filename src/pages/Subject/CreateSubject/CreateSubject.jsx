@@ -15,6 +15,7 @@ import subjectsAPI from '../../../api/subjectAPI';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import majorsAPI from '../../../api/majorAPI';
+import Card from '../../../Components/Core/Card/Card';
 
 export default function CreateSubject() {
   const toast = useToast();
@@ -78,7 +79,7 @@ export default function CreateSubject() {
     });
   }, []);
   return (
-    <>
+    <Card>
       <Text fontSize="6xl" fontWeight="bold">
         {params.id ? 'Sửa môn học' : 'Thêm mới môn học'}
       </Text>
@@ -156,6 +157,6 @@ export default function CreateSubject() {
           Thêm mới
         </Button>
       </form>
-    </>
+    </Card>
   );
 }

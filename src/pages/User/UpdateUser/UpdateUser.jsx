@@ -17,6 +17,7 @@ import { useEffect } from 'react';
 import classesAPI from '../../../api/classesAPI';
 import roleAPI from '../../../api/roleAPI';
 import userAPI from '../../../api/userAPI';
+import Card from '../../../Components/Core/Card/Card';
 
 export default function UpdateUser() {
   const [userInfo, setUserInfo] = useState();
@@ -95,7 +96,7 @@ export default function UpdateUser() {
     });
   }, []);
   return (
-    <>
+    <Card>
       <Text fontSize="6xl" fontWeight="bold">
         {params.id ? 'Sửa người dùng' : 'Thêm mới người dùng'}
       </Text>
@@ -253,6 +254,6 @@ export default function UpdateUser() {
       ) : (
         <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
       )}
-    </>
+    </Card>
   );
 }
