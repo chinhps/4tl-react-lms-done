@@ -7,11 +7,8 @@ const ChatInfo = ({ slug, lastMess, timeAgo, member, name }) => {
   const navigate = useNavigate();
   const bg = useColorModeValue('white', 'navy.700');
   const bgSecond = useColorModeValue('blue.100', '#495579');
-
-  const textColorPrimary = useColorModeValue('secondaryGray.900', 'white');
   const textColorSecondary = 'gray.400';
-  const textColorTree = useColorModeValue('gray.200', '#3E4042');
-  const textColorFour = useColorModeValue('#2D88FF', '#2D88FF');
+  
   return (
     <Flex
       onClick={() => {
@@ -24,9 +21,10 @@ const ChatInfo = ({ slug, lastMess, timeAgo, member, name }) => {
       transition="all 0.2s ease-in-out"
       position={'relative'}
       justifyContent={['center', 'center', 'center', 'center', 'start']}
+      height="inherit"
     >
       <Avatar size={'lg'} name={name} src="" />
-      <Box ml="4" display={['none', 'none', 'none', 'none', 'flex']} justifyContent="center" flexDirection="column">
+      <Box ml="4" justifyContent="center" flexDirection="column">
         <Text fontWeight="bold"> {name}</Text>
         <Flex flexDirection="column">
           {lastMess ? (

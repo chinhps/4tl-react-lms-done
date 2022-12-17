@@ -34,6 +34,7 @@ function ListMarkQuiz() {
   const [list, setList] = useState([]);
   const [dataMark, setDataMark] = useState([]);
   const [idDelete, setIdDelete] = useState(null);
+  const [loadExport, setLoadExport] = useState(false);
   const toast = useToast();
 
   const { slugCourse } = useParams();
@@ -75,12 +76,14 @@ function ListMarkQuiz() {
   };
 
   const handleExport = async () => {
-    const fetchData = await pointSubmitAPI.export('quiz',slugCourse);
+    setLoadExport(true);
+    const fetchData = await pointSubmitAPI.export('quiz', slugCourse);
     var blob = new Blob([fetchData]);
     const link = document.createElement('a');
     link.href = window.URL.createObjectURL(blob);
     link.download = `Quiz_${slugCourse}_${new Date().getTime()}.xlsx`;
     link.click();
+    setLoadExport(false);
   };
 
   return (
@@ -106,6 +109,7 @@ function ListMarkQuiz() {
           </Box>
 
           <Button
+            isLoading={loadExport}
             rightIcon={<FiChevronRight />}
             rounded="md"
             colorScheme="teal"

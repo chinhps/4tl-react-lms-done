@@ -53,8 +53,16 @@ const Chat = () => {
   console.log('listMessages', listMessages);
   return (
     <>
-      <Grid templateColumns="30% 1fr" h="80vh" maxH="100%" gap={4}>
-        <Card w="100%" bg={bg} padding={3} gap={5} boxShadow="base" overflowY="scroll">
+      <Grid templateColumns={{ base: '1fr', xl: '30% 1fr' }} h="85vh" maxH="100%" gap={4}>
+        <Card
+          w="100%"
+          display={{ base: 'none', xl: 'flex' }}
+          bg={bg}
+          padding={3}
+          gap={5}
+          boxShadow="base"
+          overflowY="scroll"
+        >
           {myRoom.map((value, index) => (
             <ChatInfo
               slug={value.slug}

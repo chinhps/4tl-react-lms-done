@@ -33,6 +33,7 @@ function ListMarkLab() {
   const [list, setList] = useState([]);
   const [dataMark, setDataMark] = useState([]);
   const [idDelete, setIdDelete] = useState(null);
+  const [loadExport, setLoadExport] = useState(false);
   const toast = useToast();
 
   const { slugCourse } = useParams();
@@ -79,6 +80,17 @@ function ListMarkLab() {
     onOpenMark();
   };
 
+  const handleExport = async () => {
+    setLoadExport(true);
+    const fetchData = await pointSubmitAPI.export('lab', slugCourse);
+    var blob = new Blob([fetchData]);
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = `Lab_${slugCourse}_${new Date().getTime()}.xlsx`;
+    link.click();
+    setLoadExport(false);
+  };
+
   return (
     <>
       <ModelConfirm
@@ -108,7 +120,14 @@ function ListMarkLab() {
             </Text>
           </Box>
 
-          <Button rightIcon={<FiChevronRight />} rounded="md" colorScheme="teal" variant="outline">
+          <Button
+            isLoading={loadExport}
+            rightIcon={<FiChevronRight />}
+            rounded="md"
+            colorScheme="teal"
+            variant="outline"
+            onClick={() => handleExport()}
+          >
             Tải bảng điểm
           </Button>
         </Flex>
