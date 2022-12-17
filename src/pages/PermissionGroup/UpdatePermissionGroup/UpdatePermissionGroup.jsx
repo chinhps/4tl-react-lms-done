@@ -14,6 +14,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import permissionsAPI from '../../../api/permissionsAPI';
 import permissionGroupAPI from '../../../api/permissionsGroup';
+import Card from '../../../Components/Core/Card/Card';
 
 export default function UpdatePermissionGroup() {
   const navigate = useNavigate();
@@ -65,7 +66,7 @@ export default function UpdatePermissionGroup() {
   }, [id]);
 
   return (
-    <Box>
+    <Card>
       <Text fontSize="6xl" fontWeight="bold">
         Sửa quyền
       </Text>
@@ -92,6 +93,6 @@ export default function UpdatePermissionGroup() {
           <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
         )}
       </form>
-    </Box>
+    </Card>
   );
 }

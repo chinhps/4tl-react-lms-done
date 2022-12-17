@@ -25,6 +25,7 @@ import userAPI from '../../../api/userAPI';
 import { Pagination } from 'react-laravel-paginex';
 import axiosClient from '../../../api/axiosClient';
 import Card from '../../../Components/Core/Card/Card';
+import { FiFilePlus } from 'react-icons/fi';
 
 export default function ListUser() {
   const navigate = useNavigate();
@@ -78,6 +79,9 @@ export default function ListUser() {
           <Text fontSize="22px" fontWeight="700" lineHeight="100%">
             Danh sách tài khoản
           </Text>
+          <Button leftIcon={<FiFilePlus />} colorScheme="teal" variant="solid">
+            Nhập file mẫu
+          </Button>
         </Flex>
         <Table variant="simple" overflowX={'scroll'}>
           <Thead>

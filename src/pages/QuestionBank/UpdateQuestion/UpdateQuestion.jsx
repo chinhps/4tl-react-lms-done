@@ -18,6 +18,7 @@ import subjectsAPI from '../../../api/subjectAPI';
 import questionsBankAPI from '../../../api/questionBankAPI';
 import { userSelector } from '../../../selectors';
 import { useSelector } from 'react-redux';
+import Card from '../../../Components/Core/Card/Card';
 
 export default function UpdateQuestion() {
   const user = useSelector(userSelector);
@@ -157,7 +158,7 @@ export default function UpdateQuestion() {
     getOneQuestion();
   }, [id]);
   return (
-    <>
+    <Card>
       <Text fontSize="6xl" fontWeight="bold">
         {params.id ? 'Sửa người dùng' : 'Thêm mới người dùng'}
       </Text>
@@ -297,6 +298,6 @@ export default function UpdateQuestion() {
       ) : (
         <Spinner size={'xl'} />
       )}
-    </>
+    </Card>
   );
 }

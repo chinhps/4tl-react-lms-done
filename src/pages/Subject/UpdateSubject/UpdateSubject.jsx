@@ -18,6 +18,7 @@ import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import majorsAPI from '../../../api/majorAPI';
 import { useEffect } from 'react';
+import Card from '../../../Components/Core/Card/Card';
 
 export default function UpdateSubject() {
   const {
@@ -97,7 +98,7 @@ export default function UpdateSubject() {
   }, [params.id]);
 
   return (
-    <>
+    <Card>
       <Text fontSize="6xl" fontWeight="bold">
         {params.id ? 'Sửa môn học' : 'Thêm mới môn học'}
       </Text>
@@ -168,7 +169,7 @@ export default function UpdateSubject() {
             />
           </FormControl>
           <Flex gap={'1rem'}>
-            <Button mt={4} bg="gray.300" type="button" onClick={() => navigate('/subject/list')}>
+            <Button mt={4} colorScheme="gray" type="button" onClick={() => navigate('/subject/list')}>
               Quay lại
             </Button>
             <Button mt={4} colorScheme="teal" isLoading={isSubmit} type="submit">
@@ -179,6 +180,6 @@ export default function UpdateSubject() {
       ) : (
         <Spinner thickness="4px" speed="0.65s" emptyColor="gray.200" color="blue.500" size="xl" />
       )}
-    </>
+    </Card>
   );
 }

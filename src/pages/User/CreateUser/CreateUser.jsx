@@ -16,6 +16,7 @@ import { useEffect } from 'react';
 import classesAPI from '../../../api/classesAPI';
 import roleAPI from '../../../api/roleAPI';
 import userAPI from '../../../api/userAPI';
+import Card from '../../../Components/Core/Card/Card';
 
 export default function CreateUser() {
   const [status, setStatus] = useState(false);
@@ -87,7 +88,7 @@ export default function CreateUser() {
   }, []);
 
   return (
-    <>
+    <Card>
       <Text fontSize="6xl" fontWeight="bold">
         {params.id ? 'Sửa người dùng' : 'Thêm mới người dùng'}
       </Text>
@@ -237,6 +238,6 @@ export default function CreateUser() {
           Thêm mới
         </Button>
       </form>
-    </>
+    </Card>
   );
 }

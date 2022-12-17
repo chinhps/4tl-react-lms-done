@@ -14,6 +14,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import classesAPI from '../../../api/classesAPI';
+import Card from '../../../Components/Core/Card/Card';
 
 export default function CreateClasses() {
   const navigate = useNavigate();
@@ -58,7 +59,7 @@ export default function CreateClasses() {
   }
 
   return (
-    <Box>
+    <Card>
       <Text fontSize="6xl" fontWeight="bold">
         Thêm lớp
       </Text>
@@ -78,6 +79,6 @@ export default function CreateClasses() {
           Thêm mới
         </Button>
       </form>
-    </Box>
+    </Card>
   );
 }

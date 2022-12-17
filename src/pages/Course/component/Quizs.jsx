@@ -4,7 +4,7 @@ import CouseItem from './CouseItem';
 
 function Quizs({courses}) {
   return (
-    <Flex gap={{ base: '20px', xl: '20px' }} flexDirection="column">
+    <Flex flexDirection="column">
       {courses.quizs?.map((data, index) => (
         <CouseItem
           max_working={data.max_working}

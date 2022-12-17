@@ -3,6 +3,7 @@ import { FormErrorMessage, FormLabel, FormControl, Input, Button, Switch, Box, u
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import permissionGroupAPI from '../../../api/permissionsGroup';
+import Card from '../../../Components/Core/Card/Card';
 
 export default function CreatePermissionGroup() {
   const navigate = useNavigate();
@@ -47,7 +48,7 @@ export default function CreatePermissionGroup() {
   }
 
   return (
-    <Box>
+    <Card>
       <Text fontSize="6xl" fontWeight="bold">
         Thêm loại phân quyền
       </Text>
@@ -67,6 +68,6 @@ export default function CreatePermissionGroup() {
           Thêm mới
         </Button>
       </form>
-    </Box>
+    </Card>
   );
 }

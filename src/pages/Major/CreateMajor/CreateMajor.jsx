@@ -3,6 +3,7 @@ import { FormErrorMessage, FormLabel, FormControl, Input, Button, Switch, Box, u
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import majorsAPI from '../../../api/majorAPI';
+import Card from '../../../Components/Core/Card/Card';
 
 export default function CreateMajor() {
   const navigate = useNavigate();
@@ -53,7 +54,7 @@ export default function CreateMajor() {
   }
 
   return (
-    <Box>
+    <Card>
       <Text fontSize="6xl" fontWeight="bold">
         Thêm ngành học
       </Text>
@@ -89,6 +90,6 @@ export default function CreateMajor() {
           Thêm mới
         </Button>
       </form>
-    </Box>
+    </Card>
   );
 }
