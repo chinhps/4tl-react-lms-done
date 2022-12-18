@@ -6,6 +6,7 @@ export const inputStyles = {
         field: {
           fontWeight: 400,
           borderRadius: '8px',
+          marginBottom: "1rem",
           color: mode('secondaryGray.900', 'white')(props),
         },
       }),

@@ -8,7 +8,7 @@ const ChatInfo = ({ slug, lastMess, timeAgo, member, name }) => {
   const bg = useColorModeValue('white', 'navy.700');
   const bgSecond = useColorModeValue('blue.100', '#495579');
   const textColorSecondary = 'gray.400';
-  
+
   return (
     <Flex
       onClick={() => {
@@ -20,7 +20,7 @@ const ChatInfo = ({ slug, lastMess, timeAgo, member, name }) => {
       _hover={{ bg: bgSecond }}
       transition="all 0.2s ease-in-out"
       position={'relative'}
-      justifyContent={['center', 'center', 'center', 'center', 'start']}
+      justifyContent={{ base: 'start'}}
       height="inherit"
     >
       <Avatar size={'lg'} name={name} src="" />

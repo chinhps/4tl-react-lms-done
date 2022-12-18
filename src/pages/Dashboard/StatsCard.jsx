@@ -1,33 +1,25 @@
 import { useColorModeValue } from '@chakra-ui/color-mode';
 import { Box, Flex } from '@chakra-ui/layout';
+import { Icon } from '@chakra-ui/react';
 import { Stat, StatLabel, StatNumber } from '@chakra-ui/stat';
+import MiniStatistics from '../../Components/Core/Card/MiniStatistics';
+import IconBox from '../../Components/Core/icons/IconBox';
 
 function StatsCard(props) {
   const { title, stat, icon } = props;
+  const boxBg = useColorModeValue('secondaryGray.300', 'whiteAlpha.100');
+  const brandColor = useColorModeValue('brand.500', 'white');
 
   return (
-    <Stat
-      px={{ base: 2, md: 4 }}
-      py={'5'}
-      shadow={'base'}
-      border={'2px solid gray.200'}
-      borderColor={useColorModeValue('gray.800', 'gray.500')}
-      rounded={'lg'}
-      w={{ base: '90%' }}
-      bg={useColorModeValue('none', '#0b3c6e')}
-    >
-      <Flex justifyContent={'space-between'}>
-        <Box pl={{ base: 2, md: 4 }}>
-          <StatLabel fontWeight={'medium'}>{title}</StatLabel>
-          <StatNumber fontSize={'2xl'} fontWeight={'medium'}>
-            {stat}
-          </StatNumber>
-        </Box>
-        <Box my={'auto'} color={useColorModeValue('gray.800', 'gray.200')} alignContent={'center'}>
-          {icon}
-        </Box>
-      </Flex>
-    </Stat>
+    <>
+      <MiniStatistics
+        startContent={
+          <IconBox w="75px" h="75px" bg={boxBg} icon={<Icon w="32px" h="32px" as={icon} color={brandColor} />} />
+        }
+        name={title}
+        value={stat}
+      />
+    </>
   );
 }
 

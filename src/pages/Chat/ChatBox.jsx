@@ -1,56 +1,37 @@
-import {
-  Avatar,
-  AvatarBadge,
-  AvatarGroup,
-  Box,
-  Button,
-  Flex,
-  FormControl,
-  Grid,
-  GridItem,
-  Input,
-  InputGroup,
-  InputRightAddon,
-  Spinner,
-  Text,
-  useColorModeValue,
-} from '@chakra-ui/react';
-// import { AiFillCheckCircle } from 'react-icons/ai';
-
-import React from 'react';
+import { Grid, Spinner, Text, useColorModeValue } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useEffect } from 'react';
-
-import { useForm } from 'react-hook-form';
-import { AiOutlineSend } from 'react-icons/ai';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import chatAPI from '../../api/chatAPI';
 import Card from '../../Components/Core/Card/Card';
-import ChatInfo from './ChatInfo';
 import ChatLayout from './ChatLayout';
-import MeChat from './MeChat';
-import TheyChat from './TheyChat';
+import ChatRoom from './ChatRoom';
 
 const Chat = () => {
-  const bg = useColorModeValue('white', 'navy.700');
-  const [myRoom, setMyroom] = useState([]);
+  const bg = useColorModeValue('white', 'navy.800');
   const [listMessages, setListMessages] = useState(null);
+  const [loadingChat, setLoadingChat] = useState(false);
   const { slug } = useParams();
-
-  useEffect(() => {
-    chatAPI.myRoom().then((data) => {
-      setMyroom(data);
-    });
-  }, []);
+  const [loadingRoom, setLoadingRoom] = useState(false);
+  const [myRoom, setMyroom] = useState([]);
 
   useEffect(() => {
     if (slug) {
+      setLoadingChat(true);
       chatAPI.listMessageCourse(slug).then((messages) => {
         setListMessages(messages);
+        setLoadingChat(false);
       });
     }
   }, [slug]);
-  console.log('listMessages', listMessages);
+
+  useEffect(() => {
+    setLoadingRoom(true);
+    chatAPI.myRoom().then((data) => {
+      setMyroom(data);
+      setLoadingRoom(false);
+    });
+  }, []);
   return (
     <>
       <Grid templateColumns={{ base: '1fr', xl: '30% 1fr' }} h="85vh" maxH="100%" gap={4}>
@@ -62,28 +43,41 @@ const Chat = () => {
           gap={5}
           boxShadow="base"
           overflowY="scroll"
+          overflowX="hidden"
         >
-          {myRoom.map((value, index) => (
-            <ChatInfo
-              slug={value.slug}
-              key={index}
-              lastMess={value.last_message[0]?.message}
-              timeAgo={value.last_message[0]?.created_at}
-              member={[{ name: 'Lâm' }]}
-              name={value.name}
-            />
-          ))}
+          <ChatRoom loadingRoom={loadingRoom} myRoom={myRoom} />
         </Card>
-        {listMessages ? (
-          <ChatLayout
-            groupInfo={{ name: listMessages.name_course, members: listMessages.members }}
-            messages={listMessages.messages}
-          />
-        ) : !slug ? (
-          <Text>Chọn lớp học để xem!</Text>
-        ) : (
-          <Spinner />
-        )}
+        <Card isLoading={loadingChat} gap={1} display={'grid'} bg={bg} boxShadow="base" height="inherit">
+          {listMessages ? (
+            <>
+              <ChatLayout
+                listRoomLayout={ChatRoom}
+                loadingRoom={loadingRoom} 
+                myRoom={myRoom}
+                groupInfo={{ name: listMessages.name_course, members: listMessages.members }}
+                messages={listMessages.messages}
+              />
+            </>
+          ) : !slug ? (
+            <>
+              <Text display={{ base: 'none', xl: 'block' }}>Chọn lớp học để xem!</Text>
+              <Card
+                w="100%"
+                display={{ base: 'flex', xl: 'none' }}
+                bg={bg}
+                padding={3}
+                gap={5}
+                boxShadow="base"
+                overflowY="scroll"
+                overflowX="hidden"
+              >
+                <ChatRoom loadingRoom={loadingRoom} myRoom={myRoom} />
+              </Card>
+            </>
+          ) : (
+            <Spinner />
+          )}
+        </Card>
       </Grid>
     </>
   );

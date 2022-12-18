@@ -24,6 +24,12 @@ import {
   FiBookmark,
   FiChevronRight,
   FiSlack,
+  FiDatabase,
+  FiGitPullRequest,
+  FiUsers,
+  FiGitCommit,
+  FiCodepen,
+  FiFileText,
 } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
 import logoDark from '../../assets/images/logo_dark.png';
@@ -37,6 +43,12 @@ const LinkItems = [
     role: ['STUDENT', 'LECTURER'],
     icon: FiCompass,
     to: '/chat',
+  },
+  {
+    name: 'Tin tức',
+    role: ['STUDENT', 'LECTURER','ADMIN'],
+    icon: FiCompass,
+    to: '/news',
   },
   {
     name: 'Thống kê',
@@ -107,7 +119,7 @@ const LinkItems = [
   {
     name: 'Ngân hàng câu hỏi',
     role: ['ADMIN'],
-    icon: FiBriefcase,
+    icon: FiDatabase,
     children: [
       {
         to: '/question-bank/list',
@@ -122,7 +134,7 @@ const LinkItems = [
   {
     name: 'Phân quyền',
     role: ['ADMIN'],
-    icon: FiBriefcase,
+    icon: FiGitPullRequest,
     children: [
       {
         to: '/permission/list',
@@ -137,7 +149,7 @@ const LinkItems = [
   {
     name: 'Vai trò',
     role: ['ADMIN'],
-    icon: FiBriefcase,
+    icon: FiUsers,
     children: [
       {
         to: '/role/list',
@@ -152,7 +164,7 @@ const LinkItems = [
   {
     name: 'Loại phân quyền',
     role: ['ADMIN'],
-    icon: FiBriefcase,
+    icon: FiGitCommit,
     children: [
       {
         to: '/permission-group/list',
@@ -167,7 +179,7 @@ const LinkItems = [
   {
     name: 'Lớp',
     role: ['ADMIN'],
-    icon: FiBriefcase,
+    icon: FiCodepen,
     children: [
       {
         to: '/classes/list',
@@ -182,7 +194,7 @@ const LinkItems = [
   {
     name: 'Bảng điểm',
     role: ['ADMIN'],
-    icon: FiBriefcase,
+    icon: FiFileText,
     to: '/point-submit/list',
   },
 ];
@@ -190,7 +202,7 @@ const LinkItems = [
 function SidebarContent({ onClose, ...rest }) {
   const { user } = useSelector((state) => state.user);
   const logo = useColorModeValue(logoLight, logoDark);
- 
+
   return (
     <>
       <Box
@@ -201,11 +213,13 @@ function SidebarContent({ onClose, ...rest }) {
         w={{ base: 'full', md: 60 }}
         pos="fixed"
         h="full"
-        // overflowY={'scroll'}
+        overflowY="auto"
         {...rest}
       >
         <Flex alignItems="center" mx="8" justifyContent="center">
-          <Image name="4TL LMS" src={logo} py={5} />
+          <Link as={ReachLink} to="/">
+            <Image name="4TL LMS" src={logo} py={5} />
+          </Link>
           <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
         </Flex>
         <Accordion allowMultiple>

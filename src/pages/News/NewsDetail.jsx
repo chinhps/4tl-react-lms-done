@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react';
-import { Box, Flex, Grid, GridItem, Image, Spinner, Stack, Tag, Text } from '@chakra-ui/react';
+import { Box, Flex, Grid, GridItem, Image, Spinner, Stack, Tag, Text, useColorModeValue } from '@chakra-ui/react';
 import newsAPI from '../../api/newsAPI';
 import { Link, useParams } from 'react-router-dom';
 import Card from '../../Components/Core/Card/Card';
 import moment from 'moment';
+import { isValidHttpUrl } from '../../utils/data';
 const NewsDetail = () => {
   const [post, setPost] = useState(null);
   const [allPost, setAllPost] = useState(null);
+  const textColorSecondary = useColorModeValue('secondaryGray.900', 'gray.400');
+  const bg = useColorModeValue('white', 'navy.700');
+  const cardShadow = useColorModeValue('0px 18px 40px rgba(112, 144, 176, 0.12)', 'unset');
 
   const { id } = useParams();
   const getPost = () => {
@@ -27,26 +31,28 @@ const NewsDetail = () => {
 
   return (
     <>
-      <Grid gridTemplateColumns={{ base: '100%', xl: '70% 30%' }} gap={6}>
+      <Grid gridTemplateColumns={{ base: '100%', xl: '70% 1fr' }} gap="20px">
         <GridItem>
-          <Card>
-            <Stack direction="column" gap={3}>
-              <Text fontWeight={700} fontSize={20} borderBottom="1px solid black" p={3}>
-                {post?.title}
-              </Text>
-              <Flex gap={5}>
-                <Tag w="100px" justifyContent={'center'} colorScheme="teal">
-                  {moment(post?.created_at).format('DD/MM/YYYY')}
-                </Tag>
-                <Tag w="100px" justifyContent={'center'} colorScheme="teal">
-                  {moment(post?.created_at).format('hh:mm:ss')}
-                </Tag>
-              </Flex>
-              <Stack direction="column" gap={3} p={3}>
-                <Text>{post?.content}</Text>
-              </Stack>
-              <Image src={post?.thumb} rounded={'md'} />
-            </Stack>
+          <Card p={10}>
+            {post ? (
+              <>
+                <Text fontWeight={700} fontSize={30} py={3}>
+                  {post.title}
+                </Text>
+                <Text color={textColorSecondary} mt={3}>
+                  {moment(post.created_at).format('DD/MM/YYYY hh:mm A')}
+                </Text>
+                <Stack direction="column" gap={3} py={3}>
+                  <div dangerouslySetInnerHTML={{ __html: post.content }}></div>
+                </Stack>
+                <Image
+                  src={isValidHttpUrl(post.thumb) ? post.thumb : process.env.REACT_APP_API + post.thumb}
+                  rounded={'md'}
+                />
+              </>
+            ) : (
+              <Spinner />
+            )}
           </Card>
         </GridItem>
         <GridItem>
@@ -60,18 +66,24 @@ const NewsDetail = () => {
                 {allPost ? (
                   allPost.map((item) => (
                     <Link to={`/news-detail/${item?.id}`} key={item?.id}>
-                      <Stack direction="row" p={2}>
-                        <Image src={item?.thumb} w={100} rounded={'md'} />
+                      <Card bg={bg} boxShadow={cardShadow} p="14px" flexDirection="rows" gap={3}>
+                        <Image
+                          src={isValidHttpUrl(item.thumb) ? item.thumb : process.env.REACT_APP_API + item.thumb}
+                          w="150px"
+                          height="100px"
+                          objectFit="cover"
+                          borderRadius="8px"
+                        />
 
-                        <Box display="flex" flexDirection={'column'}>
-                          <Text fontWeight={500} fontSize={12} noOfLines={1}>
+                        <Box display="flex" flexDirection={'column'} justifyContent="center">
+                          <Text fontWeight={500} fontSize={18} noOfLines={1}>
                             {item?.title}
                           </Text>
-                          <Tag justifyContent={'center'} colorScheme="teal">
-                            {item?.created_at}
-                          </Tag>
+                          <Text color={textColorSecondary} fontSize={14}>
+                            {moment(item?.created_at).format('DD/MM/YYYY hh:mm A')}
+                          </Text>
                         </Box>
-                      </Stack>
+                      </Card>
                     </Link>
                   ))
                 ) : (

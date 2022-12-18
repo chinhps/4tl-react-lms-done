@@ -1,8 +1,12 @@
 import axiosClient from './axiosClient';
 
 const chatAPI = {
-  sendMessage: (slug, message) => {
-    return axiosClient.post('/api/chat/send', { slug, message });
+  sendMessage: (body) => {
+    return axiosClient.post('/api/chat/send', body, {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    });
   },
   listMessageCourse: (slug) => {
     return axiosClient.get('/api/chat/' + slug);

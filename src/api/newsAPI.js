@@ -9,11 +9,12 @@ const newsAPI = {
   get: () => {
     return axiosClient.get(`${BASE_URL}`);
   },
-  new: (data) => {
-    return axiosClient.post(`${BASE_URL}/new`, data);
-  },
-  put: (id, data) => {
-    return axiosClient.put(`${BASE_URL}/${id}`, data);
+  upsert: (data) => {
+    return axiosClient.post(`${BASE_URL}/new`, data, {
+      headers: {
+        'content-type': 'multipart/form-data',
+      },
+    });
   },
   getById: (id) => {
     return axiosClient.get(`${BASE_URL}/${id}`);

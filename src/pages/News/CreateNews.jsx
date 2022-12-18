@@ -10,6 +10,8 @@ import {
   useToast,
   Text,
   Select,
+  useColorModeValue,
+  Flex,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -20,12 +22,18 @@ import newsAPI from '../../api/newsAPI';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { userSelector } from '../../selectors';
+import Card from '../../Components/Core/Card/Card';
+import DropZone from '../../Components/Core/DropZone/DropZone';
 
 export default function CreateNews() {
   const user = useSelector(userSelector);
   const navigate = useNavigate();
   const [isSubmit, setIsSubmit] = useState(false);
+  const [file, setFile] = useState(null);
   const toast = useToast();
+  const bg = useColorModeValue('white', '#1B254B');
+  const textColorPrimary = useColorModeValue('secondaryGray.900', 'white');
+
   // const [image, setImage] = useState();
   const {
     handleSubmit,
@@ -34,67 +42,38 @@ export default function CreateNews() {
     setValue,
   } = useForm();
 
-  function onSubmit(values) {
-    return new Promise((resolve) => {
-      const postData = {
-        thumb: values.thumb[0],
-        user_id: user.id,
-        title: values.title,
-        content: values.content
-      };
-      axios
-        .post('https://api2.chinh.dev/api/news/new', postData, {
-          headers: {
-            'X-Requested-With': 'XMLHttpRequest',
-            'content-type': 'multipart/form-data', // do not forget this
-          },
-          withCredentials: true,
-        })
-        .then((res) => {
-          setIsSubmit(!isSubmit);
-          toast({
-            title: 'Thông báo',
-            description: res.msg,
-            status: 'success',
-            duration: 2000,
-            isClosable: true,
-          });
-          setTimeout(() => {
-            navigate('/news/list');
-          }, 2000);
-        });
-      // newsAPI.new(postData).then((res) => {
-        // setIsSubmit(!isSubmit);
-        // toast({
-        //   title: 'Thông báo',
-        //   description: res.msg,
-        //   status: 'success',
-        //   duration: 2000,
-        //   isClosable: true,
-        // });
-        // setTimeout(() => {
-        //   navigate('/news/list');
-        // }, 2000);
-      // });
-    }).catch((err) => {
-      setIsSubmit(false);
+  const onSubmit = (values) => {
+    let formData = new FormData();
+    formData.append('thumb', file);
+    formData.append('title', values.title);
+    formData.append('content', values.content);
 
+    newsAPI.upsert(formData).then((data) => {
       toast({
-        title: 'Lỗi',
-        description: err.errorInfo,
-        status: 'error',
+        title: 'Thông báo',
+        description: data.msg,
+        status: 'success',
         duration: 2000,
         isClosable: true,
       });
     });
-  }
+  };
 
+  const handleFileChange = (files) => {
+    setFile(files[0]);
+  };
+  console.log(file);
   return (
-    <Box>
-      <Text fontSize="6xl" fontWeight="bold">
-        Thêm tin
-      </Text>
+    <Box p={10}>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <Flex justifyContent="space-between">
+          <Text fontSize="22px" fontWeight="700" lineHeight="100%">
+            Thêm mới tin tức
+          </Text>
+          <Button rounded="md" colorScheme="teal" isLoading={isSubmitting} type="submit">
+            Thêm mới
+          </Button>
+        </Flex>
         <FormControl isInvalid={errors.title} isRequired>
           <FormLabel htmlFor="title">Tiêu đề</FormLabel>
           <Input
@@ -106,36 +85,20 @@ export default function CreateNews() {
           />
           <FormErrorMessage>{errors.title && errors.title.message}</FormErrorMessage>
         </FormControl>
-        <FormControl isInvalid={errors.thumb} isRequired>
-          <FormLabel htmlFor="thumb">Hình ảnh</FormLabel>
-          <Input
-            type={'file'}
-            id="thumb"
-            placeholder="Hình ảnh"
-            {...register('thumb', {
-              required: 'Hình ảnh không được để trống',
-            })}
+        <FormControl>
+          <FormLabel>Nội dung</FormLabel>
+          <CKEditor
+            editor={ClassicEditor}
+            data=""
+            onBlur={(event, editor) => {
+              setValue('content', editor.getData());
+            }}
           />
-          <FormErrorMessage>{errors.thumb && errors.thumb.message}</FormErrorMessage>
         </FormControl>
-        <FormLabel htmlFor="thumb">Nội dung</FormLabel>
-        <CKEditor
-          editor={ClassicEditor}
-          data=""
-          // onReady={(editor) => {
-          //   // You can store the "editor" and use when it is needed.
-          //   console.log('Editor is ready to use!', editor);
-          // }}
-          // onChange={(event, editor) => {
-          //   const data = editor.getData();
-          //   console.log({ event, editor, data });
-          // }}
-          onBlur={(event, editor) => {
-            // console.log('Blur.', editor);
-            setValue('content', editor.getData())
-          }}
-        />
-        <Button mt={4} colorScheme="teal" isLoading={isSubmitting} type="submit">
+        <FormControl>
+          <DropZone onFileChange={(files) => handleFileChange(files)} />
+        </FormControl>
+        <Button mt={4} w="100%" rounded="md" colorScheme="teal" isLoading={isSubmitting} type="submit">
           Thêm mới
         </Button>
       </form>
