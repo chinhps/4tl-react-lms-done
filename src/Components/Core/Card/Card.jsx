@@ -4,7 +4,7 @@ function Card(props) {
   const styles = useStyleConfig('Card', { variant });
 
   return (
-    <Box __css={styles} {...rest} mb={2}>
+    <Box __css={styles} {...rest}>
       {isLoading ? <Spinner /> : children}
     </Box>
   );

@@ -4,7 +4,7 @@ import CouseItem from './CouseItem';
 
 function Documents({ courses }) {
   return (
-    <Flex flexDirection="column">
+    <Flex flexDirection="column" gap="20px">
       {courses.documents?.map((lab, index) => (
         <CouseItem
           key={index}
