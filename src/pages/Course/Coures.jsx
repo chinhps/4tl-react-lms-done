@@ -28,7 +28,7 @@ import Quizs from './component/Quizs';
 import InfoProfile from '../../Components/Core/InfoProfile';
 import { Menu, MenuButton, MenuList, MenuItem } from '@chakra-ui/react';
 import { FiChevronDown } from 'react-icons/fi';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ModelNewDocument from './model/ModelNewDocument';
 import ModelNewLab from './model/ModelNewLab';
 import ModelNewQuiz from './model/ModelNewQuiz';
@@ -41,15 +41,17 @@ function Coures() {
   const { user } = useSelector((state) => state.user);
   const [course, setCourse] = useState(null);
   const params = useParams();
+  const dispatch = useDispatch();
   const { isOpen: isOpenDocument, onOpen: onOpenDocument, onClose: onCloseDocument } = useDisclosure();
   const { isOpen: isOpenQuiz, onOpen: onOpenQuiz, onClose: onCloseQuiz } = useDisclosure();
   const { isOpen: isOpenLab, onOpen: onOpenLab, onClose: onCloseLab } = useDisclosure();
+  const { workSomeThing } = useSelector((state) => state.global);
 
   useEffect(() => {
     coursesAPI.getDocQuizLab(params.slugCourse).then((data) => {
       setCourse(data.data);
     });
-  }, [params]);
+  }, [params, workSomeThing]);
 
   return (
     <>

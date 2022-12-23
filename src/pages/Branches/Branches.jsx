@@ -9,7 +9,8 @@ import Projects from './component/Projects';
 const Classes = () => {
   const dispatch = useDispatch();
   const params = useParams();
-  const { pending: pendingBranch,listBranches,title: titleBranch } = useSelector((state) => state.branches);
+  const { pending: pendingBranch, listBranches, title: titleBranch } = useSelector((state) => state.branches);
+  const { workSomeThing } = useSelector((state) => state.global);
 
   useEffect(() => {
     dispatch(
@@ -18,7 +19,7 @@ const Classes = () => {
         table: params.table ?? '',
       }),
     );
-  }, [params]);
+  }, [params, workSomeThing]);
   return (
     <>
       <Grid

@@ -21,11 +21,13 @@ import {
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { FiChevronRight, FiEdit3, FiTrash2 } from 'react-icons/fi';
+import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import coursesAPI from '../../../api/coursesAPI';
 import pointSubmitAPI from '../../../api/pointSubmit';
 import Card from '../../../Components/Core/Card/Card';
 import ModelConfirm from '../../../Components/Core/ModelConfirm';
+import { toggleWorkSomething } from '../../../reducer/globalSlice';
 import ModelMark from '../model/ModelMark';
 
 function ListMarkQuiz() {
@@ -36,6 +38,9 @@ function ListMarkQuiz() {
   const [idDelete, setIdDelete] = useState(null);
   const [loadExport, setLoadExport] = useState(false);
   const toast = useToast();
+  const dispatch = useDispatch();
+
+  const { workSomeThing } = useSelector((state) => state.global);
 
   const { slugCourse } = useParams();
   const { isOpen: isOpenDelete, onOpen: onOpenDelete, onClose: onCloseDelete } = useDisclosure();
@@ -47,7 +52,7 @@ function ListMarkQuiz() {
     coursesAPI.getMarkQuiz(slugCourse).then((data) => {
       setList(data);
     });
-  }, []);
+  }, [workSomeThing]);
 
   const handleDelete = (id) => {
     setLoadingForm(true);
@@ -61,6 +66,7 @@ function ListMarkQuiz() {
           duration: 5000,
           isClosable: true,
         });
+        dispatch(toggleWorkSomething(!workSomeThing));
       })
       .catch((err) => {
         toast({

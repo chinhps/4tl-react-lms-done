@@ -18,6 +18,7 @@ import {
   Th,
   Thead,
   Tr,
+  useDisclosure,
   useToast,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
@@ -33,6 +34,8 @@ export default function Course() {
   const [tableData, setTableData] = useState({});
   const toast = useToast();
   const [isSubmit, setIsSubmit] = useState(false);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   useEffect(() => {
     coursesAPI.get().then((course) => {
       setTableData(course);
@@ -122,6 +125,7 @@ export default function Course() {
                     >
                       Sửa
                     </Button>
+
                     <Popover isLazy placement="bottom-end">
                       <PopoverTrigger>
                         <Button flex={1} colorScheme="red">

@@ -22,6 +22,8 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleWorkSomething } from '../../reducer/globalSlice';
 
 function ModelForm({ id = null, isOpen, onClose, title = '', dataForm, dataAPI, slugCourse, customData }) {
   const {
@@ -33,6 +35,8 @@ function ModelForm({ id = null, isOpen, onClose, title = '', dataForm, dataAPI, 
   const toast = useToast();
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const { workSomeThing } = useSelector((state) => state.global);
 
   const handleFileChange = (file) => {
     setFiles(file);
@@ -75,12 +79,15 @@ function ModelForm({ id = null, isOpen, onClose, title = '', dataForm, dataAPI, 
         isClosable: true,
       });
       setLoading(false);
+
       onClose();
+
+      dispatch(toggleWorkSomething(!workSomeThing));
     } catch (err) {
       console.log(err);
       toast({
         title: 'Thông báo!',
-        description: err.response.data.msg,
+        description: err?.response?.data?.msg,
         status: 'error',
         duration: 5000,
         isClosable: true,

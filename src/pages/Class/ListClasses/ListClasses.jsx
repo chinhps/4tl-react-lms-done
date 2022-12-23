@@ -9,7 +9,6 @@ import {
   Th,
   Thead,
   Tr,
-  Icon,
   Popover,
   PopoverTrigger,
   PopoverContent,
@@ -82,7 +81,9 @@ export default function ListClasses() {
             <Tr>
               <Th>ID</Th>
               <Th>Tên lớp </Th>
-              <Th textAlign={'center'} w={300}>Thao tác</Th>
+              <Th textAlign={'center'} w={300}>
+                Thao tác
+              </Th>
             </Tr>
           </Thead>
           <Tbody>

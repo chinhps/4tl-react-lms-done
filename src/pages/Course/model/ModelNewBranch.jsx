@@ -2,11 +2,14 @@ import branchAPI from '../../../api/branchAPI';
 import ModelForm from '../../../Components/Core/ModelForm';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 function ModelNewBranch(props) {
   const { slug } = useParams();
   const [parent, setParent] = useState();
-  console.log(slug);
+
+  const { workSomeThing } = useSelector((state) => state.global);
+
   const { ...res } = props;
   useEffect(() => {
     const getParent = async () => {
@@ -17,7 +20,7 @@ function ModelNewBranch(props) {
       });
     };
     getParent();
-  }, []);
+  }, [workSomeThing]);
   const dataForm = [
     {
       id: 1,
