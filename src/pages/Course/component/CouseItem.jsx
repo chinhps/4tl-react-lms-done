@@ -64,6 +64,7 @@ import ModelNewLab from '../model/ModelNewLab';
 import ModelConfigDeadline from '../model/ModelConfigDeadline';
 import deadlineConfigAPI from '../../../api/deadlineConfigAPI';
 import ModelConfirm from '../../../Components/Core/ModelConfirm';
+import { downloadRes } from '../../../utils/data';
 
 function CouseItem(
   { name, description, type, history, deadline, slug, password, config, level, max_working, linkDoc, data },
@@ -120,8 +121,11 @@ function CouseItem(
       if (password) {
         onOpen();
       } else {
+        // tài liệu
         if (type === 2) {
-          window.open(linkDoc, '_blank');
+          const fetchDoc = await documentAPI.download(linkDoc);
+          downloadRes(fetchDoc, name + '.' + linkDoc.split('.').pop());
+          // window.open(linkDoc, '_blank');
           setLoading(false);
         } else {
           dispatch(

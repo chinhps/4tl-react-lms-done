@@ -2,6 +2,7 @@ import { Flex, Image, Text, useColorModeValue } from '@chakra-ui/react';
 import moment from 'moment';
 import React from 'react';
 import { FiCheck } from 'react-icons/fi';
+import chatAPI from '../../api/chatAPI';
 
 const MeChat = ({ item, mess, created_at }) => {
   const textColorChat = useColorModeValue('brand.500', 'brand.400');
@@ -27,7 +28,7 @@ const MeChat = ({ item, mess, created_at }) => {
             <Text textColor="white" fontSize="md" wordBreak={'break-all'}>
               {mess.message}
             </Text>
-            <Image src={ process.env.REACT_APP_API + mess.link} />
+            <Image src={process.env.REACT_APP_API + '/api/chat/view-image/' + mess.link} />
           </>
         ) : null}
         <Flex alignItems="center" gap={2}>

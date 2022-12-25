@@ -30,6 +30,7 @@ import {
   FiGitCommit,
   FiCodepen,
   FiFileText,
+  FiMessageCircle,
 } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
 import logoDark from '../../assets/images/logo_dark.png';
@@ -41,7 +42,7 @@ const LinkItems = [
   {
     name: 'Tin nhắn',
     role: ['STUDENT', 'LECTURER'],
-    icon: FiCompass,
+    icon: FiMessageCircle,
     to: '/chat',
   },
   {

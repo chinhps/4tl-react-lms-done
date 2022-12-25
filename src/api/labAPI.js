@@ -1,6 +1,14 @@
 import axiosClient from './axiosClient';
 
 const labAPI = {
+  download: (slug) => {
+    const url = '/api/course/lab/download/' + slug;
+    return axiosClient.post(url, [], { responseType: 'blob' });
+  },
+  download_all: (slug_course) => {
+    const url = '/api/course/lab/download-all/' + slug_course;
+    return axiosClient.post(url, [], { responseType: 'blob' });
+  },
   getAll: (slug_course, slug_lab, password) => {
     const url = '/api/course/lab';
     return axiosClient.post(url, { slug_course, slug_lab, password });

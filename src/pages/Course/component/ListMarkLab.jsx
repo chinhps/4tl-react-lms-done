@@ -17,16 +17,19 @@ import {
   IconButton,
   useDisclosure,
   useToast,
+  Stack,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { FiChevronRight, FiEdit3, FiTrash2 } from 'react-icons/fi';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import coursesAPI from '../../../api/coursesAPI';
+import labAPI from '../../../api/labAPI';
 import pointSubmitAPI from '../../../api/pointSubmit';
 import Card from '../../../Components/Core/Card/Card';
 import ModelConfirm from '../../../Components/Core/ModelConfirm';
 import { toggleWorkSomething } from '../../../reducer/globalSlice';
+import { downloadRes } from '../../../utils/data';
 import ModelMark from '../model/ModelMark';
 
 function ListMarkLab() {
@@ -97,6 +100,17 @@ function ListMarkLab() {
     setLoadExport(false);
   };
 
+  const handleDownloadLab = async (link, name) => {
+    const downLab = await labAPI.download(link);
+    downloadRes(downLab, name);
+  };
+  const handleDownloadAllLab = async () => {
+    const downLab = await labAPI.download_all(slugCourse);
+    
+    // downloadRes(downLab, name);
+  };
+  
+
   return (
     <>
       <ModelConfirm
@@ -121,21 +135,36 @@ function ListMarkLab() {
             <Text color={textColorPrimary} fontWeight="bold" fontSize="2xl" mt="10px" mb="15px">
               Danh sách điểm Lab
             </Text>
-            <Text color={textColorSecondary} fontSize="md" me="26px" mb="40px">
+            <Text color={textColorSecondary} fontSize="md" me="26px">
               Tải về để có đầy đủ thông tin!
+            </Text>
+            <Text color={textColorSecondary} fontSize="md" me="26px" mb="20px">
+              Lưu ý: Tải tất cả bài chỉ tải bài nộp gần nhất của sinh viên!
             </Text>
           </Box>
 
-          <Button
-            isLoading={loadExport}
-            rightIcon={<FiChevronRight />}
-            rounded="md"
-            colorScheme="teal"
-            variant="outline"
-            onClick={() => handleExport()}
-          >
-            Tải bảng điểm
-          </Button>
+          <Stack>
+            <Button
+              isLoading={loadExport}
+              rightIcon={<FiChevronRight />}
+              rounded="md"
+              colorScheme="teal"
+              variant="outline"
+              onClick={() => handleExport()}
+            >
+              Tải bảng điểm
+            </Button>
+            <Button
+              isLoading={loadExport}
+              rightIcon={<FiChevronRight />}
+              rounded="md"
+              colorScheme="teal"
+              variant="outline"
+              onClick={() => handleDownloadAllLab()}
+            >
+              Tải tất cả bài
+            </Button>
+          </Stack>
         </Flex>
 
         <TableContainer>
@@ -160,11 +189,16 @@ function ListMarkLab() {
                   <Td>{vl.name}</Td>
                   <Td>{vl.name_submit}</Td>
                   <Td>{vl.count_submit}</Td>
-                  <Td>{vl.point}</Td>
+                  <Td>{vl.point ?? 'Chưa chấm'}</Td>
                   <Td>
                     <Flex flexDirection="column" gap={2}>
                       {vl.content.map((value, i) => (
-                        <Badge key={i} colorScheme="red">
+                        <Badge
+                          key={i}
+                          colorScheme="red"
+                          cursor="pointer"
+                          onClick={() => handleDownloadLab(value.link, value.name)}
+                        >
                           {value.name}
                         </Badge>
                       ))}

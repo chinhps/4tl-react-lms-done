@@ -35,7 +35,7 @@ export default function Projects({ title, data, pendingBranch }) {
       </Text>
       <Grid
         gridTemplateColumns={{ xl: `repeat(${data.length > 6 ? 2 : 1}, 1fr)`, sm: '1fr 0.46fr' }}
-        gap={{ base: '20px', xl: '20px' }}
+        gap={{ base: '15px', xl: '15px' }}
         display={{ base: 'block', xl: 'grid' }}
       >
         {!pendingBranch ? (

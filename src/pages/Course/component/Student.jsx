@@ -86,7 +86,10 @@ function Student() {
             <Tbody>
               {listStudent.map((student, index) => (
                 <Tr key={student.id}>
-                  <Td>{student.id}</Td>
+                  <Td>
+                    {index + 1}
+                    {/* {student.id} */}
+                  </Td>
                   <Td>{student.user_code}</Td>
                   <Td>{student.name}</Td>
                   <Td>{student.email}</Td>

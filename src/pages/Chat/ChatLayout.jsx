@@ -245,11 +245,11 @@ const ChatLayout = (props) => {
               bg={bgSend}
               height="70px"
               width="75px"
-              _hover={{ bg: 'none' }}
+              _hover={{ bg: '#4a60ff' }}
               // px="30px"
               cursor={'pointer'}
             >
-              <FiSend />
+              <FiSend color='white' />
             </Button>
           </Flex>
         </form>

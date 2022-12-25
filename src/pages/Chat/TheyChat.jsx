@@ -34,7 +34,7 @@ const TheyChat = ({ item, thumb, mess, name, active, created_at }) => {
               <Text fontSize="md" color={textColorMessage} wordBreak={'break-all'}>
                 {mess.message}
               </Text>
-              <Image src={process.env.REACT_APP_API + mess.link} />
+              <Image src={process.env.REACT_APP_API + '/api/chat/view-image/' + mess.link} />
             </>
           ) : null}
           <Text fontSize="xs" color={textColorTime} mt={1}>
