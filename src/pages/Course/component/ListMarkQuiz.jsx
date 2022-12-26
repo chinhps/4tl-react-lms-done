@@ -94,14 +94,16 @@ function ListMarkQuiz() {
 
   return (
     <>
-      <ModelConfirm
-        id={idDelete}
-        isOpen={isOpenDelete}
-        onClose={onCloseDelete}
-        handleConfirm={handleDelete}
-        isLoading={loadingForm}
-        description="Bạn có chắc muốn hủy kết quả làm bài?"
-      />
+      {isOpenDelete ? (
+        <ModelConfirm
+          id={idDelete}
+          isOpen={isOpenDelete}
+          onClose={onCloseDelete}
+          handleConfirm={handleDelete}
+          isLoading={loadingForm}
+          description="Bạn có chắc muốn hủy kết quả làm bài?"
+        />
+      ) : null}
 
       <Card mb={{ base: '0px', '2xl': '20px' }}>
         <Flex justifyContent="space-between">

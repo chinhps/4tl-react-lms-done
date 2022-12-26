@@ -36,7 +36,8 @@ export default function Projects({ title, data, pendingBranch }) {
       <Grid
         gridTemplateColumns={{ xl: `repeat(${data.length > 6 ? 2 : 1}, 1fr)`, sm: '1fr 0.46fr' }}
         gap={{ base: '15px', xl: '15px' }}
-        display={{ base: 'block', xl: 'grid' }}
+        display={{ base: 'flex', xl: 'grid' }}
+        flexDirection="column"
       >
         {!pendingBranch ? (
           data.map((project, i) => (

@@ -1,5 +1,21 @@
 import React, { useEffect } from 'react';
-import { Box, Button, Grid, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Stack, Text, useColorModeValue, useDisclosure, useToast } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Grid,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  Stack,
+  Text,
+  useColorModeValue,
+  useDisclosure,
+  useToast,
+} from '@chakra-ui/react';
 import DropZone from './DropZone';
 import Card from '../../../Components/Core/Card/Card';
 import { useSelector } from 'react-redux';
@@ -44,7 +60,7 @@ function Lab() {
     formData.append('id_point', labs?.id_point);
     formData.append('slug_course', slugCourse);
     formData.append('slug_lab', slugLab);
-    
+
     listFile.forEach((image_file) => {
       formData.append('listFile[]', image_file);
     });
@@ -91,7 +107,8 @@ function Lab() {
       <Grid
         gridTemplateColumns={{ base: 'repeat(3, 1fr)', sm: '1fr 0.46fr' }}
         gap={{ base: '20px', xl: '20px' }}
-        display={{ base: 'block', xl: 'grid' }}
+        display={{ base: 'flex', xl: 'grid' }}
+        flexDirection="column"
       >
         <Card mb={{ base: '0px', '2xl': '20px' }} p={8}>
           <Text color={textColorPrimary} fontWeight="bold" fontSize="2xl" mt="10px" mb="4px">

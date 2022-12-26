@@ -3,6 +3,7 @@ import ModelForm from '../../../Components/Core/ModelForm';
 
 function ModelMark(props) {
   const { ...res } = props;
+  console.log(props);
   const dataForm = [
     {
       id: 1,
@@ -11,14 +12,14 @@ function ModelMark(props) {
       type: 'inputNumber',
       min: 0,
       max: 10,
-      default: props.default?.point ?? null,
+      default: props.default?.point,
       validate: { required: 'Bạn cần điểm' },
     },
     {
       id: 2,
       label: 'Mô tả',
       name: 'description',
-      default: props.default?.description ?? null,
+      default: props.default?.description,
       type: 'textarea',
     },
   ];

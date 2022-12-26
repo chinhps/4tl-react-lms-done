@@ -31,6 +31,7 @@ import ModelConfirm from '../../../Components/Core/ModelConfirm';
 import { toggleWorkSomething } from '../../../reducer/globalSlice';
 import { downloadRes } from '../../../utils/data';
 import ModelMark from '../model/ModelMark';
+import ItemListMarkLab from './ItemListMarkLab';
 
 function ListMarkLab() {
   const textColorPrimary = useColorModeValue('secondaryGray.900', 'white');
@@ -39,6 +40,10 @@ function ListMarkLab() {
   const [dataMark, setDataMark] = useState([]);
   const [idDelete, setIdDelete] = useState(null);
   const [loadExport, setLoadExport] = useState(false);
+
+  // loading
+  const [isEdit, setIsEdit] = useState(false);
+
   const toast = useToast();
   const dispatch = useDispatch();
 
@@ -106,29 +111,32 @@ function ListMarkLab() {
   };
   const handleDownloadAllLab = async () => {
     const downLab = await labAPI.download_all(slugCourse);
-    
+
     // downloadRes(downLab, name);
   };
-  
 
   return (
     <>
-      <ModelConfirm
-        id={idDelete}
-        isOpen={isOpenDelete}
-        onClose={onCloseDelete}
-        handleConfirm={handleDelete}
-        isLoading={loadingForm}
-        description="Hủy kết quả làm bài thì không thể hoàn tác lại thao tác! Bạn vẫn chắc muốn thực hiện?"
-      />
-      <ModelMark
-        title="Chấm điểm"
-        id={dataMark?.id}
-        default={dataMark}
-        slugCourse={slugCourse}
-        isOpen={isOpenMark}
-        onClose={onCloseMark}
-      />
+      {isOpenDelete ? (
+        <ModelConfirm
+          id={idDelete}
+          isOpen={isOpenDelete}
+          onClose={onCloseDelete}
+          handleConfirm={handleDelete}
+          isLoading={loadingForm}
+          description="Hủy kết quả làm bài thì không thể hoàn tác lại thao tác! Bạn vẫn chắc muốn thực hiện?"
+        />
+      ) : isOpenMark ? (
+        <ModelMark
+          title="Chấm điểm"
+          id={dataMark?.id}
+          default={dataMark}
+          slugCourse={slugCourse}
+          isOpen={isOpenMark}
+          onClose={onCloseMark}
+        />
+      ) : null}
+
       <Card mb={{ base: '0px', '2xl': '20px' }}>
         <Flex justifyContent="space-between">
           <Box>
@@ -183,43 +191,18 @@ function ListMarkLab() {
               </Tr>
             </Thead>
             <Tbody>
-              {list.map((vl) => (
-                <Tr key={vl.id}>
-                  <Td>{vl.user_code}</Td>
-                  <Td>{vl.name}</Td>
-                  <Td>{vl.name_submit}</Td>
-                  <Td>{vl.count_submit}</Td>
-                  <Td>{vl.point ?? 'Chưa chấm'}</Td>
-                  <Td>
-                    <Flex flexDirection="column" gap={2}>
-                      {vl.content.map((value, i) => (
-                        <Badge
-                          key={i}
-                          colorScheme="red"
-                          cursor="pointer"
-                          onClick={() => handleDownloadLab(value.link, value.name)}
-                        >
-                          {value.name}
-                        </Badge>
-                      ))}
-                    </Flex>
-                  </Td>
-                  <Td>
-                    <Badge colorScheme={vl.note === 'Failed' ? 'red' : 'green'}>{vl.note}</Badge>
-                  </Td>
-                  <Td>
-                    <Flex flexDirection="column" gap={2}>
-                      <IconButton icon={<FiEdit3 />} onClick={() => handleMark(vl.id)} />
-                      <IconButton
-                        icon={<FiTrash2 />}
-                        onClick={() => {
-                          setIdDelete(vl.id);
-                          onOpenDelete();
-                        }}
-                      />
-                    </Flex>
-                  </Td>
-                </Tr>
+              {list.map((vl, index) => (
+                <>
+                  <ItemListMarkLab
+                    isOpenMark={isOpenMark}
+                    key={index}
+                    vl={vl}
+                    handleDownloadLab={handleDownloadLab}
+                    handleMark={handleMark}
+                    setIdDelete={setIdDelete}
+                    onOpenDelete={onOpenDelete}
+                  />
+                </>
               ))}
             </Tbody>
           </Table>

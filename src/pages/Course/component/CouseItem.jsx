@@ -65,6 +65,7 @@ import ModelConfigDeadline from '../model/ModelConfigDeadline';
 import deadlineConfigAPI from '../../../api/deadlineConfigAPI';
 import ModelConfirm from '../../../Components/Core/ModelConfirm';
 import { downloadRes } from '../../../utils/data';
+import { toggleWorkSomething } from '../../../reducer/globalSlice';
 
 function CouseItem(
   { name, description, type, history, deadline, slug, password, config, level, max_working, linkDoc, data },
@@ -104,6 +105,9 @@ function CouseItem(
   const [dataEdit, setDataEdit] = useState(null);
   const [dataConfig, setDataConfig] = useState(null);
   const [customData, setCustomData] = useState(null);
+  const { workSomeThing } = useSelector((state) => state.global);
+  const { slugCourse } = useParams();
+  const dispatch = useDispatch();
 
   const handleChoose = async () => {
     setLoading(true);
@@ -160,6 +164,7 @@ function CouseItem(
         duration: 5000,
         isClosable: true,
       });
+      dispatch(toggleWorkSomething(!workSomeThing));
     } catch (err) {
       toast({
         title: 'Thông báo!',
@@ -182,9 +187,6 @@ function CouseItem(
     onOpenEdit();
   };
 
-  const { slugCourse } = useParams();
-  const dispatch = useDispatch();
-
   const onSubmit = async (data) => {
     setLoadingForm(true);
     dispatch(
@@ -193,12 +195,16 @@ function CouseItem(
         slug,
         password: data.password,
       }),
-    ).then((data) => {
-      setLoadingForm(false);
-      if (data.payload) {
-        type === 1 ? navigate('./lab/' + slug) : navigate('./quiz/' + slug);
-      }
-    });
+    )
+      .then((data) => {
+        setLoadingForm(false);
+        if (data.payload) {
+          type === 1 ? navigate('./lab/' + slug) : navigate('./quiz/' + slug);
+        }
+      })
+      .then((_) => {
+        dispatch(toggleWorkSomething(!workSomeThing));
+      });
   };
 
   const handleClose = () => {

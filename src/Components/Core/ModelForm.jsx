@@ -124,12 +124,10 @@ function ModelForm({ id = null, isOpen, onClose, title = '', dataForm, dataAPI, 
                       resize="vertical"
                     />
                   ) : form.type === 'inputNumber' ? (
-                    <NumberInput
-                      {...register(form.name, { value: form.default ?? null, ...(form.validate ?? null) })}
-                      max={form.max ?? 50}
-                      min={form.min ?? 1}
-                    >
-                      <NumberInputField />
+                    <NumberInput max={form.max ?? 50} min={form.min ?? 1}>
+                      <NumberInputField
+                        {...register(form.name, { value: form.default ?? null, ...(form.validate ?? null) })}
+                      />
                       <NumberInputStepper>
                         <NumberIncrementStepper />
                         <NumberDecrementStepper />

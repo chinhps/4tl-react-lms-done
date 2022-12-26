@@ -2,7 +2,7 @@
   "name": "base-project",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".",
+  "homepage": "https://lms4tl.site",
   "dependencies": {
     "@chakra-ui/icons": "^2.0.13",
     "@chakra-ui/react": "^2.3.6",

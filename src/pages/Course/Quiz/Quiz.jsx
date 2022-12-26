@@ -153,7 +153,8 @@ function Quiz() {
       <Grid
         gridTemplateColumns={{ base: 'repeat(3, 1fr)', sm: '1fr 0.46fr' }}
         gap={{ base: '20px', xl: '20px' }}
-        display={{ base: 'block', xl: 'grid' }}
+        display={{ base: 'flex', xl: 'grid' }}
+        flexDirection="column"
       >
         <GridItem>
           <Card mb={{ base: '0px', '2xl': '20px' }}>

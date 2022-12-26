@@ -55,11 +55,12 @@ export const inputStyles = {
       },
     },
     NumberInput: {
-      baseStyle: {
+      baseStyle: (props) => ({
         field: {
           fontWeight: 400,
+          color: mode('secondaryGray.900', 'white')(props),
         },
-      },
+      }),
 
       variants: {
         main: (props) => ({

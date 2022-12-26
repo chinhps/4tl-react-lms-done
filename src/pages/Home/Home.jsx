@@ -26,7 +26,8 @@ function Home() {
         <Grid
           gridTemplateColumns={{ xl: 'repeat(3, 1fr)', '2xl': '1fr 0.46fr' }}
           gap={{ base: '20px', xl: '20px' }}
-          display={{ base: 'block', xl: 'grid' }}
+          display={{ base: 'flex', xl: 'grid' }}
+          flexDirection="column"
         >
           <Flex flexDirection="column" gridArea={{ xl: '1 / 1 / 2 / 3', '2xl': '1 / 1 / 2 / 2' }}>
             <Banner />

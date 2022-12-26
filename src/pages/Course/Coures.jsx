@@ -71,7 +71,8 @@ function Coures() {
       <Grid
         gridTemplateColumns="repeat(3, 1fr)"
         // gap={{ base: '20px', xl: '20px' }}
-        display={{ base: 'block', xl: 'grid' }}
+        display={{ base: 'flex', xl: 'grid' }}
+        flexDirection="column"
       >
         <GridItem colSpan={{ base: 3, xl: 2 }}>
           <Tabs isLazy variant="soft-rounded" colorScheme="green">

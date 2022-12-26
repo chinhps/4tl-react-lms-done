@@ -10,7 +10,8 @@ function Overviews({ courses }) {
       <Grid
         gridTemplateColumns={{ xl: `repeat(1, 1fr)`, sm: '1fr 0.46fr' }}
         gap={{ base: '20px', xl: '20px' }}
-        display={{ base: 'block', xl: 'grid' }}
+        display={{ base: 'flex', xl: 'grid' }}
+        flexDirection="column"
       >
         <Quizs courses={courses} />
         <Documents courses={courses} />
